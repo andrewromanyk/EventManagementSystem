@@ -18,6 +18,11 @@ public class TicketServiceImpl implements TicketService {
 
     }
     @Override
+    public void registerTicket() {
+        System.out.println("Created a ticket!");
+    }
+
+    @Override
     public Ticket purchaseTicket(int eventId, User user) {
         //logic of buying ticket
         return null;
