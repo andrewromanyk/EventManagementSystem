@@ -1,12 +1,20 @@
 package ua.edu.ukma.event_management_system.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Component;
 import ua.edu.ukma.event_management_system.entity.User;
 import ua.edu.ukma.event_management_system.entity.UserRole;
+import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
 import java.util.*;
 
+@Component
 public class UserServiceImpl implements UserService {
+
+    @Autowired
+    private TicketService ticketService;
+
     @Override
     public void createUser(User user) {
         System.out.println("Created user: " + user.getFirstName());
