@@ -19,7 +19,7 @@ public class EventServiceImpl implements EventService {
 
     @Override
     public void createEvent(Event event) {
-
+        System.out.println("Created event!");
     }
 
     @Override
