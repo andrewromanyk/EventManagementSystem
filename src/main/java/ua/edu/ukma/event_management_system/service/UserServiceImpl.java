@@ -17,8 +17,23 @@ public class UserServiceImpl implements UserService {
         List<User> users = new ArrayList<User>();
         users.add(new User(1, UserRole.USER, "petro123", "Petro", "Petrenko", 19));
         users.add(new User(2, UserRole.USER, "rose", "Alina", "Koval", 38));
-        users.add(new User(1, UserRole.USER, "petro123", "Kyrylo", "Vovk", 51));
+        users.add(new User(3, UserRole.USER, "petro123", "Kyrylo", "Vovk", 51));
         return users;
+    }
+
+    @Override
+    public User getUserById(int userId) {
+        return null;
+    }
+
+    @Override
+    public void updateUser(User updatedUser) {
+        return;
+    }
+
+    @Override
+    public void removeUser(int userId) {
+        return;
     }
 
     @Override
