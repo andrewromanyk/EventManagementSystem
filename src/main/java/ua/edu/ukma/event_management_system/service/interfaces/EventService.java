@@ -1,6 +1,6 @@
 package ua.edu.ukma.event_management_system.service.interfaces;
 
-import ua.edu.ukma.event_management_system.entity.Event;
+import ua.edu.ukma.event_management_system.domain.Event;
 
 public interface EventService {
 

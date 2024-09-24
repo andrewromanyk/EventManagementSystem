@@ -1,4 +1,4 @@
-package ua.edu.ukma.event_management_system.entity;
+package ua.edu.ukma.event_management_system.domain;
 
 import ua.edu.ukma.event_management_system.service.interfaces.Ratable;
 

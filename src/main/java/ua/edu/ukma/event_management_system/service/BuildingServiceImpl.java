@@ -1,6 +1,6 @@
 package ua.edu.ukma.event_management_system.service;
 
-import ua.edu.ukma.event_management_system.entity.Building;
+import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 
 import java.util.ArrayList;

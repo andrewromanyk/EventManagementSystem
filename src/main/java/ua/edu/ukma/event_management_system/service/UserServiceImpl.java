@@ -2,8 +2,8 @@ package ua.edu.ukma.event_management_system.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import ua.edu.ukma.event_management_system.entity.User;
-import ua.edu.ukma.event_management_system.entity.UserRole;
+import ua.edu.ukma.event_management_system.domain.User;
+import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 

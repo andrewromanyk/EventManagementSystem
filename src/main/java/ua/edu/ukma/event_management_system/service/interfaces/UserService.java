@@ -1,7 +1,7 @@
 package ua.edu.ukma.event_management_system.service.interfaces;
 
-import ua.edu.ukma.event_management_system.entity.User;
-import ua.edu.ukma.event_management_system.entity.UserRole;
+import ua.edu.ukma.event_management_system.domain.User;
+import ua.edu.ukma.event_management_system.domain.UserRole;
 
 import java.util.List;
 
