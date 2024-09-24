@@ -4,7 +4,7 @@ import jakarta.persistence.*;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 
 @Entity
-@Table(name = "user")
+@Table(name = "users") // user is reserved keyword
 public class UserEntity {
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
