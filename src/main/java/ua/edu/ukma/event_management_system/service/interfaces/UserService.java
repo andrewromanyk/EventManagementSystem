@@ -2,20 +2,21 @@ package ua.edu.ukma.event_management_system.service.interfaces;
 
 import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.domain.UserRole;
+import ua.edu.ukma.event_management_system.entity.UserEntity;
 
 import java.util.List;
 
 public interface UserService {
 
-    void createUser(User user);
+    UserEntity createUser(UserEntity user);
 
-    List<User> getAllUsers();
+    List<UserEntity> getAllUsers();
 
-    User getUserById(int userId);
+    UserEntity getUserById(long userId);
 
-    void updateUser(User updatedUser);
+    void updateUser(UserEntity updatedUser);
 
-    void removeUser(int userId);
+    void removeUser(long userId);
 
-    boolean checkPermission(User user, UserRole role);
+    boolean checkPermission(UserEntity user, UserRole role);
 }
