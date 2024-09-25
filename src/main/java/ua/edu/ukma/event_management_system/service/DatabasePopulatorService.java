@@ -13,10 +13,10 @@ import java.time.LocalDateTime;
 @Transactional
 public class DatabasePopulatorService {
 
-    private final BuildingRepository buildingRepository;
-    private final EventRepository eventRepository;
-    private final TicketRepository ticketRepository;
-    private final UserRepository userRepository;
+    public final BuildingRepository buildingRepository;
+    public final EventRepository eventRepository;
+    public final TicketRepository ticketRepository;
+    public final UserRepository userRepository;
 
     public DatabasePopulatorService(BuildingRepository br, EventRepository er,
                                     TicketRepository tr, UserRepository ur) {
@@ -28,9 +28,9 @@ public class DatabasePopulatorService {
 
     public void populateDatabase() {
         UserEntity user1 = new UserEntity(UserRole.USER, "and123", "Andriy",
-                "Petrenko", 30);
+                "Petrenko", "andriisuper@gmail.com", "380999777444", 30);
         UserEntity user2 = new UserEntity(UserRole.ORGANIZER, "maria_shevchenko", "Maria",
-                "Shevchenko", 24);
+                "Shevchenko", "shevchenkoM@gmail.com", "380111486754", 24);
         userRepository.save(user1);
         userRepository.save(user2);
 

@@ -2,6 +2,8 @@ package ua.edu.ukma.event_management_system.entity;
 
 import jakarta.persistence.*;
 
+import java.util.List;
+
 @Entity(name = "building")
 public class BuildingEntity {
     @Id
@@ -25,7 +27,9 @@ public class BuildingEntity {
     @Column(length = 500)
     private String description;
 
-    private int rating;
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "building_id")
+    private List<BuildingRatingEntity> rating;
 
     // Default constructor for JPA
     public BuildingEntity(){}
@@ -83,11 +87,4 @@ public class BuildingEntity {
         this.description = description;
     }
 
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
-    }
 }

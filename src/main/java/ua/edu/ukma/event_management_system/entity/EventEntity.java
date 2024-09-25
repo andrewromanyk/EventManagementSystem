@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import ua.edu.ukma.event_management_system.domain.Building;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity
 @Table(name = "event")
@@ -34,7 +35,15 @@ public class EventEntity {
     @Column(nullable = false)
     private int minAgeRestriction;
 
-    private int rating;
+    @ManyToMany
+    @JoinTable(name="ticket",
+    joinColumns = @JoinColumn(name = "event_id"),
+    inverseJoinColumns = @JoinColumn(name = "user_id"))
+    private List<UserEntity> users;
+
+    @OneToMany(fetch = FetchType.LAZY)
+    @JoinColumn(name = "event_id")
+    private List<EventRatingEntity> rating;
 
     // Default constructor required by JPA
     public EventEntity() {}
@@ -113,14 +122,6 @@ public class EventEntity {
 
     public void setMinAgeRestriction(int minAgeRestriction) {
         this.minAgeRestriction = minAgeRestriction;
-    }
-
-    public int getRating() {
-        return rating;
-    }
-
-    public void setRating(int rating) {
-        this.rating = rating;
     }
 
 }

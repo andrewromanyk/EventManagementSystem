@@ -3,6 +3,8 @@ package ua.edu.ukma.event_management_system.entity;
 import jakarta.persistence.*;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 
+import java.util.List;
+
 @Entity
 @Table(name = "users") // user is reserved keyword
 public class UserEntity {
@@ -24,18 +26,28 @@ public class UserEntity {
     private String lastName;
 
     @Column(nullable = false)
+    private String email;
+
+    @Column(nullable = false)
+    private String phoneNumber;
+
+    @Column(nullable = false)
     private int age;
 
-    private int rating;
+    @ManyToMany(mappedBy = "users")
+    private List<EventEntity> events;
+
     // Default constructor (required by JPA)
     public UserEntity() {}
 
     // Constructor with parameters (optional)
-    public UserEntity(UserRole userRole, String username, String firstName, String lastName, int age) {
+    public UserEntity(UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, int age) {
         this.userRole = userRole;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
         this.age = age;
     }
 
@@ -89,11 +101,19 @@ public class UserEntity {
         this.age = age;
     }
 
-    public int getRating() {
-        return rating;
+    public String getEmail() {
+        return email;
     }
 
-    public void setRating(int rating) {
-        this.rating = rating;
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getPhoneNumber() {
+        return phoneNumber;
+    }
+
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 }
