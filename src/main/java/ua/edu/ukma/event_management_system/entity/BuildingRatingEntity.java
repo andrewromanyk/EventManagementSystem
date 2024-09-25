@@ -23,4 +23,12 @@ public class BuildingRatingEntity {
     @Column(nullable = false)
     private String comment;
 
+    public BuildingRatingEntity(BuildingEntity building, byte rating, UserEntity author, String comment) {
+        this.building = building;
+        this.rating = rating;
+        this.author = author;
+        this.comment = comment;
+    }
+
+    public BuildingRatingEntity() {}
 }

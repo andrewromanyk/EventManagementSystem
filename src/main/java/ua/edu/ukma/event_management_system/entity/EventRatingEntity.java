@@ -23,4 +23,12 @@ public class EventRatingEntity {
     @Column(nullable = false)
     private String comment;
 
+    public EventRatingEntity(EventEntity event, byte rating, UserEntity author, String comment) {
+        this.event = event;
+        this.rating = rating;
+        this.author = author;
+        this.comment = comment;
+    }
+
+    public EventRatingEntity() {}
 }
