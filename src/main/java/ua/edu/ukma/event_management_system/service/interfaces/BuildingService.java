@@ -2,6 +2,9 @@ package ua.edu.ukma.event_management_system.service.interfaces;
 
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
+import ua.edu.ukma.event_management_system.entity.BuildingRatingEntity;
+import ua.edu.ukma.event_management_system.entity.UserEntity;
+import ua.edu.ukma.event_management_system.repository.BuildingRatingRepository;
 
 import java.util.List;
 
@@ -17,4 +20,5 @@ public interface BuildingService {
 
     void deleteBuilding(Long id);
 
+    BuildingRatingEntity rateBuilding(BuildingEntity building, byte rating, UserEntity user, String comment);
 }

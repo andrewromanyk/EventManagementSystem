@@ -4,8 +4,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
+import ua.edu.ukma.event_management_system.entity.BuildingRatingEntity;
 import ua.edu.ukma.event_management_system.entity.UserEntity;
+import ua.edu.ukma.event_management_system.repository.BuildingRatingRepository;
 import ua.edu.ukma.event_management_system.repository.BuildingRepository;
+import ua.edu.ukma.event_management_system.repository.UserRepository;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 
 import java.util.ArrayList;
@@ -15,8 +18,18 @@ import java.util.Optional;
 @Service
 public class BuildingServiceImpl implements BuildingService {
 
-    @Autowired
     private BuildingRepository buildingRepository;
+    private BuildingRatingRepository buildingRatingRepository;
+
+    @Autowired
+    void setBuildingRepository(BuildingRepository buildingRepository) {
+        this.buildingRepository = buildingRepository;
+    }
+
+    @Autowired
+    void setBuildingRatingRepository(BuildingRatingRepository buildingRatingRepository) {
+        this.buildingRatingRepository = buildingRatingRepository;
+    }
 
     @Override
     public BuildingEntity createBuilding(BuildingEntity building) {
@@ -51,5 +64,10 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public void deleteBuilding(Long id) {
         buildingRepository.deleteById(id);
+    }
+
+    @Override
+    public BuildingRatingEntity rateBuilding(BuildingEntity building, byte rating, UserEntity user, String comment) {
+        return buildingRatingRepository.save(new BuildingRatingEntity(building, rating, user, comment));
     }
 }
