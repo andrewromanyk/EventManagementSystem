@@ -13,17 +13,22 @@ import java.time.LocalDateTime;
 @Transactional
 public class DatabasePopulatorService {
 
-    public final BuildingRepository buildingRepository;
-    public final EventRepository eventRepository;
-    public final TicketRepository ticketRepository;
-    public final UserRepository userRepository;
+    private final BuildingRepository buildingRepository;
+    private final EventRepository eventRepository;
+    private final TicketRepository ticketRepository;
+    private final UserRepository userRepository;
+    private final EventRatingRepository eventRatingRepository;
+    private final BuildingRatingRepository buildingRatingRepository;
 
     public DatabasePopulatorService(BuildingRepository br, EventRepository er,
-                                    TicketRepository tr, UserRepository ur) {
+                                    TicketRepository tr, UserRepository ur,
+                                    EventRatingRepository err, BuildingRatingRepository brr) {
         this.buildingRepository = br;
         this.eventRepository = er;
         this.ticketRepository = tr;
         this.userRepository = ur;
+        this.eventRatingRepository = err;
+        this.buildingRatingRepository = brr;
     }
 
     public void populateDatabase() {
@@ -56,5 +61,11 @@ public class DatabasePopulatorService {
         TicketEntity ticket2 = new TicketEntity(user1, event2, 200);
         ticketRepository.save(ticket1);
         ticketRepository.save(ticket2);
+
+        EventRatingEntity rating1 = new EventRatingEntity(event1, (byte) 4, user1, "");
+        eventRatingRepository.save(rating1);
+
+        BuildingRatingEntity rating2 = new BuildingRatingEntity(building1, (byte) 5, user2, "");
+        buildingRatingRepository.save(rating2);
     }
 }
