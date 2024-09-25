@@ -32,8 +32,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public UserEntity getUserById(long userId) {
-        UserEntity user = userRepository.findById(userId).get();
-        return user;
+        return userRepository.findById(userId).orElse(null);
     }
 
     public void updateUser(UserEntity updatedUser) {

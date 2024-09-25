@@ -1,18 +1,23 @@
 package ua.edu.ukma.event_management_system.service.interfaces;
 
-import ua.edu.ukma.event_management_system.domain.Ticket;
-import ua.edu.ukma.event_management_system.domain.User;
+import ua.edu.ukma.event_management_system.entity.EventEntity;
+import ua.edu.ukma.event_management_system.entity.TicketEntity;
+import ua.edu.ukma.event_management_system.entity.UserEntity;
+
+import java.util.List;
 
 public interface TicketService {
-	void registerTicket();
+	TicketEntity createTicket(TicketEntity ticket);
 
-	Ticket purchaseTicket(int eventId, User user);
+	TicketEntity purchaseTicket(UserEntity user, EventEntity event, int price);
 
-	Ticket getTicketById(int ticketId);
+	List<TicketEntity> getAllTickets();
 
-	void updateTicket(Ticket updatedTicket);
+	TicketEntity getTicketById(long ticketId);
 
-	void returnTicket(int ticketId);
+	void updateTicket(TicketEntity updatedTicket);
+
+	void removeTicket(long ticketId);
 
 
 }
