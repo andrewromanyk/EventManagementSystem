@@ -2,12 +2,13 @@ package ua.edu.ukma.event_management_system.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.domain.Ticket;
 import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 
-@Component
+@Service
 public class TicketServiceImpl implements TicketService {
 
     private final EventService eventService;

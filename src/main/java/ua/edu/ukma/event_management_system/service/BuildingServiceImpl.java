@@ -1,22 +1,55 @@
 package ua.edu.ukma.event_management_system.service;
 
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.domain.Building;
+import ua.edu.ukma.event_management_system.entity.BuildingEntity;
+import ua.edu.ukma.event_management_system.entity.UserEntity;
+import ua.edu.ukma.event_management_system.repository.BuildingRepository;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
+@Service
 public class BuildingServiceImpl implements BuildingService {
+
+    @Autowired
+    private BuildingRepository buildingRepository;
+
     @Override
-    public void addBuilding() {
-        System.out.println("Created Building!");
+    public BuildingEntity createBuilding(BuildingEntity building) {
+        return buildingRepository.save(building);
     }
+
     @Override
-    public List<Building> getAllBuildings() {
-        List<Building> buildings = new ArrayList<Building>();
-        buildings.add(new Building(1, "Liny Kostenko, 8", 500, 74, 50, "A small building"));
-        buildings.add(new Building(2, "Hotkevycha, 27", 1450, 120, 100, "A medium building"));
-        buildings.add(new Building(3, "Polubotka, 7", 750, 94, 85, "A medium building"));
-        return buildings;
+    public List<BuildingEntity> getAllBuildings() {
+        return buildingRepository.findAll();
+    }
+
+    @Override
+    public BuildingEntity getBuildingById(Long id) {
+        BuildingEntity building = buildingRepository.findById(id).get();
+        return building;
+    }
+
+    @Override
+    public void updateBuilding(Long id, BuildingEntity updatedBuilding) {
+        Optional<BuildingEntity> existingBuilding = buildingRepository.findById(id);
+        if (existingBuilding.isPresent()) {
+            BuildingEntity building = existingBuilding.get();
+            building.setAddress(updatedBuilding.getAddress());
+            building.setHourlyRate(updatedBuilding.getHourlyRate());
+            building.setAreaM2(updatedBuilding.getAreaM2());
+            building.setCapacity(updatedBuilding.getCapacity());
+            building.setDescription(updatedBuilding.getDescription());
+            buildingRepository.save(building);
+        }
+    }
+
+    @Override
+    public void deleteBuilding(Long id) {
+        buildingRepository.deleteById(id);
     }
 }

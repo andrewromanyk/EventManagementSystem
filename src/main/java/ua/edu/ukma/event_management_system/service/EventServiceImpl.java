@@ -2,11 +2,12 @@ package ua.edu.ukma.event_management_system.service;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 
-@Component
+@Service
 public class EventServiceImpl implements EventService {
 
 
@@ -23,7 +24,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event getEventById(int eventId) {
+    public Event getEventById(long eventId) {
         return null;
     }
 
@@ -33,7 +34,7 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public void deleteEvent(int eventId) {
+    public void deleteEvent(long eventId) {
 
     }
 }

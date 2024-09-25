@@ -6,9 +6,9 @@ public interface EventService {
 
     void createEvent(Event event);
 
-    Event getEventById(int eventId);
+    Event getEventById(long eventId);
 
     void updateEvent(Event event);
 
-    void deleteEvent(int eventId);
+    void deleteEvent(long eventId);
 }
