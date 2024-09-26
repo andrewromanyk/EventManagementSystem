@@ -21,4 +21,8 @@ public interface BuildingService {
     void deleteBuilding(Long id);
 
     BuildingRatingEntity rateBuilding(BuildingEntity building, byte rating, UserEntity user, String comment);
+
+    List<BuildingRatingEntity> getAllByBuildingIdAndRating(long buildingId, byte rating);
+
+    List<BuildingEntity> getAllByCapacity(int capacity);
 }

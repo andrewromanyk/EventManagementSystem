@@ -70,4 +70,14 @@ public class BuildingServiceImpl implements BuildingService {
     public BuildingRatingEntity rateBuilding(BuildingEntity building, byte rating, UserEntity user, String comment) {
         return buildingRatingRepository.save(new BuildingRatingEntity(building, rating, user, comment));
     }
+
+    @Override
+    public List<BuildingRatingEntity> getAllByBuildingIdAndRating(long buildingId, byte rating) {
+        return buildingRatingRepository.findAllByBuildingIdAndRating(buildingId, rating);
+    }
+
+    @Override
+    public List<BuildingEntity> getAllByCapacity(int capacity) {
+        return buildingRepository.findAllByCapacity(capacity);
+    }
 }
