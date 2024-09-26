@@ -27,8 +27,7 @@ public class BuildingEntity {
     @Column(length = 500)
     private String description;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "building_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "building")
     private List<BuildingRatingEntity> rating;
 
     // Default constructor for JPA

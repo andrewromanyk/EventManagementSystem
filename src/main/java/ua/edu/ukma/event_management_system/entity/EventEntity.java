@@ -41,8 +41,7 @@ public class EventEntity {
     inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<UserEntity> users;
 
-    @OneToMany(fetch = FetchType.LAZY)
-    @JoinColumn(name = "event_id")
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
     private List<EventRatingEntity> rating;
 
     // Default constructor required by JPA
