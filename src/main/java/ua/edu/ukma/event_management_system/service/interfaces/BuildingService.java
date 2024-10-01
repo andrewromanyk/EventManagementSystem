@@ -1,28 +1,27 @@
 package ua.edu.ukma.event_management_system.service.interfaces;
 
 import ua.edu.ukma.event_management_system.domain.Building;
-import ua.edu.ukma.event_management_system.entity.BuildingEntity;
-import ua.edu.ukma.event_management_system.entity.BuildingRatingEntity;
-import ua.edu.ukma.event_management_system.entity.UserEntity;
-import ua.edu.ukma.event_management_system.repository.BuildingRatingRepository;
+import ua.edu.ukma.event_management_system.domain.BuildingRating;
+import ua.edu.ukma.event_management_system.dto.BuildingDto;
+import ua.edu.ukma.event_management_system.dto.UserDto;
 
 import java.util.List;
 
 public interface BuildingService {
 
-    BuildingEntity createBuilding(BuildingEntity building);
+    Building createBuilding(BuildingDto building);
 
-    List<BuildingEntity> getAllBuildings();
+    List<Building> getAllBuildings();
 
-    BuildingEntity getBuildingById(Long id);
+    Building getBuildingById(Long id);
 
-    void updateBuilding(Long id, BuildingEntity updatedBuilding);
+    void updateBuilding(Long id, BuildingDto updatedBuilding);
 
     void deleteBuilding(Long id);
 
-    BuildingRatingEntity rateBuilding(BuildingEntity building, byte rating, UserEntity user, String comment);
+    BuildingRating rateBuilding(BuildingDto building, byte rating, UserDto user, String comment);
 
-    List<BuildingRatingEntity> getAllByBuildingIdAndRating(long buildingId, byte rating);
+    List<BuildingRating> getAllByBuildingIdAndRating(long buildingId, byte rating);
 
-    List<BuildingEntity> getAllByCapacity(int capacity);
+    List<Building> getAllByCapacity(int capacity);
 }

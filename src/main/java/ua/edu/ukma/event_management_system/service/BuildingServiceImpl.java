@@ -1,23 +1,26 @@
 package ua.edu.ukma.event_management_system.service;
 
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.domain.Building;
+import ua.edu.ukma.event_management_system.domain.BuildingRating;
+import ua.edu.ukma.event_management_system.dto.BuildingDto;
+import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.BuildingRatingEntity;
 import ua.edu.ukma.event_management_system.entity.UserEntity;
 import ua.edu.ukma.event_management_system.repository.BuildingRatingRepository;
 import ua.edu.ukma.event_management_system.repository.BuildingRepository;
-import ua.edu.ukma.event_management_system.repository.UserRepository;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service
 public class BuildingServiceImpl implements BuildingService {
 
+    private ModelMapper modelMapper;
     private BuildingRepository buildingRepository;
     private BuildingRatingRepository buildingRatingRepository;
 
@@ -31,24 +34,34 @@ public class BuildingServiceImpl implements BuildingService {
         this.buildingRatingRepository = buildingRatingRepository;
     }
 
-    @Override
-    public BuildingEntity createBuilding(BuildingEntity building) {
-        return buildingRepository.save(building);
+    @Autowired
+    void setModelMapper(ModelMapper modelMapper) {
+        this.modelMapper = modelMapper;
     }
 
     @Override
-    public List<BuildingEntity> getAllBuildings() {
-        return buildingRepository.findAll();
+    public Building createBuilding(BuildingDto building) {
+        BuildingEntity toSave = dtoToEntity(building);
+        return toDomain(buildingRepository.save(toSave));
     }
 
     @Override
-    public BuildingEntity getBuildingById(Long id) {
-        BuildingEntity building = buildingRepository.findById(id).get();
-        return building;
+    public List<Building> getAllBuildings() {
+        return buildingRepository.findAll()
+                .stream()
+                .map(this::toDomain)
+                .toList();
     }
 
     @Override
-    public void updateBuilding(Long id, BuildingEntity updatedBuilding) {
+    public Building getBuildingById(Long id) {
+		return toDomain(buildingRepository
+                .findById(id)
+                .orElseThrow());
+    }
+
+    @Override
+    public void updateBuilding(Long id, BuildingDto updatedBuilding) {
         Optional<BuildingEntity> existingBuilding = buildingRepository.findById(id);
         if (existingBuilding.isPresent()) {
             BuildingEntity building = existingBuilding.get();
@@ -67,17 +80,54 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    public BuildingRatingEntity rateBuilding(BuildingEntity building, byte rating, UserEntity user, String comment) {
-        return buildingRatingRepository.save(new BuildingRatingEntity(building, rating, user, comment));
+    public BuildingRating rateBuilding(BuildingDto building, byte rating, UserDto user, String comment) {
+        return toDomain(buildingRatingRepository.save(
+                new BuildingRatingEntity(
+                        dtoToEntity(building),
+                        rating,
+                        dtoToEntity(user),
+                        comment
+                ))
+        );
     }
 
     @Override
-    public List<BuildingRatingEntity> getAllByBuildingIdAndRating(long buildingId, byte rating) {
-        return buildingRatingRepository.findAllByBuildingIdAndRating(buildingId, rating);
+    public List<BuildingRating> getAllByBuildingIdAndRating(long buildingId, byte rating) {
+        return buildingRatingRepository.findAllByBuildingIdAndRating(buildingId, rating)
+                .stream()
+                .map(this::toDomain)
+                .toList();
     }
 
     @Override
-    public List<BuildingEntity> getAllByCapacity(int capacity) {
-        return buildingRepository.findAllByCapacity(capacity);
+    public List<Building> getAllByCapacity(int capacity) {
+        return buildingRepository.findAllByCapacity(capacity)
+                .stream()
+                .map(this::toDomain)
+                .toList();
+    }
+
+    private BuildingDto toDto(Building building) {
+        return modelMapper.map(building, BuildingDto.class);
+    }
+
+    private Building toDomain(BuildingEntity buildingEntity) {
+        return modelMapper.map(buildingEntity, Building.class);
+    }
+
+    private BuildingRating toDomain(BuildingRatingEntity buildingRatingEntity) {
+        return modelMapper.map(buildingRatingEntity, BuildingRating.class);
+    }
+
+    private BuildingEntity toEntity(Building building) {
+        return modelMapper.map(building, BuildingEntity.class);
+    }
+
+    private BuildingEntity dtoToEntity(BuildingDto buildingDto) {
+        return modelMapper.map(buildingDto, BuildingEntity.class);
+    }
+
+    private UserEntity dtoToEntity(UserDto userDto) {
+        return modelMapper.map(userDto, UserEntity.class);
     }
 }

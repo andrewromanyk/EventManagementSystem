@@ -1,15 +1,25 @@
 package ua.edu.ukma.event_management_system.domain;
 
-import ua.edu.ukma.event_management_system.service.interfaces.Ratable;
+import lombok.Getter;
 
-public class Building implements Ratable {
+import java.util.ArrayList;
+import java.util.List;
+
+public class Building {
+    @Getter
     private int id;
+    @Getter
     private String address;
+    @Getter
     private int hourlyRate;
+    @Getter
     private int areaM2;
+    @Getter
     private int capacity; // max number of people that the building can host
+    @Getter
     private String description;
-    private int rating;
+    @Getter
+    private List<BuildingRating> rating;
 
     public Building(int id, String address, int hourlyRate, int areaM2, int capacity, String description) {
         this.id = id;
@@ -18,44 +28,16 @@ public class Building implements Ratable {
         this.areaM2 = areaM2;
         this.capacity = capacity;
         this.description = description;
+        this.rating = new ArrayList<>();
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public int getHourlyRate() {
-        return hourlyRate;
-    }
-
-    public int getAreaM2() {
-        return areaM2;
-    }
-
-    public int getCapacity() {
-        return capacity;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    @Override
-    public void rate(int rating) {
-        if (rating < 1)
-            this.rating = 1;
-        else if(rating > 10)
-            this.rating = 10;
-        else
-            this.rating = rating;
-    }
-
-    @Override
-    public int getRating() {
-        return rating;
+    public Building(int id, String address, int hourlyRate, int areaM2, int capacity, String description, List<BuildingRating> rating) {
+        this.id = id;
+        this.address = address;
+        this.hourlyRate = hourlyRate;
+        this.areaM2 = areaM2;
+        this.capacity = capacity;
+        this.description = description;
+        this.rating = rating;
     }
 }
