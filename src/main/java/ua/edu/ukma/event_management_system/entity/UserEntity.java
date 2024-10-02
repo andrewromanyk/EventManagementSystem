@@ -11,7 +11,6 @@ import lombok.*;
 @Entity
 @Table(name = "users") // user is reserved keyword
 public class UserEntity {
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
