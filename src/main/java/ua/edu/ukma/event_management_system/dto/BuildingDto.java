@@ -1,11 +1,13 @@
 package ua.edu.ukma.event_management_system.dto;
 
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import java.util.ArrayList;
 import java.util.List;
 
 @Data
+@NoArgsConstructor
 public class BuildingDto {
 	private int id;
 	private String address;

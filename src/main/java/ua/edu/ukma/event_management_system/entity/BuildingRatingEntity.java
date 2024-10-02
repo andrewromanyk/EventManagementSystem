@@ -1,7 +1,9 @@
 package ua.edu.ukma.event_management_system.entity;
 
 import jakarta.persistence.*;
+import lombok.Data;
 
+@Data
 @Entity
 @Table(name = "building_rating")
 public class BuildingRatingEntity {

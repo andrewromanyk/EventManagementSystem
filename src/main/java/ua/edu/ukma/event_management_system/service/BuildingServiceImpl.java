@@ -82,12 +82,13 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
     public BuildingRating rateBuilding(BuildingDto building, byte rating, UserDto user, String comment) {
         return toDomain(buildingRatingRepository.save(
-                new BuildingRatingEntity(
-                        dtoToEntity(building),
-                        rating,
-                        dtoToEntity(user),
-                        comment
-                ))
+                        new BuildingRatingEntity(
+                                dtoToEntity(building),
+                                rating,
+                                dtoToEntity(user),
+                                comment
+                        )
+                )
         );
     }
 

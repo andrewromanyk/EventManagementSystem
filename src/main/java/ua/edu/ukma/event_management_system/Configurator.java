@@ -15,8 +15,4 @@ public class Configurator {
     public ModelMapper modelMapper() {
         return new ModelMapper();
     }
-    @Bean
-    public BuildingService buildingService() {
-        return new BuildingServiceImpl();
-    }
 }
