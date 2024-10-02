@@ -46,11 +46,11 @@ public class DatabasePopulatorService {
         buildingRepository.save(building1);
         buildingRepository.save(building2);
 
-        EventEntity event1 = new EventEntity("Queen concert", LocalDateTime.now().plusDays(10),
+        EventEntity event1 = new EventEntity("queen-concert", LocalDateTime.now().plusDays(10),
                 LocalDateTime.now().plusDays(10).plusHours(2),
                 building2, "A great queen concert", 100, 18);
 
-        EventEntity event2 = new EventEntity("IT conference", LocalDateTime.now().plusDays(3),
+        EventEntity event2 = new EventEntity("it-conference", LocalDateTime.now().plusDays(3),
                 LocalDateTime.now().plusDays(3).plusHours(3),
                 building1, "IT conference discussing Django vs SpringBoot",
                 50, 25);

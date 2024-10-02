@@ -70,14 +70,27 @@ public class EventServiceImpl implements EventService {
         return toDomain(eventRepository.save(toSave));
     }
 
+    @Override
     public void updateEvent(Long id, EventDto updatedEvent) {
         Optional<EventEntity> existingEventOpt = eventRepository.findById(id);
+
         if (existingEventOpt.isPresent()) {
             EventEntity existingEvent = existingEventOpt.get();
             existingEvent.setEventTitle(updatedEvent.getEventTitle());
             existingEvent.setDateTimeStart(updatedEvent.getDateTimeStart());
             existingEvent.setDateTimeEnd(updatedEvent.getDateTimeEnd());
-            existingEvent.setBuilding(toEntity(updatedEvent.getBuilding()));
+
+            BuildingEntity buildingEntity = toEntity(updatedEvent.getBuilding());
+            if(buildingEntity != null){
+                Optional<BuildingEntity> existingBuilding = buildingRepository.findById(buildingEntity.getId());
+                if (!existingBuilding.isPresent()){
+                    buildingEntity = buildingRepository.save(buildingEntity);
+                }else{
+                    buildingEntity = existingBuilding.get();
+                }
+            }
+
+            existingEvent.setBuilding(buildingEntity);
             existingEvent.setDescription(updatedEvent.getDescription());
             existingEvent.setNumberOfTickets(updatedEvent.getNumberOfTickets());
             existingEvent.setMinAgeRestriction(updatedEvent.getMinAgeRestriction());
