@@ -64,9 +64,7 @@ public class BuildingController {
 	}
 
 	@PostMapping("/{id}/rate")
-	public void rateBuilding(
-			@PathVariable long id
-			) {
+	public void rateBuilding(@PathVariable long id) {
 	}
 
 	@GetMapping("/{buildingId}/{rating}")

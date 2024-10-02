@@ -1,7 +1,6 @@
 package ua.edu.ukma.event_management_system.domain;
 
 import lombok.*;
-import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
 import java.util.List;
