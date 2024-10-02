@@ -3,8 +3,7 @@ package ua.edu.ukma.event_management_system.entity;
 import jakarta.persistence.*;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "ticket")

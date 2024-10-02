@@ -1,5 +1,6 @@
 package ua.edu.ukma.event_management_system.controller;
 
+import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -45,12 +46,12 @@ public class UserController {
     }
 
     @PostMapping("/")
-    public void createNewUser(@RequestBody UserDto userDto) {
+    public void createNewUser(@RequestBody @Valid UserDto userDto) {
         userService.createUser(userDto);
     }
 
     @PutMapping("/{id}")
-    public void updateUser(@PathVariable long id, @RequestBody UserDto userDto) {
+    public void updateUser(@PathVariable long id, @RequestBody @Valid UserDto userDto) {
         userService.updateUser(id, userDto);
     }
 
