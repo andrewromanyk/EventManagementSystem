@@ -1,6 +1,7 @@
 package ua.edu.ukma.event_management_system.domain;
 
 import lombok.Data;
+import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.service.interfaces.Ratable;
 
 import java.time.LocalDateTime;
@@ -12,7 +13,7 @@ public class Event {
     private String eventTitle;
     private LocalDateTime dateTimeStart;
     private LocalDateTime dateTimeEnd;
-    private Building building;
+    private BuildingDto building;
     private String description;
     private int numberOfTickets;
     private int minAgeRestriction;
