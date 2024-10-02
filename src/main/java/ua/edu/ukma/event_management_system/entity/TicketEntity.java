@@ -9,7 +9,6 @@ import lombok.*;
 @Table(name = "ticket")
 public class TicketEntity {
     @Id
-    @Setter(AccessLevel.NONE)
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 

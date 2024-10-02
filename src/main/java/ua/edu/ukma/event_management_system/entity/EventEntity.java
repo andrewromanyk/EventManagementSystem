@@ -13,7 +13,6 @@ import java.util.List;
 @Entity
 @Table(name = "event")
 public class EventEntity {
-    @Setter(AccessLevel.NONE)
     @Id
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
