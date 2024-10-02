@@ -2,7 +2,9 @@ package ua.edu.ukma.event_management_system.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestTemplate;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.domain.Event;
@@ -42,6 +44,11 @@ public class EventController {
 
     @PostMapping("/")
     public void createNewEvent(@RequestBody EventDto eventDto){
+        if (eventDto.getDescription().isEmpty()){
+            ResponseEntity<String> response = new RestTemplate()
+                    .getForEntity("https://baconipsum.com/api/?type=all-meat&sentences=2&format=text", String.class);
+            eventDto.setDescription(response.getBody());
+        }
         eventService.createEvent(eventDto);
     }
 

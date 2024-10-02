@@ -3,6 +3,8 @@ package ua.edu.ukma.event_management_system;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.client.RestTemplate;
 import ua.edu.ukma.event_management_system.entity.TicketEntity;
 import ua.edu.ukma.event_management_system.entity.UserEntity;
 import ua.edu.ukma.event_management_system.service.DatabasePopulatorService;
