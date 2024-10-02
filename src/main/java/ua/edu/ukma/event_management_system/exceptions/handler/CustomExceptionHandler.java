@@ -23,4 +23,8 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
         body.put("message", ex.getMessage());
         return new ResponseEntity<>(body, HttpStatus.CONFLICT);
     }
+    @ExceptionHandler(IllegalNameException.class)
+    public ResponseEntity<String> handleIllegalNameException(IllegalNameException ex) {
+        return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
+    }
 }

@@ -12,6 +12,7 @@ import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
 import ua.edu.ukma.event_management_system.entity.EventRatingEntity;
 import ua.edu.ukma.event_management_system.entity.UserEntity;
+import ua.edu.ukma.event_management_system.exceptions.handler.NameValidator;
 import ua.edu.ukma.event_management_system.repository.BuildingRepository;
 import ua.edu.ukma.event_management_system.repository.EventRatingRepository;
 import ua.edu.ukma.event_management_system.repository.EventRepository;
@@ -76,6 +77,7 @@ public class EventServiceImpl implements EventService {
 
         if (existingEventOpt.isPresent()) {
             EventEntity existingEvent = existingEventOpt.get();
+            NameValidator.validateName(updatedEvent.getEventTitle());
             existingEvent.setEventTitle(updatedEvent.getEventTitle());
             existingEvent.setDateTimeStart(updatedEvent.getDateTimeStart());
             existingEvent.setDateTimeEnd(updatedEvent.getDateTimeEnd());
