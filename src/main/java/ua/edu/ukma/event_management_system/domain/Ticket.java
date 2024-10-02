@@ -1,11 +1,13 @@
 package ua.edu.ukma.event_management_system.domain;
 
 import lombok.Data;
+import ua.edu.ukma.event_management_system.dto.EventDto;
+import ua.edu.ukma.event_management_system.dto.UserDto;
 
 @Data
 public class Ticket {
-    private int id;
-    private User user;
-    private Event event;
+    private long id;
+    private UserDto user;
+    private EventDto event;
     private int price;
 }

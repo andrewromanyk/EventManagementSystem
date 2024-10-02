@@ -1,6 +1,7 @@
 package ua.edu.ukma.event_management_system.dto;
 
 import lombok.*;
+import ua.edu.ukma.event_management_system.entity.UserEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -17,10 +18,11 @@ public class EventDto {
     private int numberOfTickets;
     private int minAgeRestriction;
 //    private List<EventRatingDto> rating;
+    private List<UserDto> users;
 
     public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd,
-                    BuildingDto building, String description,
-                    int numberOfTickets, int minAgeRestriction){
+                    BuildingDto building, String description, int numberOfTickets, int minAgeRestriction,
+                    List<UserDto> users) {
         this.id = id;
         this.eventTitle = eventTitle;
         this.dateTimeStart = dateTimeStart;
@@ -29,6 +31,7 @@ public class EventDto {
         this.description = description;
         this.numberOfTickets = numberOfTickets;
         this.minAgeRestriction = minAgeRestriction;
+        this.users = users;
     }
 
 //    public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
