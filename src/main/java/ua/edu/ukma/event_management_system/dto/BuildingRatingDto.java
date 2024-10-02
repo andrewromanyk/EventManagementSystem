@@ -2,6 +2,7 @@ package ua.edu.ukma.event_management_system.dto;
 
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import org.hibernate.validator.constraints.Range;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.User;
 
@@ -9,6 +10,7 @@ import ua.edu.ukma.event_management_system.domain.User;
 @NoArgsConstructor
 public class BuildingRatingDto {
 	private long id;
+	@Range(min = 0, max = 10)
 	private byte rating;
 	private User author;
 	private String comment;

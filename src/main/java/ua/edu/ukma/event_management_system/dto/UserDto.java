@@ -1,5 +1,6 @@
 package ua.edu.ukma.event_management_system.dto;
 
+import jakarta.validation.constraints.Email;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.edu.ukma.event_management_system.domain.UserRole;
@@ -12,6 +13,7 @@ public class UserDto {
     private String username;
     private String firstName;
     private String lastName;
+    @Email
     private String email;
     private String phoneNumber;
     private int age;

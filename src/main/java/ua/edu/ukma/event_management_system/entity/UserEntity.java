@@ -6,8 +6,7 @@ import ua.edu.ukma.event_management_system.domain.UserRole;
 import java.util.List;
 import lombok.*;
 
-@Getter
-@Setter
+@Data
 @NoArgsConstructor
 @Entity
 @Table(name = "users") // user is reserved keyword
