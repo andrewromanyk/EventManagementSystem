@@ -14,7 +14,7 @@ public class Event {
     private String eventTitle;
     private LocalDateTime dateTimeStart;
     private LocalDateTime dateTimeEnd;
-    private BuildingDto building;
+    private Building building;
     private String description;
     private int numberOfTickets;
     private int minAgeRestriction;

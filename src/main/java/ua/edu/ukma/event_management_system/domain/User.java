@@ -4,9 +4,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 
 @Data
-@NoArgsConstructor
 public class User {
-    private int id;
+    private long id;
     private UserRole userRole;
     private String username;
     private String firstName;
@@ -14,4 +13,15 @@ public class User {
     private String email;
     private String phoneNumber;
     private int age;
+
+    public User(int id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, int age) {
+        this.id = id;
+        this.userRole = userRole;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.age = age;
+    }
 }

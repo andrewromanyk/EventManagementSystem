@@ -1,5 +1,7 @@
 package ua.edu.ukma.event_management_system.exceptions.handler;
 
+import ua.edu.ukma.event_management_system.exceptions.IllegalNameException;
+
 public class NameValidator {
 
     private static final String FORBIDDEN_CHARACTERS = "[ыэёъ]";
