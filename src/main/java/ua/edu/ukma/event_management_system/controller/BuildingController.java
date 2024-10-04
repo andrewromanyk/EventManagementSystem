@@ -2,10 +2,12 @@ package ua.edu.ukma.event_management_system.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClient;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.BuildingRating;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
@@ -61,6 +63,14 @@ public class BuildingController {
 				errors.put(error.getField(), error.getDefaultMessage());
 			});
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+		}
+		if(buildingDto.getDescription().isEmpty()){
+			RestClient client = RestClient.create();
+			String defaultDescription = client.get()
+					.uri("https://baconipsum.com/api/?type=meat-and-filler&sentences=2&format=text")
+					.retrieve()
+					.body(String.class);
+			buildingDto.setDescription(defaultDescription);
 		}
 		buildingService.createBuilding(buildingDto);
 		return new ResponseEntity<>(HttpStatus.CREATED);

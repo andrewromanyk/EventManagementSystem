@@ -22,7 +22,7 @@ public class BuildingDto {
 	private int areaM2;
 	@Min(value = 10, message = "Capacity should be at least 10")
 	private int capacity;
-	@Pattern(regexp = "^[A-Za-zА-Яа-я0-9 ,.:;-]+$", message = "Description contains invalid characters")
+	@Pattern(regexp = "^[A-Za-zА-Яа-я0-9 ,.:;-]+|^$", message = "Description contains invalid characters")
 	@Size(max = 500, message = "Description must be less than 500 characters long")
 	private String description;
 	@Valid
