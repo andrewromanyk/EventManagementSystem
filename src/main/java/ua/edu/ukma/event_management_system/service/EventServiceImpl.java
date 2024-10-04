@@ -3,16 +3,14 @@ package ua.edu.ukma.event_management_system.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
-import ua.edu.ukma.event_management_system.entity.EventRatingEntity;
 import ua.edu.ukma.event_management_system.entity.UserEntity;
-import ua.edu.ukma.event_management_system.exceptions.handler.NameValidator;
+import ua.edu.ukma.event_management_system.exceptions.handler.ContentValidator;
 import ua.edu.ukma.event_management_system.repository.BuildingRepository;
 import ua.edu.ukma.event_management_system.repository.EventRatingRepository;
 import ua.edu.ukma.event_management_system.repository.EventRepository;
@@ -77,7 +75,7 @@ public class EventServiceImpl implements EventService {
 
         if (existingEventOpt.isPresent()) {
             EventEntity existingEvent = existingEventOpt.get();
-            NameValidator.validateName(updatedEvent.getEventTitle());
+            ContentValidator.validateContent(updatedEvent.getEventTitle());
             existingEvent.setEventTitle(updatedEvent.getEventTitle());
             existingEvent.setDateTimeStart(updatedEvent.getDateTimeStart());
             existingEvent.setDateTimeEnd(updatedEvent.getDateTimeEnd());
