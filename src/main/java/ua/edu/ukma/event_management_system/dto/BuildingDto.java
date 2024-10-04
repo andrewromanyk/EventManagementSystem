@@ -30,12 +30,10 @@ public class BuildingDto {
 
 	public BuildingDto(int id, String address, int hourlyRate, int areaM2, int capacity, String description) {
 		this.id = id;
-		ContentValidator.validateContent(address);
 		this.address = address;
 		this.hourlyRate = hourlyRate;
 		this.areaM2 = areaM2;
 		this.capacity = capacity;
-		ContentValidator.validateContent(description);
 		this.description = description;
 	}
 
