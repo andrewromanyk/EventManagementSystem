@@ -16,7 +16,8 @@ public class Building {
     private String description;
     private List<BuildingRating> rating;
 
-    public Building(int id, String address, int hourlyRate, int areaM2, int capacity, String description) {
+    public Building(int id, String address, int hourlyRate, int areaM2, int capacity,
+                    String description) {
         this.id = id;
         this.address = address;
         this.hourlyRate = hourlyRate;
@@ -27,12 +28,7 @@ public class Building {
     }
 
     public Building(int id, String address, int hourlyRate, int areaM2, int capacity, String description, List<BuildingRating> rating) {
-        this.id = id;
-        this.address = address;
-        this.hourlyRate = hourlyRate;
-        this.areaM2 = areaM2;
-        this.capacity = capacity;
-        this.description = description;
+        this(id, address, hourlyRate, areaM2, capacity, description);
         this.rating = rating;
     }
 }
