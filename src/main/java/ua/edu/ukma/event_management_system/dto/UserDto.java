@@ -8,13 +8,15 @@ import ua.edu.ukma.event_management_system.domain.UserRole;
 @NoArgsConstructor
 @Data
 public class UserDto {
+    @NotBlank(message = "Id is required")
     private int id;
+    @NotBlank(message = "UserRole is required")
     private UserRole userRole;
-    @NotEmpty(message = "Username is required")
+    @NotBlank(message = "Username is required")
     private String username;
-    @NotEmpty(message = "First name is required")
+    @NotBlank(message = "First name is required")
     private String firstName;
-    @NotEmpty(message = "Last name is required")
+    @NotBlank(message = "Last name is required")
     private String lastName;
     @Email(message = "Email should be valid")
     private String email;

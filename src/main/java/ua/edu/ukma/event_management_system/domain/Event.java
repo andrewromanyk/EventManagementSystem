@@ -18,6 +18,6 @@ public class Event {
     private String description;
     private int numberOfTickets;
     private int minAgeRestriction;
-    //private List<EventRating> rating;
+    private List<EventRating> rating;
     private List<UserDto> users;
 }

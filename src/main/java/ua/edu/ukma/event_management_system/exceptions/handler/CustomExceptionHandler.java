@@ -9,14 +9,11 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ua.edu.ukma.event_management_system.exceptions.EventFullException;
 import ua.edu.ukma.event_management_system.exceptions.IllegalNameException;
 
-import java.util.HashMap;
-import java.util.Map;
-
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EventFullException.class)
-    public ResponseEntity<Object> handleEventFullException(EventFullException ex, WebRequest request) {
+    public ResponseEntity<Object> handleEventFullException(EventFullException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
     @ExceptionHandler(IllegalNameException.class)

@@ -2,14 +2,20 @@ package ua.edu.ukma.event_management_system.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpMethod;
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.client.RestClient;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.BuildingRating;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.BuildingRatingDto;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
+import jakarta.validation.Valid;
 
-import java.util.List;
+import java.util.*;
 
 @RestController
 @RequestMapping("building")
@@ -49,18 +55,45 @@ public class BuildingController {
 	}
 
 	@PostMapping("/")
-	public void createNewBuilding(@RequestBody BuildingDto buildingDto) {
+	public ResponseEntity<?> createNewBuilding(@RequestBody @Valid BuildingDto buildingDto,
+											   BindingResult bindingResult) {
+		if(bindingResult.hasErrors()){
+			Map<String, String> errors = new HashMap<>();
+			bindingResult.getFieldErrors().forEach(error -> {
+				errors.put(error.getField(), error.getDefaultMessage());
+			});
+			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+		}
+		if(buildingDto.getDescription().isEmpty()){
+			RestClient client = RestClient.create();
+			String defaultDescription = client.get()
+					.uri("https://baconipsum.com/api/?type=meat-and-filler&sentences=2&format=text")
+					.retrieve()
+					.body(String.class);
+			buildingDto.setDescription(defaultDescription);
+		}
 		buildingService.createBuilding(buildingDto);
+		return new ResponseEntity<>(HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")
-	public void updateBuilding(@PathVariable long id, @RequestBody BuildingDto buildingDto) {
+	public ResponseEntity<?> updateBuilding(@PathVariable long id, @RequestBody @Valid BuildingDto buildingDto,
+							   BindingResult bindingResult) {
+		if(bindingResult.hasErrors()){
+			Map<String, String> errors = new HashMap<>();
+			bindingResult.getFieldErrors().forEach(error -> {
+				errors.put(error.getField(), error.getDefaultMessage());
+			});
+			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
+		}
 		buildingService.updateBuilding(id, buildingDto);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@DeleteMapping("/{id}")
-	public void deleteBuilding(@PathVariable long id) {
+	public ResponseEntity<?> deleteBuilding(@PathVariable long id) {
 		buildingService.deleteBuilding(id);
+		return new ResponseEntity<>(HttpStatus.OK);
 	}
 
 	@PostMapping("/{id}/rate")
