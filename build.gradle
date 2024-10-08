@@ -23,6 +23,8 @@ dependencies {
 	implementation 'org.springframework.boot:spring-boot-starter-web'
 	implementation 'org.modelmapper:modelmapper:3.2.1'
 	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
+	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0'
 
 	runtimeOnly 'com.h2database:h2'   // H2 database driver
 
@@ -36,6 +38,19 @@ dependencies {
 
 	testImplementation 'org.springframework.boot:spring-boot-starter-test'
 	testRuntimeOnly 'org.junit.platform:junit-platform-launcher'
+}
+
+tasks.register('generateAPIFile') {
+	doLast {
+		def projectRoot = project.projectDir
+		def newFile = new File(projectRoot, "open-api.json")
+		if (!newFile.exists()) {
+			newFile.createNewFile()
+		}
+		exec {
+			commandLine 'curl', '-o', newFile.getAbsolutePath(), 'http://localhost:8080/v3/api-docs'
+		}
+	}
 }
 
 tasks.named('test') {
