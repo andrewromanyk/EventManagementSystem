@@ -80,7 +80,7 @@ public class EventServiceImpl implements EventService {
             existingEvent.setDateTimeStart(updatedEvent.getDateTimeStart());
             existingEvent.setDateTimeEnd(updatedEvent.getDateTimeEnd());
 
-            BuildingEntity buildingEntity = toEntity(updatedEvent.getBuilding());
+            BuildingEntity buildingEntity = buildingRepository.findById(updatedEvent.getBuilding()).get();
             if(buildingEntity != null){
                 Optional<BuildingEntity> existingBuilding = buildingRepository.findById(buildingEntity.getId());
                 if (!existingBuilding.isPresent()){

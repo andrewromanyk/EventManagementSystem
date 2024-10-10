@@ -12,7 +12,7 @@ import java.util.List;
 @Data
 @NoArgsConstructor
 public class BuildingDto {
-	@Min(value = 1, message = "Id is required and must be at least 1")
+	//@Min(value = 1, message = "Id is required and must be at least 1")
 	private int id;
 	@NotBlank(message = "Address is required")
 	private String address;
@@ -25,7 +25,7 @@ public class BuildingDto {
 	@Pattern(regexp = "^[A-Za-zА-Яа-я0-9 ,.:;-]+|^$", message = "Description contains invalid characters")
 	@Size(max = 500, message = "Description must be less than 500 characters long")
 	private String description;
-	@Valid
+	//@Valid
 	private List<BuildingRatingDto> rating = new ArrayList<>();
 
 	public BuildingDto(int id, String address, int hourlyRate, int areaM2, int capacity, String description) {

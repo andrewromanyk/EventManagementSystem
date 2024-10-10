@@ -64,7 +64,7 @@ public class BuildingController {
 			});
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
-		if(buildingDto.getDescription().isEmpty()){
+		if(buildingDto.getDescription() == null || buildingDto.getDescription().isEmpty()){
 			RestClient client = RestClient.create();
 			String defaultDescription = client.get()
 					.uri("https://baconipsum.com/api/?type=meat-and-filler&sentences=2&format=text")
@@ -72,8 +72,8 @@ public class BuildingController {
 					.body(String.class);
 			buildingDto.setDescription(defaultDescription);
 		}
-		buildingService.createBuilding(buildingDto);
-		return new ResponseEntity<>(HttpStatus.CREATED);
+		Building returned = buildingService.createBuilding(buildingDto);
+		return new ResponseEntity<>(returned, HttpStatus.CREATED);
 	}
 
 	@PutMapping("/{id}")

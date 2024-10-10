@@ -13,7 +13,7 @@ public class EventDto {
     private String eventTitle;
     private LocalDateTime dateTimeStart;
     private LocalDateTime dateTimeEnd;
-    private BuildingDto building;
+    private long building;
     private String description;
     private int numberOfTickets;
     private int minAgeRestriction;
@@ -21,7 +21,7 @@ public class EventDto {
     private List<UserDto> users;
 
     public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
-                    LocalDateTime dateTimeEnd, BuildingDto building, String description,
+                    LocalDateTime dateTimeEnd, long building, String description,
                     int numberOfTickets, int minAgeRestriction, List<UserDto> users) {
         this.id = id;
         this.eventTitle = eventTitle;
@@ -36,7 +36,7 @@ public class EventDto {
     }
 
     public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
-                    LocalDateTime dateTimeEnd, BuildingDto building, String description,
+                    LocalDateTime dateTimeEnd, long building, String description,
                     int numberOfTickets, int minAgeRestriction, List<UserDto> users,
                     List<EventRatingDto> rating){
         this(id, eventTitle, dateTimeStart, dateTimeEnd, building, description,
