@@ -2,6 +2,7 @@ package ua.edu.ukma.event_management_system.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -17,6 +18,9 @@ public class EventController {
 
     private ModelMapper modelMapper;
     private EventService eventService;
+
+    @Value("${outer.api.call.url}")
+    private String OUTER_API_CALL;
 
     @Autowired
     public void setModelWrapper(ModelMapper modelMapper){
@@ -46,7 +50,7 @@ public class EventController {
     public void createNewEvent(@RequestBody EventDto eventDto){
         if (eventDto.getDescription().isEmpty()){
             ResponseEntity<String> response = new RestTemplate()
-                    .getForEntity("https://baconipsum.com/api/?type=all-meat&sentences=2&format=text", String.class);
+                    .getForEntity(OUTER_API_CALL, String.class);
             eventDto.setDescription(response.getBody());
         }
         eventService.createEvent(eventDto);
