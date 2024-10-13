@@ -3,6 +3,7 @@ package ua.edu.ukma.event_management_system.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
@@ -14,6 +15,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("event")
+@ConditionalOnExpression("${api.event.enable}")
 public class EventController {
 
     private ModelMapper modelMapper;

@@ -2,6 +2,7 @@ package ua.edu.ukma.event_management_system.controller;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,6 +20,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("building")
+@ConditionalOnExpression("${api.building.enable}")
 public class BuildingController {
 
 	private ModelMapper modelMapper;

@@ -706,68 +706,6 @@
           }
         }
       },
-      "BuildingDto": {
-        "required": [
-          "address"
-        ],
-        "type": "object",
-        "properties": {
-          "id": {
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "address": {
-            "type": "string"
-          },
-          "hourlyRate": {
-            "minimum": 1,
-            "type": "integer",
-            "format": "int32"
-          },
-          "areaM2": {
-            "minimum": 10,
-            "type": "integer",
-            "format": "int32"
-          },
-          "capacity": {
-            "minimum": 10,
-            "type": "integer",
-            "format": "int32"
-          },
-          "description": {
-            "maxLength": 500,
-            "minLength": 0,
-            "pattern": "^[A-Za-zА-Яа-я0-9 ,.:;-]+|^$",
-            "type": "string"
-          },
-          "rating": {
-            "type": "array",
-            "items": {
-              "$ref": "#/components/schemas/BuildingRatingDto"
-            }
-          }
-        }
-      },
-      "BuildingRatingDto": {
-        "type": "object",
-        "properties": {
-          "id": {
-            "type": "integer",
-            "format": "int64"
-          },
-          "rating": {
-            "type": "string",
-            "format": "byte"
-          },
-          "author": {
-            "$ref": "#/components/schemas/User"
-          },
-          "comment": {
-            "type": "string"
-          }
-        }
-      },
       "EventDto": {
         "type": "object",
         "properties": {
@@ -787,7 +725,8 @@
             "format": "date-time"
           },
           "building": {
-            "$ref": "#/components/schemas/BuildingDto"
+            "type": "integer",
+            "format": "int64"
           },
           "description": {
             "type": "string"
@@ -852,6 +791,67 @@
           "price": {
             "type": "integer",
             "format": "int32"
+          }
+        }
+      },
+      "BuildingDto": {
+        "required": [
+          "address"
+        ],
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int32"
+          },
+          "address": {
+            "type": "string"
+          },
+          "hourlyRate": {
+            "minimum": 1,
+            "type": "integer",
+            "format": "int32"
+          },
+          "areaM2": {
+            "minimum": 10,
+            "type": "integer",
+            "format": "int32"
+          },
+          "capacity": {
+            "minimum": 10,
+            "type": "integer",
+            "format": "int32"
+          },
+          "description": {
+            "maxLength": 500,
+            "minLength": 0,
+            "pattern": "^[A-Za-zА-Яа-я0-9 ,.:;-]+|^$",
+            "type": "string"
+          },
+          "rating": {
+            "type": "array",
+            "items": {
+              "$ref": "#/components/schemas/BuildingRatingDto"
+            }
+          }
+        }
+      },
+      "BuildingRatingDto": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "integer",
+            "format": "int64"
+          },
+          "rating": {
+            "type": "string",
+            "format": "byte"
+          },
+          "author": {
+            "$ref": "#/components/schemas/User"
+          },
+          "comment": {
+            "type": "string"
           }
         }
       },

@@ -16,6 +16,7 @@ java {
 
 repositories {
 	mavenCentral()
+	mavenLocal()
 }
 
 dependencies {
@@ -26,6 +27,7 @@ dependencies {
 	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0'
+	implementation 'ua.edu.ukma:modelmapper-spring-boot-starter:0.0.1-SNAPSHOT'
 
 	runtimeOnly 'com.h2database:h2'   // H2 database driver
 

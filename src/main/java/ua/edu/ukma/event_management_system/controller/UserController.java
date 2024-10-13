@@ -3,6 +3,7 @@ package ua.edu.ukma.event_management_system.controller;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.ukma.event_management_system.domain.Building;
@@ -21,6 +22,7 @@ import java.util.*;
 
 @RestController
 @RequestMapping("user")
+@ConditionalOnExpression("${api.user.enable}")
 public class UserController {
 
     private ModelMapper modelMapper;
