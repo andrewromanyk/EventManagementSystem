@@ -5,13 +5,16 @@ import ch.qos.logback.classic.LoggerContext;
 import ch.qos.logback.classic.spi.ILoggingEvent;
 import ch.qos.logback.core.AppenderBase;
 import ch.qos.logback.core.Layout;
+import lombok.NoArgsConstructor;
 import org.slf4j.LoggerFactory;
 import lombok.AllArgsConstructor;
 import org.slf4j.*;
 import ua.edu.ukma.event_management_system.controller.BuildingController;
 
+@NoArgsConstructor
 @AllArgsConstructor
 public class CustomAppender extends AppenderBase<ILoggingEvent> {
+
 
     private Layout<ILoggingEvent> layout;
 
