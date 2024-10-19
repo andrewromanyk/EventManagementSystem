@@ -14,21 +14,26 @@ import ua.edu.ukma.event_management_system.controller.BuildingController;
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomAppender extends AppenderBase<ILoggingEvent> {
-
-
     private Layout<ILoggingEvent> layout;
+
+    public void setLayout(Layout<ILoggingEvent> layout) {
+        this.layout = layout;
+    }
 
     @Override
     protected void append(ILoggingEvent iLoggingEvent) {
-        System.out.println(layout.doLayout(iLoggingEvent));
+        if (layout != null) {
+            System.out.println(layout.doLayout(iLoggingEvent));
+        } else {
+            System.out.println(iLoggingEvent.getFormattedMessage());
+        }
     }
 
     public static void main(String[] args) {
         LoggerContext loggerContext = (LoggerContext) LoggerFactory.getILoggerFactory();
-
         CustomLayout layout = new CustomLayout();
-
-        CustomAppender app = new CustomAppender(layout);
+        CustomAppender app = new CustomAppender();
+        app.setLayout(layout);
         app.setContext(loggerContext);
         app.start();
 
@@ -37,5 +42,4 @@ public class CustomAppender extends AppenderBase<ILoggingEvent> {
 
         logg.info("Hello World");
     }
-
 }
