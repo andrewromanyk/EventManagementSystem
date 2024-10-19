@@ -1,0 +1,6 @@
+2024-10-19 23:16:36 [http-nio-8080-exec-2] INFO  u.e.u.e.controller.UserController - Action performed on user with ID: 1 - Got user
+2024-10-19 23:27:33 [http-nio-8080-exec-1] INFO  u.e.u.e.controller.UserController - Action performed on user with ID: 2 -> Got user
+2024-10-19 23:28:44 [http-nio-8080-exec-3] INFO  u.e.u.e.controller.UserController - Action performed on user with ID: 1 -> Got user
+2024-10-19 23:33:12 [http-nio-8080-exec-5] INFO  u.e.u.e.controller.UserController - Action performed on user with ID: 1 -> Put user
+2024-10-19 23:33:30 [http-nio-8080-exec-4] ERROR u.e.u.e.controller.UserController - Action performed on user with ID: 1 -> {age=Age should be less than 120}
+2024-10-19 23:34:37 [http-nio-8080-exec-7] INFO  u.e.u.e.controller.UserController - Action performed on user with ID: 5 -> Deleted user

@@ -10,6 +10,17 @@
         </encoder>
     </appender>
 
+    <appender name="UserActionFileAppender" class="ch.qos.logback.core.FileAppender">
+        <file>logs/user-actions.log</file>
+        <encoder>
+            <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - Action performed on user with ID: %X{userId} -> %msg%n</pattern>
+        </encoder>
+    </appender>
+
+    <logger name="ua.edu.ukma.event_management_system.controller.UserController" level="info" additivity="false">
+        <appender-ref ref="UserActionFileAppender" />
+    </logger>
+
     <root level="info">
         <appender-ref ref="CustomAppender" />
         <appender-ref ref="FileAppender" />

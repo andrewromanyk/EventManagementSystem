@@ -8,9 +8,9 @@ import ua.edu.ukma.event_management_system.domain.UserRole;
 @NoArgsConstructor
 @Data
 public class UserDto {
-    @NotBlank(message = "Id is required")
+   // @NotBlank(message = "Id is required")
     private int id;
-    @NotBlank(message = "UserRole is required")
+    //@NotBlank(message = "UserRole is required")
     private UserRole userRole;
     @NotBlank(message = "Username is required")
     private String username;
