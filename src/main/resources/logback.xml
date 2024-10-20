@@ -1,4 +1,5 @@
 <configuration>
+    <import class="ch.qos.logback.classic.boolex.OnMarkerEvaluator"/>
     <appender name="CustomAppender" class="ua.edu.ukma.event_management_system.logger.CustomAppender">
         <layout class="ua.edu.ukma.event_management_system.logger.CustomLayout" />
     </appender>
@@ -9,6 +10,21 @@
             <pattern>%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n</pattern>
         </encoder>
     </appender>
+
+    <turboFilter class="ch.qos.logback.classic.turbo.MarkerFilter">
+        <Marker>USER_ACTION</Marker>
+        <onMatch>ACCEPT</onMatch>
+    </turboFilter>
+
+    <turboFilter class="ch.qos.logback.classic.turbo.MarkerFilter">
+        <Marker>VALIDATION</Marker>
+        <onMatch>DENY</onMatch>
+    </turboFilter>
+
+    <turboFilter class="ch.qos.logback.classic.turbo.MarkerFilter">
+        <Marker>USER_ERROR</Marker>
+        <OnMatch>DENY</OnMatch>
+    </turboFilter>
 
     <appender name="UserActionFileAppender" class="ch.qos.logback.core.FileAppender">
         <file>logs/user-actions.log</file>

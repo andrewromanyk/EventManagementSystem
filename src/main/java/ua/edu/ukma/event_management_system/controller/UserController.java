@@ -1,10 +1,9 @@
 package ua.edu.ukma.event_management_system.controller;
 
 import jakarta.validation.Valid;
+import org.apache.logging.log4j.MarkerManager;
 import org.modelmapper.ModelMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
-import org.slf4j.MDC;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.validation.BindingResult;
@@ -24,6 +23,9 @@ import java.util.*;
 public class UserController {
 
     private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Marker USER_ACTION_MARKER = MarkerFactory.getMarker("USER_ACTION");
+    private static final Marker VALIDATION_MARKER = MarkerFactory.getMarker("VALIDATION");
+    private static final Marker USER_ERROR_MARKER = MarkerFactory.getMarker("USER_ERROR");
 
     private ModelMapper modelMapper;
     private UserService userService;
@@ -42,7 +44,7 @@ public class UserController {
     public UserDto getUser(@PathVariable long id) {
         try{
             MDC.put("userId", String.valueOf(id));
-            logger.info("Got user");
+            logger.info(USER_ACTION_MARKER, "Got user");
             return toDto(userService.getUserById(id));
         }finally{
             MDC.clear();
@@ -79,10 +81,10 @@ public class UserController {
                 bindingResult.getFieldErrors().forEach(error -> {
                     errors.put(error.getField(), error.getDefaultMessage());
                 });
-                logger.error(errors.toString());
+                logger.error(VALIDATION_MARKER, "Validation error occured: {}", errors);
                 return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
             }
-            logger.info("Put user");
+            logger.info(USER_ACTION_MARKER, "Put user");
             userService.updateUser(id, userDto);
             return new ResponseEntity<>(HttpStatus.OK);
         }finally{
@@ -94,8 +96,12 @@ public class UserController {
     public ResponseEntity<?> deleteUser(@PathVariable long id) {
         try {
             MDC.put("userId", String.valueOf(id));
-            userService.removeUser(id);
-            logger.info("Deleted user");
+            boolean userRemoved = userService.removeUser(id);
+            if(!userRemoved) {
+                logger.warn(USER_ERROR_MARKER, "User deletion failed. User not found.", id);
+                return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
+            }
+            logger.info(USER_ACTION_MARKER, "Deleted user");
             return new ResponseEntity<>(HttpStatus.OK);
         }finally {
             MDC.clear();
@@ -105,5 +111,4 @@ public class UserController {
     private UserDto toDto(User user) {
         return modelMapper.map(user, UserDto.class);
     }
-
 }

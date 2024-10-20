@@ -16,7 +16,7 @@ public interface UserService {
 
     void updateUser(long id, UserDto updatedUser);
 
-    void removeUser(long userId);
+    boolean removeUser(long userId);
 
     boolean checkPermission(User user, UserRole role);
 
