@@ -33,9 +33,13 @@ public class DatabasePopulatorService {
 
     public void populateDatabase() {
         UserEntity user1 = new UserEntity(UserRole.USER, "and123", "Andriy",
-                "Petrenko", "andriisuper@gmail.com", "380999777444", 30);
+                "Petrenko", "andriisuper@gmail.com",
+                "$2a$10$JFbuJfw3FZSs.9rDOO3jiOP2r9HjnJczXsWiqvEhkCyyWVHNjuQyy", // Andri1Sup3r
+                "380999777444", 30);
         UserEntity user2 = new UserEntity(UserRole.ORGANIZER, "maria_shevchenko", "Maria",
-                "Shevchenko", "shevchenkoM@gmail.com", "380111486754", 24);
+                "Shevchenko", "shevchenkoM@gmail.com",
+                "$2a$10$lhATh/lhdonUDlGJrhZtiOU0U8AB18UvdIeTr2mTAMObZZ3G4e2Ui", // maria1234
+                "380111486754", 24);
         userRepository.save(user1);
         userRepository.save(user2);
 

@@ -32,6 +32,9 @@ public class UserEntity {
     private String email;
 
     @Column(nullable = false)
+    private String password;
+
+    @Column(nullable = false)
     private String phoneNumber;
 
     @Column(nullable = false)
@@ -40,12 +43,13 @@ public class UserEntity {
     @ManyToMany(mappedBy = "users")
     private List<EventEntity> events;
 
-    public UserEntity(UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, int age) {
+    public UserEntity(UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, int age) {
         this.userRole = userRole;
         this.username = username;
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.age = age;
     }

@@ -9,13 +9,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.ukma.event_management_system.domain.Building;
-import ua.edu.ukma.event_management_system.domain.BuildingRating;
 import ua.edu.ukma.event_management_system.domain.User;
-import ua.edu.ukma.event_management_system.dto.BuildingDto;
-import ua.edu.ukma.event_management_system.dto.BuildingRatingDto;
 import ua.edu.ukma.event_management_system.dto.UserDto;
-import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
 import org.springframework.http.ResponseEntity;

@@ -6,9 +6,9 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandi
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
-import ua.edu.ukma.event_management_system.domain.Building;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import ua.edu.ukma.event_management_system.domain.Event;
-import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
@@ -40,5 +40,10 @@ public class Configurator {
         eventMapperRev.addMappings(mapper -> mapper.using(toBuildingConverter).map(EventDto::getBuilding, EventEntity::setBuilding));
 
         return mapperResult;
+    }
+
+    @Bean
+    public PasswordEncoder passwordEncoder() {
+        return new BCryptPasswordEncoder(10);
     }
 }

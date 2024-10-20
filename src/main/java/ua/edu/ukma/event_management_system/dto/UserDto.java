@@ -20,6 +20,8 @@ public class UserDto {
     private String lastName;
     @Email(message = "Email should be valid")
     private String email;
+    @NotBlank(message = "Password is required")
+    private String password;
     @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$")
     private String phoneNumber;
 
@@ -34,6 +36,18 @@ public class UserDto {
         this.firstName = firstName;
         this.lastName = lastName;
         this.email = email;
+        this.phoneNumber = phoneNumber;
+        this.age = age;
+    }
+
+    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, int age) {
+        this.id = id;
+        this.userRole = userRole;
+        this.username = username;
+        this.firstName = firstName;
+        this.lastName = lastName;
+        this.email = email;
+        this.password = password;
         this.phoneNumber = phoneNumber;
         this.age = age;
     }

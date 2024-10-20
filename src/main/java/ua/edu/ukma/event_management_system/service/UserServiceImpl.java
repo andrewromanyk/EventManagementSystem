@@ -3,6 +3,7 @@ package ua.edu.ukma.event_management_system.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.BuildingRating;
@@ -27,18 +28,26 @@ public class UserServiceImpl implements UserService {
 
     private UserRepository userRepository;
 
+    private PasswordEncoder passwordEncoder;
+
     @Autowired
     void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
     @Autowired
-    void setBuildingRepository(UserRepository userRepository) {
+    void setUserRepository(UserRepository userRepository) {
         this.userRepository = userRepository;
+    }
+
+    @Autowired
+    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+        this.passwordEncoder = passwordEncoder;
     }
 
     @Override
     public User createUser(UserDto user) {
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         return toDomain(userRepository.save(dtoToEntity(user)));
     }
 
@@ -67,6 +76,11 @@ public class UserServiceImpl implements UserService {
             existingUser.setEmail(updatedUser.getEmail());
             existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
             existingUser.setAge(updatedUser.getAge());
+
+            if (!existingUser.getPassword().equals(updatedUser.getPassword())) {
+                existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));
+            }
+
             userRepository.save(existingUser);
         }
     }

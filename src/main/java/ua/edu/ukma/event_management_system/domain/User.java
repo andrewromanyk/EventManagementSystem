@@ -13,9 +13,10 @@ public class User {
     private String lastName;
     private String email;
     private String phoneNumber;
+    private String password;
     private int age;
 
-    public User(int id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, int age) {
+    public User(long id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, String password, int age) {
         this.id = id;
         this.userRole = userRole;
         this.username = username;
@@ -23,6 +24,7 @@ public class User {
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
+        this.password = password;
         this.age = age;
     }
 }
