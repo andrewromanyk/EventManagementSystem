@@ -1,0 +1,66 @@
+package ua.edu.ukma.event_management_system.service;
+
+import io.jsonwebtoken.Claims;
+import io.jsonwebtoken.Jwts;
+import io.jsonwebtoken.security.Keys;
+import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.stereotype.Service;
+
+import javax.crypto.KeyGenerator;
+import javax.crypto.SecretKey;
+import java.security.NoSuchAlgorithmException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+@Service
+public class JwtService {
+
+	private byte[] secretKey;
+
+	public JwtService() {
+		try {
+			KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
+			SecretKey secretKey = keyGenerator.generateKey();
+			this.secretKey = secretKey.getEncoded();
+		} catch (NoSuchAlgorithmException e) {
+			throw new RuntimeException(e);
+		}
+	}
+	public String extractUsername(String token) {
+		return extractClaims(token).getSubject();
+	}
+
+	public boolean validate(String token, UserDetails userDetails) {
+		String username = extractUsername(token);
+		return username.equals(userDetails.getUsername()) && !isTokenExpired(token);
+	}
+
+
+	public String generateToken(String username) {
+		Map<String, Object> claims = new HashMap<>();
+		return Jwts.builder()
+				.claims()
+				.add(claims)
+				.subject(username)
+				.issuedAt(new Date(System.currentTimeMillis()))
+				.expiration(new Date(System.currentTimeMillis() + 1000 * 60 * 60)) // 1 hour
+				.and()
+				.signWith(Keys.hmacShaKeyFor(secretKey))
+				.compact();
+	}
+
+	private boolean isTokenExpired(String token) {
+		return extractClaims(token)
+				.getExpiration()
+				.before(new Date());
+	}
+
+	private Claims extractClaims(String token) {
+		return Jwts.parser()
+				.verifyWith(Keys.hmacShaKeyFor(secretKey))
+				.build()
+				.parseSignedClaims(token)
+				.getPayload();
+	}
+}

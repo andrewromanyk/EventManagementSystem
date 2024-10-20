@@ -24,7 +24,6 @@ public class UDetailsService implements UserDetailsService {
 		UserEntity user = userRepository.findByUsername(username);
 
 		if (user == null) {
-			System.out.println("user wasnt found");
 			throw new UsernameNotFoundException("User %s was not found".formatted(username));
 		}
 
