@@ -40,8 +40,13 @@ public class DatabasePopulatorService {
                 "Shevchenko", "shevchenkoM@gmail.com",
                 "$2a$10$lhATh/lhdonUDlGJrhZtiOU0U8AB18UvdIeTr2mTAMObZZ3G4e2Ui", // maria1234
                 "380111486754", 24);
+        UserEntity admin = new UserEntity(UserRole.ADMIN, "admin", "Admin",
+                "eqwe", "emsAdmin@gmail.com",
+                "$2a$10$NY5RpFbjoy4TnN.DPH/OEOhnq0.2/sNcfwbJHLW5YTfW.wOugwTsS", // admin123
+                "380777777777", 35);
         userRepository.save(user1);
         userRepository.save(user2);
+        userRepository.save(admin);
 
         BuildingEntity building1 = new BuildingEntity("123 Main St", 100, 300,
                 500, "Conference Hall");

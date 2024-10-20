@@ -3,7 +3,10 @@ package ua.edu.ukma.event_management_system.service;
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.security.Keys;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
+import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.stereotype.Service;
 
 import javax.crypto.KeyGenerator;
@@ -16,7 +19,13 @@ import java.util.Map;
 @Service
 public class JwtService {
 
+	private UserDetailsService userDetailsService;
 	private byte[] secretKey;
+
+	@Autowired
+	public void setUserDetailsService(UserDetailsService userDetailsService) {
+		this.userDetailsService = userDetailsService;
+	}
 
 	public JwtService() {
 		try {
@@ -39,6 +48,12 @@ public class JwtService {
 
 	public String generateToken(String username) {
 		Map<String, Object> claims = new HashMap<>();
+
+		claims.put("roles", userDetailsService.loadUserByUsername(username)
+				.getAuthorities().stream()
+				.map(GrantedAuthority::getAuthority)
+				.toList());
+
 		return Jwts.builder()
 				.claims()
 				.add(claims)
