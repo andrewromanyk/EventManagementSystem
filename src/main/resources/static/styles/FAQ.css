@@ -16,7 +16,6 @@ header {
     font-family: Verdana, sans-serif;
     color: aliceblue;
     padding-left: 10px;
-
 }
 
 #icon {
@@ -28,17 +27,29 @@ header {
 }
 
 .fullOutside{
+    background-color: #F0F0F0;
     box-shadow: #1B1F23 1px 1px 25px;
-    width: 60%;
-    display: flex;
-    justify-content: center;
-    margin: 0 auto;
-    background-color: #d8e1eb;
+    width: 60vh;
     height: 100vh;
+    margin: 0 auto;
+    display: flex;
 }
 
-.inside{
-    align-items: center;
+.inside {
+    margin: 0 auto;
+    justify-content: center;
+    text-align: center;
+    padding-left: 20px;
+    padding-right: 20px;
+    font-family: Monospace, monospace;
+    color: black;
+}
+
+.question{
+}
+
+.answer{
+    font-weight: normal;
 }
 
 footer{
@@ -53,9 +64,6 @@ li{
     color: aliceblue;
     padding-left: 10px;
     font-size: 12px;
-}
-
-ul{
     text-align: center;
 }
 
