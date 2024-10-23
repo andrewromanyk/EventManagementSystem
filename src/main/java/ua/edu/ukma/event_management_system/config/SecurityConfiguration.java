@@ -53,6 +53,7 @@ public class SecurityConfiguration {
 						.requestMatchers(HttpMethod.DELETE, "event/**").hasAuthority("ORGANIZER")
 						.requestMatchers("user/**").hasAuthority("USER")
 						.requestMatchers("ticket/**").hasAuthority("USER")
+						.requestMatchers("manage/**").hasAuthority("USER")
 						.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())
 				.sessionManagement(session ->

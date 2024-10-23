@@ -1,0 +1,43 @@
+<!doctype html>
+<html lang="ua"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>FAQ - Event Manager</title>
+    <link rel="stylesheet" href="../static/styles/manager_chooser.css"
+        th:href="@{styles/manager_chooser.css}">
+    <link rel="icon" href="../static/em-icon.png"
+          th:href="@{/em-icon.png}">
+</head>
+
+<body>
+    <header>
+        <h1 id=name>
+            Event
+            <br>
+            Manager
+        </h1>
+        <img id=icon alt="Event Manager" src="../static/em-icon.png"
+             th:src="@{/em-icon.png}">
+    </header>
+
+    <div class="fullOutside">
+        <button class="managing-button" sec:authorize="hasAuthority('ORGANIZER')">Manage Events</button>
+        <button class="managing-button" sec:authorize="hasAuthority('USER')">Manage Tickets</button>
+        <button class="managing-button" sec:authorize="hasAuthority('ADMIN')">Manage Users</button>
+        <button class="managing-button" sec:authorize="hasAuthority('ADMIN')">Manage Buildings</button>
+    </div>
+
+    <footer>
+        <ul>
+            <li>
+                <a href="/login">Main Site</a>
+            </li>
+            <li>
+                <a href="/FAQ.html">FAQ</a>
+            </li>
+        </ul>
+    </footer>
+</body>
+
+</html>
