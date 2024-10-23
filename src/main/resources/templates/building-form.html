@@ -1,0 +1,69 @@
+<!DOCTYPE html>
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>Create Building - Event Manager</title>
+    <link rel="stylesheet" href="../static/styles/FAQ.css"
+          th:href="@{styles/FAQ.css}">
+    <link rel="icon" href="../static/em-icon.png"
+          th:href="@{/em-icon.png}">
+</head>
+
+<body>
+<header>
+    <h1 id=name>Add new
+        <br>
+        Building</h1>
+    <img id=icon alt="Event Manager" src="../static/em-icon.png"
+         th:src="@{/em-icon.png}">
+</header>
+
+<div class="fullOutside">
+    <div class="inside">
+        <h5 class="question">
+            What is this page for?
+        </h5>
+        <h6 class="answer">
+            You can add new buildings in which events can be hosted.
+        </h6>
+    </div>
+
+    <form th:action="@{/building}" th:object="${buildingDto}" method="post">
+
+        <label for="address">address:</label>
+        <input type="text" id="address" th:field="*{address}" required minlength="1">
+        <br>
+
+        <label for="hourlyRate">hourly rate:</label>
+        <input type="number" id="hourlyRate" th:field="*{hourlyRate}" required min="1">
+        <br>
+
+        <label for="areaM2">area in square meters:</label>
+        <input type="number" id="areaM2" th:field="*{areaM2}" required min="10">
+        <br>
+
+        <label for="capacity">capacity:</label>
+        <input type="number" id="capacity" th:field="*{capacity}" required min="10">
+        <br>
+
+        <label for="description">description:</label>
+        <input type="text" id="description" th:field="*{description}"pattern="^[A-Za-zА-Яа-я0-9 ,.:;-]+|^$" maxlength="500">
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+</div>
+
+<footer>
+    <ul>
+        <li>
+            <a href="/login">Main Site</a>
+        </li>
+        <li>
+            <a href="/FAQ.html">FAQ</a>
+        </li>
+    </ul>
+</footer>
+</body>
+
+</html>

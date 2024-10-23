@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
+import org.springframework.ui.Model;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
@@ -56,9 +57,9 @@ public class BuildingController {
 		}
 	}
 
-	@PostMapping("/")
-	public ResponseEntity<?> createNewBuilding(@RequestBody @Valid BuildingDto buildingDto,
-											   BindingResult bindingResult) {
+	@PostMapping
+	public ResponseEntity<?> createNewBuilding(@ModelAttribute("buildingDto") @Valid BuildingDto buildingDto,
+									BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()){
 			Map<String, String> errors = new HashMap<>();
 			bindingResult.getFieldErrors().forEach(error -> {
@@ -66,6 +67,7 @@ public class BuildingController {
 			});
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
+
 		if(buildingDto.getDescription() == null || buildingDto.getDescription().isEmpty()){
 			RestClient client = RestClient.create();
 			String defaultDescription = client.get()
@@ -74,6 +76,7 @@ public class BuildingController {
 					.body(String.class);
 			buildingDto.setDescription(defaultDescription);
 		}
+
 		Building returned = buildingService.createBuilding(buildingDto);
 		return new ResponseEntity<>(returned, HttpStatus.CREATED);
 	}
