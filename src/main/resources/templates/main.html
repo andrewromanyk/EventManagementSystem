@@ -1,0 +1,52 @@
+<!doctype html>
+<html lang="ua" xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head>
+    <title>FAQ - Event Manager</title>
+    <link rel="stylesheet" href="../static/styles/main.css"
+          th:href="@{styles/main.css}">
+    <link rel="icon" href="../static/em-icon.png"
+          th:href="@{/em-icon.png}">
+</head>
+
+<body>
+    <header>
+        <h1 id=name>
+            Event
+            <br>
+            Manager
+        </h1>
+        <img id=icon alt="Event Manager" src="../static/em-icon.png"
+             th:src="@{/em-icon.png}">
+    </header>
+
+    <div class="fullOutside">
+        <div class="greeting">
+            <br>
+            Welcome,&nbsp;<div sec:authentication="name" style="display: inline">[unknown name]</div>!
+        </div>
+        <br>
+        <div class="tickets">
+            <span class="ticketName">Your tickets:</span>
+            <ol>
+                <li th:each="ticket : ${tickets}" class="ticketRow">
+                    <br>
+                    Event: <span class="ticketName" th:text="${ticket.event.eventTitle}"></span>
+                </li>
+            </ol>
+        </div>
+    </div>
+
+    <footer>
+        <ul class="footerList">
+            <li>
+                <a href="/login">Main Site</a>
+            </li>
+            <li>
+                <a href="/FAQ.html">FAQ</a>
+            </li>
+        </ul>
+    </footer>
+</body>
+
+</html>

@@ -23,5 +23,7 @@ public interface TicketService {
 
 	void removeTicket(long ticketId);
 
+	List<Ticket> getAllTicketsForUser(UserDto user);
 
+	List<Ticket> getAllTicketsForUser(String name);
 }

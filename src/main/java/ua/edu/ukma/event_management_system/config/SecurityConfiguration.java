@@ -51,6 +51,7 @@ public class SecurityConfiguration {
 						.requestMatchers("login").permitAll()
 						.requestMatchers(HttpMethod.POST, "building/**").hasAuthority("ADMIN")
 						.requestMatchers(HttpMethod.DELETE, "event/**").hasAuthority("ORGANIZER")
+						.requestMatchers("user").hasAuthority("USER")
 						.requestMatchers("user/**").hasAuthority("USER")
 						.requestMatchers("ticket/**").hasAuthority("USER")
 						.requestMatchers("manage/**").hasAuthority("USER")

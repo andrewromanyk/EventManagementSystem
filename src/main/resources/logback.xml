@@ -1,5 +1,6 @@
 <configuration>
     <import class="ch.qos.logback.classic.boolex.OnMarkerEvaluator"/>
+
     <appender name="CustomAppender" class="ua.edu.ukma.event_management_system.logger.CustomAppender">
         <layout class="ua.edu.ukma.event_management_system.logger.CustomLayout" />
     </appender>

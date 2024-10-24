@@ -2,7 +2,6 @@ package ua.edu.ukma.event_management_system.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.domain.Ticket;
@@ -78,6 +77,16 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public void removeTicket(long ticketId) {
         ticketRepository.deleteById(ticketId);
+    }
+
+    @Override
+    public List<Ticket> getAllTicketsForUser(UserDto user) {
+        return modelMapper.map(ticketRepository.findAllByUserId(user.getId()), List.class);
+    }
+
+    @Override
+    public List<Ticket> getAllTicketsForUser(String name){
+        return modelMapper.map(ticketRepository.findAllByUserUsername(name), List.class);
     }
 
     private TicketDto toDto(Ticket ticket) {
