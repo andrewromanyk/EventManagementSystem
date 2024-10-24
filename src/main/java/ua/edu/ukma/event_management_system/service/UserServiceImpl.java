@@ -1,6 +1,7 @@
 package ua.edu.ukma.event_management_system.service;
 
 import org.modelmapper.ModelMapper;
+import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -9,6 +10,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
+import ua.edu.ukma.event_management_system.controller.UserController;
 import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.UserDto;
@@ -18,8 +20,13 @@ import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
 import java.util.*;
 
+
 @Component
 public class UserServiceImpl implements UserService {
+
+    private static final Logger logger = LoggerFactory.getLogger(UserServiceImpl.class);
+
+    private static final Marker USER_ACTION_MARKER = MarkerFactory.getMarker("USER_ACTION");
 
     private ModelMapper modelMapper;
     private UserRepository userRepository;
@@ -51,7 +58,9 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(UserDto user) {
         user.setPassword(passwordEncoder.encode(user.getPassword()));
-        return toDomain(userRepository.save(dtoToEntity(user)));
+        User returned = toDomain(userRepository.save(dtoToEntity(user)));
+        logger.info(USER_ACTION_MARKER, "Got user");
+        return returned;
     }
 
     @Override

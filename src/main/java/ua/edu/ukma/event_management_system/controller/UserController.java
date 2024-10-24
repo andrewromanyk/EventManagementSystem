@@ -44,7 +44,6 @@ public class UserController {
     public UserDto getUser(@PathVariable long id) {
         try{
             MDC.put("userId", String.valueOf(id));
-            logger.info(USER_ACTION_MARKER, "Got user");
             return toDto(userService.getUserById(id));
         }finally{
             MDC.clear();
