@@ -50,7 +50,7 @@ public class UserController {
         }
     }
 
-    @GetMapping("/")
+    @GetMapping
     public List<UserDto> getUsers() {
         logger.info(USER_ACTION_MARKER, "Got all user");
         return userService.getAllUsers()
