@@ -16,6 +16,7 @@ import ua.edu.ukma.event_management_system.repository.BuildingRepository;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -58,7 +59,7 @@ public class BuildingServiceImpl implements BuildingService {
     public Building getBuildingById(Long id) {
 		return toDomain(buildingRepository
                 .findById(id)
-                .orElseThrow());
+                .orElseThrow(() -> new NoSuchElementException("Building not found: " + id)));
     }
 
     @Override
