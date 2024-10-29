@@ -44,6 +44,7 @@ public class BuildingControllerTest {
 		Building building1 = building1();
 		when(buildingService.getBuildingById(1L)).thenReturn(building1);
 		when(modelMapper.map(building1, BuildingDto.class)).thenReturn(building1Dto());
+
 		mockMvc.perform(MockMvcRequestBuilders.get("/building/1"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeExists("buildings"))
@@ -54,10 +55,38 @@ public class BuildingControllerTest {
 	void testGetBuildingWithNonExistingId() throws Exception {
 		when(buildingService.getBuildingById(any()))
 				.thenThrow(new NoSuchElementException("Building not found: 666"));
+
 		mockMvc.perform(MockMvcRequestBuilders.get("/building/666"))
 				.andExpect(status().isNotFound())
 				.andExpect(model().attributeExists("error"))
 				.andExpect(model().attribute("error", "Building not found: 666"));
+	}
+
+	@Test
+	void testGetBuildings() throws Exception {
+		Building building1 = building1();
+		Building building2 = building2();
+		List<Building> serviceResponse = List.of(building1, building2);
+		when(buildingService.getAllBuildings()).thenReturn(serviceResponse);
+		when(modelMapper.map(building1, BuildingDto.class)).thenReturn(building1Dto());
+		when(modelMapper.map(building2, BuildingDto.class)).thenReturn(building2Dto());
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/building/"))
+				.andExpect(status().isOk())
+				.andExpect(model().attributeExists("buildings"))
+				.andExpect(model().attribute("buildings", List.of(building1Dto(), building2Dto())));
+	}
+
+	@Test
+	void testGetBuildingsWithCapacity() throws Exception {
+		Building building1 = building1();
+		when(buildingService.getAllByCapacity(1)).thenReturn(List.of(building1));
+		when(modelMapper.map(building1, BuildingDto.class)).thenReturn(building1Dto());
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/building/?capacity=1"))
+				.andExpect(status().isOk())
+				.andExpect(model().attributeExists("buildings"))
+				.andExpect(model().attribute("buildings", List.of(building1Dto())));
 	}
 
 	private Building building1() {
@@ -78,6 +107,27 @@ public class BuildingControllerTest {
 				400,
 				50,
 				"A building located on Some street, 1"
+		);
+	}
+
+	private Building building2() {
+		return new Building(
+				2,
+				"Another street, 2",
+				100,
+				120,
+				10,
+				"A building located on Another street, 2"
+		);
+	}
+
+	private BuildingDto building2Dto() {
+		return new BuildingDto(1,
+				"Another street, 2",
+				100,
+				120,
+				10,
+				"A building located on Another street, 2"
 		);
 	}
 }
