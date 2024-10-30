@@ -80,14 +80,26 @@ public class BuildingControllerTest {
 	@Test
 	void testGetBuildingsWithCapacity() throws Exception {
 		Building building1 = building1();
-		when(buildingService.getAllByCapacity(1)).thenReturn(List.of(building1));
+		when(buildingService.getAllByCapacity(50)).thenReturn(List.of(building1));
 		when(modelMapper.map(building1, BuildingDto.class)).thenReturn(building1Dto());
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/building/?capacity=1"))
+		mockMvc.perform(MockMvcRequestBuilders.get("/building/?capacity=50"))
 				.andExpect(status().isOk())
 				.andExpect(model().attributeExists("buildings"))
 				.andExpect(model().attribute("buildings", List.of(building1Dto())));
 	}
+
+	@Test
+	void testGetBuildingsWithCapacityEmpty() throws Exception {
+		when(buildingService.getAllByCapacity(any(Integer.class))).thenReturn(Collections.emptyList());
+
+		mockMvc.perform(MockMvcRequestBuilders.get("/building/?capacity=10"))
+				.andExpect(status().isOk())
+				.andExpect(model().attributeExists("buildings"))
+				.andExpect(model().attribute("buildings", Collections.emptyList()));
+	}
+
+
 
 	private Building building1() {
 		return new Building(
