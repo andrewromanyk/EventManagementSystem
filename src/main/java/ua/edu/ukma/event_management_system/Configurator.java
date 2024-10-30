@@ -6,6 +6,7 @@ import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandi
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
 import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.thymeleaf.spring6.SpringTemplateEngine;
@@ -28,8 +29,9 @@ public class Configurator {
         return new BuildingServiceImpl();
     }
 
+    @Primary
     @Bean
-    @ConditionalOnMissingBean(ModelMapper.class)
+    //@ConditionalOnMissingBean(ModelMapper.class)
     public ModelMapper modelMapper() {
         ModelMapper mapperResult = new ModelMapper();
 

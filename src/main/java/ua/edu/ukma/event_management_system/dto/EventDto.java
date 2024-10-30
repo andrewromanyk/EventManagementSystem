@@ -8,6 +8,7 @@ import java.util.List;
 
 @Data
 @NoArgsConstructor
+@EqualsAndHashCode
 public class EventDto {
     private int id;
     private String eventTitle;

@@ -12,6 +12,7 @@ public class BuildingEntity {
     @Id
     // default strategy, JPA automatically selects the appropriate
     // generation strategy based on the database used
+    @Setter
     @GeneratedValue(strategy = GenerationType.AUTO)
     private long id;
 
