@@ -10,7 +10,10 @@ import org.springframework.test.context.ContextConfiguration;
 import ua.edu.ukma.event_management_system.controller.BuildingController;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.Event;
+import ua.edu.ukma.event_management_system.domain.User;
+import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.EventDto;
+import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
 import ua.edu.ukma.event_management_system.exceptions.handler.ControllerExceptionHandler;
@@ -82,8 +85,40 @@ public class ModelMapperTest {
         return building;
     }
 
+    private User getUserDomain(){
+        User user = new User();
+        user.setId(1);
+        user.setUserRole(UserRole.USER);
+        user.setUsername("John Doe");
+        user.setFirstName("John");
+        user.setLastName("Doe");
+        user.setEmail("john.doe@example.com");
+        user.setPhoneNumber("+380147852369");
+        user.setPassword("password");
+        user.setAge(18);
+        return user;
+    }
+
+    private UserDto getUserDto(){
+        UserDto userDto = new UserDto();
+        userDto.setId(1);
+        userDto.setUserRole(UserRole.USER);
+        userDto.setUsername("John Doe");
+        userDto.setFirstName("John");
+        userDto.setLastName("Doe");
+        userDto.setEmail("john.doe@example.com");
+        userDto.setPhoneNumber("+380147852369");
+        userDto.setPassword("password");
+        userDto.setAge(18);
+        return userDto;
+    }
+
     @Test
     public void testModelMapper2() {
+        assertEquals(getUserDto(), modelMapper.map(getUserDomain(), UserDto.class));
+    }
+
+    @Test void testModelMapper1() {
         assertEquals(getEventDto1(), modelMapper.map(getEventDomain1(), EventDto.class));
     }
 }
