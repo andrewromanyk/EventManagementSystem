@@ -52,4 +52,10 @@ public class SpringSecurityTest {
         mvc.perform(get("/manage")).andExpect(status().isOk());
     }
 
+    @Test
+    @WithMockUser(authorities = {"USER"})
+    public void userCantAccess() throws Exception {
+        mvc.perform(get("/user")).andExpect(status().isForbidden());
+    }
+
 }
