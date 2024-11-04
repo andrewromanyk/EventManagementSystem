@@ -1,7 +1,6 @@
 package ua.edu.ukma.event_management_system;
 
 import org.modelmapper.*;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnMissingBean;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.ComponentScan;
@@ -9,9 +8,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.thymeleaf.spring6.SpringTemplateEngine;
-import org.thymeleaf.spring6.templateresolver.SpringResourceTemplateResolver;
-import org.thymeleaf.spring6.view.ThymeleafViewResolver;
 import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
@@ -20,7 +16,6 @@ import ua.edu.ukma.event_management_system.service.BuildingServiceImpl;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 
 @Configuration
-@ComponentScan("ua.edu.ukma")
 public class Configurator {
 
     @Bean

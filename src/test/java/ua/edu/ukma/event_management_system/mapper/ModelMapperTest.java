@@ -1,12 +1,16 @@
 package ua.edu.ukma.event_management_system.mapper;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.internal.bytebuddy.implementation.bind.annotation.IgnoreForBinding;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.FilterType;
 import org.springframework.context.annotation.Import;
 import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ua.edu.ukma.event_management_system.Configurator;
 import ua.edu.ukma.event_management_system.controller.BuildingController;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.Event;
@@ -15,16 +19,15 @@ import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
-import ua.edu.ukma.event_management_system.entity.EventEntity;
-import ua.edu.ukma.event_management_system.exceptions.handler.ControllerExceptionHandler;
-import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 
 import java.time.LocalDateTime;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-@SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.NONE)
+
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {Configurator.class})
 @Import({ModelMapper.class})
 public class ModelMapperTest {
 
