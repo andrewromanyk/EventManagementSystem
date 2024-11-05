@@ -3,6 +3,7 @@ package ua.edu.ukma.event_management_system.service;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
+import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.entity.*;
 import ua.edu.ukma.event_management_system.repository.*;
@@ -63,8 +64,15 @@ public class DatabasePopulatorService {
                 LocalDateTime.now().plusDays(3).plusHours(3),
                 building1, "IT conference discussing Django vs SpringBoot",
                 50, 25);
+
+        EventEntity eventZeroTickets = new EventEntity("zero tickets",
+                LocalDateTime.now().plusDays(3),
+                LocalDateTime.now().plusDays(3).plusHours(3),
+                building2, "zero tickets event",
+                0, 1);
         eventRepository.save(event1);
         eventRepository.save(event2);
+        eventRepository.save(eventZeroTickets);
 
         TicketEntity ticket1 = new TicketEntity(user1, event1, 100);
         TicketEntity ticket2 = new TicketEntity(user1, event2, 200);

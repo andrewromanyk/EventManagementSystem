@@ -47,7 +47,7 @@ public class TicketController {
     }
 
     @PostMapping("/")
-    public void createTicket(@RequestBody @Valid TicketDto ticketDto) {
+    public void createTicket(@RequestBody @Valid TicketDto ticketDto) throws EventFullException {
         if (ticketDto.getEvent().getUsers().size() >= ticketDto.getEvent().getNumberOfTickets()){
             throw new EventFullException("Event is full!");
         }

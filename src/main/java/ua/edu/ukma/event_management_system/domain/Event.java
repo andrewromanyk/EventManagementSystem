@@ -19,5 +19,5 @@ public class Event {
     private int numberOfTickets;
     private int minAgeRestriction;
     private List<EventRating> rating;
-    private List<UserDto> users;
+    private List<User> users;
 }

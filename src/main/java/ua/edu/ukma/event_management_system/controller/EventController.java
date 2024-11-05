@@ -64,7 +64,7 @@ public class EventController {
     }
 
     @DeleteMapping("/{id}")
-    public void deleteBuilding(@PathVariable long id) {
+    public void deleteEvent(@PathVariable long id) {
         eventService.deleteEvent(id);
     }
 

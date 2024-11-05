@@ -9,7 +9,7 @@ import ua.edu.ukma.event_management_system.dto.UserDto;
 @Data
 public class Ticket {
     private long id;
-    private UserDto user;
+    private User user;
     private Event event;
     private int price;
 }

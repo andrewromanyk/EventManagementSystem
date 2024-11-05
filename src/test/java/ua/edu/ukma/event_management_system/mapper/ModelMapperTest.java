@@ -19,6 +19,7 @@ import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
+import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 
 import java.time.LocalDateTime;
 import java.util.List;

@@ -27,11 +27,12 @@ dependencies {
 	implementation 'org.hibernate.validator:hibernate-validator:8.0.1.Final'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-ui:2.6.0'
 	implementation 'org.springdoc:springdoc-openapi-starter-webmvc-api:2.6.0'
-	implementation 'ua.edu.ukma:modelmapper-spring-boot-starter:0.0.1-SNAPSHOT'
+//	implementation 'ua.edu.ukma:modelmapper-spring-boot-starter:0.0.1-SNAPSHOT'
 	implementation 'org.springframework.boot:spring-boot-starter-security:3.3.4'
 	implementation 'io.jsonwebtoken:jjwt-api:0.12.6' // JWT dependency
 	implementation 'org.springframework.boot:spring-boot-starter-thymeleaf:3.3.4'
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
+	implementation 'org.springframework.boot:spring-boot-starter-aop:3.3.5'
 
 	runtimeOnly 'com.h2database:h2'   // H2 database driver
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6' // JWT dependency

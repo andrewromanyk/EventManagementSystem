@@ -81,7 +81,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<Ticket> getAllTicketsForUser(UserDto user) {
-        return modelMapper.map(ticketRepository.findAllByUserId(user.getId()), List.class);
+        return modelMapper.map(ticketRepository.findAllByUserId((int) user.getId()), List.class);
     }
 
     @Override

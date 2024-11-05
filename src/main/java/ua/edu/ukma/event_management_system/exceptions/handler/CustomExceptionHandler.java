@@ -16,6 +16,7 @@ public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleEventFullException(EventFullException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.CONFLICT);
     }
+
     @ExceptionHandler(IllegalNameException.class)
     public ResponseEntity<String> handleIllegalNameException(IllegalNameException ex) {
         return new ResponseEntity<>(ex.getMessage(), HttpStatus.BAD_REQUEST);
