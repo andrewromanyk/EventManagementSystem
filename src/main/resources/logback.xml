@@ -38,7 +38,11 @@
         <appender-ref ref="UserActionFileAppender" />
     </logger>
 
-    <logger name="ua.edu.ukma.event_management_system.aop.ExceptionAOP" level="error" additivity="false">
+    <logger name="ua.edu.ukma.event_management_system.aop.ExceptionAspect" level="error" additivity="false">
+        <appender-ref ref="FileAppender" />
+    </logger>
+
+    <logger name="ua.edu.ukma.event_management_system.aop.GETLoggerAspect" level="info" additivity="false">
         <appender-ref ref="FileAppender" />
     </logger>
 
