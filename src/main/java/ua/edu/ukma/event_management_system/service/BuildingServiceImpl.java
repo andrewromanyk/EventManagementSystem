@@ -2,8 +2,8 @@ package ua.edu.ukma.event_management_system.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.stereotype.Service;
+import ua.edu.ukma.event_management_system.aop.rate_limit.RateLimit;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.BuildingRating;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
@@ -48,6 +48,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    @RateLimit(maxRequests = 3)
     public List<Building> getAllBuildings() {
         return buildingRepository.findAll()
                 .stream()
