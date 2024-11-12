@@ -3,8 +3,8 @@ package ua.edu.ukma.event_management_system.dto;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ua.edu.ukma.event_management_system.domain.Event;
-import ua.edu.ukma.event_management_system.domain.User;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
@@ -14,5 +14,6 @@ public class TicketDto {
     private UserDto user;
     private EventDto event;
     private int price;
+    private LocalDateTime purchaseDate;
 
 }

@@ -1,38 +1,30 @@
-package ua.edu.ukma.event_management_system.service;
+package ua.edu.ukma.event_management_system;
 
-import org.springframework.stereotype.Service;
-
-import org.springframework.transaction.annotation.Transactional;
-import ua.edu.ukma.event_management_system.domain.Event;
+import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.extension.ExtendWith;
+import org.modelmapper.ModelMapper;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Import;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.junit.jupiter.SpringExtension;
+import ua.edu.ukma.event_management_system.domain.Ticket;
 import ua.edu.ukma.event_management_system.domain.UserRole;
-import ua.edu.ukma.event_management_system.entity.*;
-import ua.edu.ukma.event_management_system.repository.*;
+import ua.edu.ukma.event_management_system.entity.BuildingEntity;
+import ua.edu.ukma.event_management_system.entity.EventEntity;
+import ua.edu.ukma.event_management_system.entity.TicketEntity;
+import ua.edu.ukma.event_management_system.entity.UserEntity;
 
 import java.time.LocalDateTime;
 
-@Service
-@Transactional
-public class DatabasePopulatorService {
+@ExtendWith(SpringExtension.class)
+@ContextConfiguration(classes = {Configurator.class})
+@Import({ModelMapper.class})
+public class TempTest {
+    @Autowired
+    private ModelMapper modelMapper;
 
-    private final BuildingRepository buildingRepository;
-    private final EventRepository eventRepository;
-    private final TicketRepository ticketRepository;
-    private final UserRepository userRepository;
-    private final EventRatingRepository eventRatingRepository;
-    private final BuildingRatingRepository buildingRatingRepository;
-
-    public DatabasePopulatorService(BuildingRepository br, EventRepository er,
-                                    TicketRepository tr, UserRepository ur,
-                                    EventRatingRepository err, BuildingRatingRepository brr) {
-        this.buildingRepository = br;
-        this.eventRepository = er;
-        this.ticketRepository = tr;
-        this.userRepository = ur;
-        this.eventRatingRepository = err;
-        this.buildingRatingRepository = brr;
-    }
-
-    public void populateDatabase() {
+    @Test
+    void test(){
         UserEntity user1 = new UserEntity(UserRole.USER, "and123", "Andriy",
                 "Petrenko", "andriisuper@gmail.com",
                 "$2a$10$JFbuJfw3FZSs.9rDOO3jiOP2r9HjnJczXsWiqvEhkCyyWVHNjuQyy", // Andri1Sup3r
@@ -45,16 +37,11 @@ public class DatabasePopulatorService {
                 "eqwe", "emsAdmin@gmail.com",
                 "$2a$10$NY5RpFbjoy4TnN.DPH/OEOhnq0.2/sNcfwbJHLW5YTfW.wOugwTsS", // admin123
                 "380777777777", 35);
-        userRepository.save(user1);
-        userRepository.save(user2);
-        userRepository.save(admin);
 
         BuildingEntity building1 = new BuildingEntity("123 Main St", 100, 300,
                 500, "Conference Hall");
         BuildingEntity building2 = new BuildingEntity("654 Central St", 500, 200,
                 100, "Concert Hall");
-        buildingRepository.save(building1);
-        buildingRepository.save(building2);
 
         EventEntity event1 = new EventEntity("queen-concert", LocalDateTime.now().plusDays(10),
                 LocalDateTime.now().plusDays(10).plusHours(2),
@@ -70,19 +57,10 @@ public class DatabasePopulatorService {
                 LocalDateTime.now().plusDays(3).plusHours(3),
                 building2, "zero tickets event",
                 0, 1);
-        eventRepository.save(event1);
-        eventRepository.save(event2);
-        eventRepository.save(eventZeroTickets);
 
         TicketEntity ticket1 = new TicketEntity(user1, event1, 100, LocalDateTime.now());
         TicketEntity ticket2 = new TicketEntity(user1, event2, 200, LocalDateTime.now());
-        ticketRepository.save(ticket1);
-        ticketRepository.save(ticket2);
 
-//        EventRatingEntity rating1 = new EventRatingEntity(event1, (byte) 4, user1, "");
-//        eventRatingRepository.save(rating1);
-//
-//        BuildingRatingEntity rating2 = new BuildingRatingEntity(building1, (byte) 5, user2, "");
-//        buildingRatingRepository.save(rating2);
+        System.out.println(modelMapper.map(ticket1, Ticket.class));
     }
 }

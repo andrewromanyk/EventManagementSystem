@@ -18,6 +18,7 @@ import ua.edu.ukma.event_management_system.repository.TicketRepository;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -47,7 +48,7 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Ticket purchaseTicket(UserDto user, EventDto event, int price) {
-        TicketEntity ticket = new TicketEntity(dtoToEntity(user), toEntity(event), price);
+        TicketEntity ticket = new TicketEntity(dtoToEntity(user), toEntity(event), price, LocalDateTime.now());
         return toDomain(ticketRepository.save(ticket));
     }
 
@@ -70,6 +71,7 @@ public class TicketServiceImpl implements TicketService {
             existingTicket.setEvent(toEntity(updatedTicket.getEvent()));
             existingTicket.setPrice(updatedTicket.getPrice());
             existingTicket.setUser(toEntity(updatedTicket.getUser()));
+            existingTicket.setPurchaseDate(updatedTicket.getPurchaseDate());
             ticketRepository.save(existingTicket);
         }
     }
@@ -87,6 +89,11 @@ public class TicketServiceImpl implements TicketService {
     @Override
     public List<Ticket> getAllTicketsForUser(String name){
         return modelMapper.map(ticketRepository.findAllByUserUsername(name), List.class);
+    }
+
+    @Override
+    public List<Long> getAllTicketsCreatedToday() {
+        return ticketRepository.findAllCreatedToday();
     }
 
     private TicketDto toDto(Ticket ticket) {

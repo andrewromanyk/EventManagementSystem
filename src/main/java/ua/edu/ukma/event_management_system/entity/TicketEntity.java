@@ -2,9 +2,13 @@ package ua.edu.ukma.event_management_system.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
+import org.springframework.context.annotation.Lazy;
+
+import java.time.LocalDateTime;
 
 @Data
 @NoArgsConstructor
+@AllArgsConstructor
 @Entity
 @Table(name = "ticket")
 public class TicketEntity {
@@ -23,9 +27,13 @@ public class TicketEntity {
     @Column(nullable = false)
     private int price;
 
-    public TicketEntity(UserEntity user, EventEntity event, int price) {
+    @Column(nullable = false)
+    private LocalDateTime purchaseDate;
+
+    public TicketEntity(UserEntity user, EventEntity event, int price, LocalDateTime purchaseDate) {
         this.user = user;
         this.event = event;
         this.price = price;
+        this.purchaseDate = purchaseDate;
     }
 }

@@ -1,6 +1,7 @@
 package ua.edu.ukma.event_management_system.entity;
 
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Lazy;
 import ua.edu.ukma.event_management_system.domain.Building;
 
 import lombok.*;
@@ -45,7 +46,7 @@ public class EventEntity {
     inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<UserEntity> users;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "event")
+    @OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "event")
     private List<EventRatingEntity> rating;
 
 

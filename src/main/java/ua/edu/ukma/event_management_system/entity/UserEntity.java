@@ -1,6 +1,7 @@
 package ua.edu.ukma.event_management_system.entity;
 
 import jakarta.persistence.*;
+import org.springframework.context.annotation.Lazy;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 
 import java.util.List;

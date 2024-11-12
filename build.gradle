@@ -34,7 +34,7 @@ dependencies {
 	implementation 'org.thymeleaf.extras:thymeleaf-extras-springsecurity6:3.1.2.RELEASE'
 	implementation 'org.springframework.boot:spring-boot-starter-aop:3.3.5'
 
-	runtimeOnly 'com.h2database:h2'   // H2 database driver
+	runtimeOnly 'com.h2database:h2:2.3.232'
 	runtimeOnly 'io.jsonwebtoken:jjwt-impl:0.12.6' // JWT dependency
 	runtimeOnly 'io.jsonwebtoken:jjwt-jackson:0.12.6' // JWT dependency
 
