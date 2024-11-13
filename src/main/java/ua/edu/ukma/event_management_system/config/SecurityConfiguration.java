@@ -64,6 +64,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/user/**").hasAuthority("USER")
 						.requestMatchers( "/ticket/**").hasAuthority("USER")
 						.requestMatchers("/main/**").hasAuthority("USER")
+						.requestMatchers("/manage/cache").hasAuthority("ADMIN")
 						.requestMatchers("/manage/**").hasAuthority("USER")
 						.anyRequest().authenticated())
 				.httpBasic(Customizer.withDefaults())

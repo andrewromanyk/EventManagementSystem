@@ -2,6 +2,8 @@ package ua.edu.ukma.event_management_system.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.cache.annotation.CachePut;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.aop.rate_limit.RateLimit;
 import ua.edu.ukma.event_management_system.domain.Building;
@@ -49,6 +51,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     @RateLimit(maxRequests = 3)
+    @Cacheable(cacheNames="buildings")
     public List<Building> getAllBuildings() {
         return buildingRepository.findAll()
                 .stream()
@@ -57,6 +60,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    @Cacheable(cacheNames="building", key = "#id")
     public Building getBuildingById(Long id) {
 		return toDomain(buildingRepository
                 .findById(id)
@@ -64,6 +68,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
+    @CachePut(cacheNames = "building", key = "#id")
     public void updateBuilding(Long id, BuildingDto updatedBuilding) {
         Optional<BuildingEntity> existingBuilding = buildingRepository.findById(id);
         if (existingBuilding.isPresent()) {
