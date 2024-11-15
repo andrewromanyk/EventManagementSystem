@@ -60,14 +60,14 @@ public class DatabasePopulatorService {
                 LocalDateTime.now().plusDays(10).plusHours(2),
                 building2, "A great queen concert", 100, 18);
 
-        EventEntity event2 = new EventEntity("it-conference", LocalDateTime.now().plusDays(3),
-                LocalDateTime.now().plusDays(3).plusHours(3),
+        EventEntity event2 = new EventEntity("it-conference", LocalDateTime.now().plusHours(3),
+                LocalDateTime.now().plusHours(6),
                 building1, "IT conference discussing Django vs SpringBoot",
                 50, 25);
 
-        EventEntity eventZeroTickets = new EventEntity("zero tickets",
-                LocalDateTime.now().plusDays(3),
-                LocalDateTime.now().plusDays(3).plusHours(3),
+        EventEntity eventZeroTickets = new EventEntity("High school reunion",
+                LocalDateTime.now(),
+                LocalDateTime.now().plusHours(3),
                 building2, "zero tickets event",
                 0, 1);
         eventRepository.save(event1);

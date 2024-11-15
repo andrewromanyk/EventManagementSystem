@@ -1,9 +1,6 @@
 package ua.edu.ukma.event_management_system.domain;
 
 import lombok.Data;
-import ua.edu.ukma.event_management_system.dto.BuildingDto;
-import ua.edu.ukma.event_management_system.dto.UserDto;
-import ua.edu.ukma.event_management_system.service.interfaces.Ratable;
 
 import java.time.LocalDateTime;
 import java.util.List;

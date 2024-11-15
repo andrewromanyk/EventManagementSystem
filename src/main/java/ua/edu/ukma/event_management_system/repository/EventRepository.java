@@ -1,10 +1,15 @@
 package ua.edu.ukma.event_management_system.repository;
 
 import org.springframework.data.jpa.repository.JpaRepository;
+import org.springframework.data.jpa.repository.Query;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
 
+import java.util.List;
 import java.util.Optional;
 
 public interface EventRepository extends JpaRepository<EventEntity, Long> {
     Optional<EventEntity> findAllByEventTitle(String title);
+
+    @Query("SELECT e.eventTitle, e.dateTimeStart FROM EventEntity e")
+    List<Object[]> findEventNameAndDates();
 }
