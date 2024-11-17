@@ -1,0 +1,48 @@
+package ua.edu.ukma.event_management_system.controller;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatusCode;
+import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
+import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.server.ResponseStatusException;
+import ua.edu.ukma.event_management_system.domain.UserRole;
+import ua.edu.ukma.event_management_system.dto.UserDto;
+import ua.edu.ukma.event_management_system.service.interfaces.UserService;
+
+import java.util.HashMap;
+import java.util.Map;
+
+@RestController
+public class AuthControllerRest {
+
+	private UserService userService;
+
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
+
+	@PostMapping("login")
+	public ResponseEntity<Map<String, String>> login(@RequestParam String username, @RequestParam String password) {
+		if (username == null || password == null) {
+			throw new ResponseStatusException(HttpStatusCode.valueOf(401));
+		}
+
+		String token = userService.verify(username, password);
+
+		// Return the token in a JSON response
+		Map<String, String> response = new HashMap<>();
+		response.put("token", token);
+
+		return ResponseEntity.ok(response);
+	}
+
+//	@PostMapping("register")
+//	public void registerUser(@RequestBody UserDto userDto) {
+//		userDto.setUserRole(UserRole.USER);
+//		userService.createUser(userDto);
+//	}
+
+}

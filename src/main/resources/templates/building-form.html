@@ -22,13 +22,9 @@
 </header>
 
 <div class="fullOutside">
-    <div class="inside">
-        <h5 class="question">
-            What is this page for?
-        </h5>
-        <h6 class="answer">
-            You can add new buildings in which events can be hosted.
-        </h6>
+    <div class="mainText">
+        <br>
+        Add building
     </div>
 
     <form th:action="@{/building}" th:object="${buildingDto}" method="post">
@@ -54,6 +50,7 @@
         <br>
         <button type="submit">Submit</button>
     </form>
+
 </div>
 
 <footer>

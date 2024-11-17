@@ -59,7 +59,7 @@ public class UserController {
                 .toList();
     }
 
-    @PostMapping("/")
+    @PostMapping
     public ResponseEntity<?> createNewUser(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();

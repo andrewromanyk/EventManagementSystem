@@ -1,30 +1,51 @@
 package ua.edu.ukma.event_management_system.controller;
 
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatusCode;
+import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
+import ua.edu.ukma.event_management_system.domain.UserRole;
+import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
-import java.util.Map;
-
-@RestController
+@Controller
 public class AuthController {
 
-	private UserService userService;
+    private UserService userService;
 
-	@Autowired
-	public void setUserService(UserService userService) {
-		this.userService = userService;
-	}
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
+    }
 
-	@PostMapping("login")
-	public String login(@RequestBody Map<String, String> map) {
-		String username = map.get("username");
-		String password = map.get("password");
-		if (username == null || password == null) {
-			throw new ResponseStatusException(HttpStatusCode.valueOf(401));
-		}
-		return userService.verify(username, password);
-	}
+    @GetMapping("register")
+    public String index(Model model) {
+        model.addAttribute("userDto", new UserDto());
+        return "register";
+    }
+
+    @GetMapping("login")
+    public String login() {
+        return "login";
+    }
+
+    @PostMapping("register")
+    public String registerUser(@ModelAttribute @Valid UserDto userDto) {
+        userDto.setUserRole(UserRole.USER);
+        userService.createUser(userDto);
+        return "redirect:/login";
+    }
+
+//    @PostMapping("login")
+//    public String login(@RequestParam String username, @RequestParam String password) {
+//        if (username == null || password == null) {
+//            throw new ResponseStatusException(HttpStatusCode.valueOf(401));
+//        }
+//        return "redirect:/main";
+////        return userService.verify(username, password);
+//    }
 }

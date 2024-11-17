@@ -63,7 +63,7 @@
     </logger>
 
     <root level="info">
-        <appender-ref ref="CustomAppender" />
+<!--        <appender-ref ref="CustomAppender" />-->
 <!--        <appender-ref ref="FileAppender" />-->
     </root>
 

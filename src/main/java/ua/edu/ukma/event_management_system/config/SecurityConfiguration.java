@@ -48,14 +48,14 @@ public class SecurityConfiguration {
 	public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
 		return http
 				.csrf(AbstractHttpConfigurer::disable)
-				.headers(httpSecurityHeadersConfigurer -> {
-					httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable);
-				})
+				.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 				.authorizeHttpRequests(request -> request
 						.requestMatchers("/login").permitAll()
 						.requestMatchers("/FAQ.html").permitAll()
 						.requestMatchers("/styles/*.css").permitAll()
 						.requestMatchers("/*.png").permitAll()
+						.requestMatchers("/register/**").permitAll()
+						.requestMatchers("/register").permitAll()
 						.requestMatchers(HttpMethod.GET, "/building/**").hasAuthority("USER")
 						.requestMatchers("/building/**").hasAuthority("ADMIN")
 						.requestMatchers(HttpMethod.GET, "/event/**").hasAuthority("USER")
