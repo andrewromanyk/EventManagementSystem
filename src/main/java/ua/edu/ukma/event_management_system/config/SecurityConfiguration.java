@@ -50,7 +50,7 @@ public class SecurityConfiguration {
 				.csrf(AbstractHttpConfigurer::disable)
 				.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 				.authorizeHttpRequests(request -> request
-						.requestMatchers("/login").permitAll()
+						.requestMatchers("login").permitAll()
 						.requestMatchers("/FAQ.html").permitAll()
 						.requestMatchers("/styles/*.css").permitAll()
 						.requestMatchers("/*.png").permitAll()
@@ -67,7 +67,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/manage/cache").hasAuthority("ADMIN")
 						.requestMatchers("/manage/**").hasAuthority("USER")
 						.anyRequest().authenticated())
-				.httpBasic(Customizer.withDefaults())
+//				.httpBasic(Customizer.withDefaults())
 				.sessionManagement(session ->
 						session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.logout(LogoutConfigurer::permitAll)

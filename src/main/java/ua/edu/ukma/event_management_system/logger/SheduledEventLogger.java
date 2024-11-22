@@ -27,13 +27,12 @@ public class SheduledEventLogger {
     @Scheduled(fixedRate = 1000 * 60 * 60 * 24)
     private void logEventsForToday(){
         try {
-            LocalDateTime now = LocalDateTime.now();
             List<Object[]> events = eventRepository.findEventNameAndDates();
-            logger.info("Events planned for today: {}", events.stream()
+            String xs = events.stream()
                     .filter(event -> ((LocalDateTime) event[1]).toLocalDate().equals(LocalDate.now()))
                     .map(event -> (String) event[0])
-                    .collect(Collectors.joining(", "))
-            );
+                    .collect(Collectors.joining(", "));
+            logger.info("Events planned for today: {}", xs);
         } catch (Exception e) {
             logger.error("Failed to log events: {}", e.getMessage());
         }

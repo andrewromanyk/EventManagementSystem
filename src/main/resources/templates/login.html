@@ -64,13 +64,13 @@
 
         // Handle the response
         if (response.ok) {
-            const data = await response.json();  // Parse the JSON response
-
-            const token = data.token;  // Assuming the token is returned as a JSON property
-            console.log('Received token:', token);
-
-            // Save the token in localStorage (or sessionStorage)
-            localStorage.setItem('jwtToken', token);  // You can also use sessionStorage instead
+            // const data = await response.json();  // Parse the JSON response
+            //
+            // const token = data.token;  // Assuming the token is returned as a JSON property
+            // console.log('Received token:', token);
+            //
+            // // Save the token in localStorage (or sessionStorage)
+            // localStorage.setItem('jwtToken', token);  // You can also use sessionStorage instead
 
             // Optionally, redirect or update UI
             window.location.href = '/main';  // Redirect after successful login

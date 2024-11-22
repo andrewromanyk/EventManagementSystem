@@ -1,9 +1,7 @@
 package ua.edu.ukma.event_management_system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatusCode;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
+import org.springframework.http.*;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.server.ResponseStatusException;
@@ -25,18 +23,30 @@ public class AuthControllerRest {
 	}
 
 	@PostMapping("login")
-	public ResponseEntity<Map<String, String>> login(@RequestParam String username, @RequestParam String password) {
+	public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
 		if (username == null || password == null) {
 			throw new ResponseStatusException(HttpStatusCode.valueOf(401));
 		}
 
 		String token = userService.verify(username, password);
 
-		// Return the token in a JSON response
-		Map<String, String> response = new HashMap<>();
-		response.put("token", token);
+		ResponseCookie cookie = ResponseCookie.from("jwtToken", token)
+				.httpOnly(true)
+				.secure(true)
+				.path("/")
+				.maxAge(24 * 60 * 60)
+				.sameSite("Strict")
+				.build();
 
-		return ResponseEntity.ok(response);
+		return ResponseEntity.ok()
+				.header(HttpHeaders.SET_COOKIE, cookie.toString())
+				.body("Login successful");
+
+//		// Return the token in a JSON response
+//		Map<String, String> response = new HashMap<>();
+//		response.put("token", token);
+//
+//		return ResponseEntity.ok(response);
 	}
 
 //	@PostMapping("register")

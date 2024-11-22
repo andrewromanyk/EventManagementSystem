@@ -22,7 +22,7 @@ public class FormController {
         this.ticketService = service;
     }
 
-    @GetMapping("/create-building")
+    @GetMapping("/building-form")
     public String createBuildingForm(Model model) {
         model.addAttribute("buildingDto", new BuildingDto());
         return "building-form";
