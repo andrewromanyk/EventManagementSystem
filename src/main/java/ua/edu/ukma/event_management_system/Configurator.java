@@ -26,6 +26,9 @@ import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 
+import java.util.ArrayList;
+import java.util.stream.Collectors;
+
 @Configuration
 public class Configurator {
 
@@ -43,11 +46,11 @@ public class Configurator {
         return new EventServiceImpl();
     }
 
-    @Bean
-    @ConditionalOnSingleCandidate(TicketService.class)
-    public TicketService ticketService() {
-        return new TicketServiceImpl();
-    }
+//    @Bean
+//    @ConditionalOnSingleCandidate(TicketService.class)
+//    public TicketService ticketService() {
+//        return new TicketServiceImpl();
+//    }
 
     @Primary
     @Bean
@@ -72,7 +75,14 @@ public class Configurator {
         // Building
         // domain to dto
         TypeMap<Building, BuildingDto> buildingMapper = mapperResult.createTypeMap(Building.class, BuildingDto.class);
-        buildingMapper.addMappings(mapper -> mapper.map(src -> src.getRating().stream().map(BuildingRating::getId).toList(), BuildingDto::setRating));
+        buildingMapper.addMappings(mapper ->
+                mapper.map(src -> src.getRating() == null
+                                ? new ArrayList<>() // Handle null safely
+                                : src.getRating().stream()
+                                .map(BuildingRating::getId)
+                                .collect(Collectors.toList()), // Use Collectors.toList() for Java 8+
+                        BuildingDto::setRating)
+        );
         logger.info("Created 3 part modelmapper");
 
         // dto to model

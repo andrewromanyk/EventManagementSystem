@@ -62,9 +62,9 @@
         <appender-ref ref="ScheduledEventFileAppender" />
     </logger>
 
-    <root level="info">
-<!--        <appender-ref ref="CustomAppender" />-->
-<!--        <appender-ref ref="FileAppender" />-->
-    </root>
+<!--    <root level="info">-->
+<!--&lt;!&ndash;        <appender-ref ref="CustomAppender" />&ndash;&gt;-->
+<!--&lt;!&ndash;        <appender-ref ref="FileAppender" />&ndash;&gt;-->
+<!--    </root>-->
 
 </configuration>
