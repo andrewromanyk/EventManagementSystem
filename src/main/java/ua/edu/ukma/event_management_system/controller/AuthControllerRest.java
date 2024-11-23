@@ -38,8 +38,10 @@ public class AuthControllerRest {
 				.sameSite("Strict")
 				.build();
 
-		return ResponseEntity.ok()
+		return ResponseEntity
+				.status(HttpStatus.FOUND)
 				.header(HttpHeaders.SET_COOKIE, cookie.toString())
+				.header(HttpHeaders.LOCATION, "/main")
 				.body("Login successful");
 
 //		// Return the token in a JSON response
