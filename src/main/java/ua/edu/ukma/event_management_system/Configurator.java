@@ -77,10 +77,10 @@ public class Configurator {
         TypeMap<Building, BuildingDto> buildingMapper = mapperResult.createTypeMap(Building.class, BuildingDto.class);
         buildingMapper.addMappings(mapper ->
                 mapper.map(src -> src.getRating() == null
-                                ? new ArrayList<>() // Handle null safely
+                                ? new ArrayList<>()
                                 : src.getRating().stream()
                                 .map(BuildingRating::getId)
-                                .collect(Collectors.toList()), // Use Collectors.toList() for Java 8+
+                                .collect(Collectors.toList()),
                         BuildingDto::setRating)
         );
         logger.info("Created 3 part modelmapper");
