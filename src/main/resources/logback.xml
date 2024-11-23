@@ -34,7 +34,7 @@
         </encoder>
     </appender>
 
-    <logger name="ua.edu.ukma.event_management_system.controller.UserController" level="info" additivity="false">
+    <logger name="ua.edu.ukma.event_management_system.controller.api.UserController" level="info" additivity="false">
         <appender-ref ref="UserActionFileAppender" />
     </logger>
 

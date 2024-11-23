@@ -8,8 +8,6 @@ import ch.qos.logback.core.Layout;
 import lombok.NoArgsConstructor;
 import org.slf4j.LoggerFactory;
 import lombok.AllArgsConstructor;
-import org.slf4j.*;
-import ua.edu.ukma.event_management_system.controller.BuildingController;
 
 @NoArgsConstructor
 @AllArgsConstructor

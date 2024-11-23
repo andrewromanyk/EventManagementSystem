@@ -1,4 +1,4 @@
-package ua.edu.ukma.event_management_system.controller;
+package ua.edu.ukma.event_management_system.controller.api;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
@@ -6,11 +6,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.ukma.event_management_system.domain.Ticket;
-import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.dto.TicketDto;
-import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.exceptions.EventFullException;
-import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 
 import java.util.List;

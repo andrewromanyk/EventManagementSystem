@@ -1,4 +1,4 @@
-package ua.edu.ukma.event_management_system.controller;
+package ua.edu.ukma.event_management_system.controller.api;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;

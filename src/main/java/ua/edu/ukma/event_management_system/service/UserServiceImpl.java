@@ -10,7 +10,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-import ua.edu.ukma.event_management_system.controller.UserController;
 import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.UserDto;

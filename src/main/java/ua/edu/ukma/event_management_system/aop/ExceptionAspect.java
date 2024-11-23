@@ -13,7 +13,7 @@ public class ExceptionAspect {
 
     private static final Logger logger = LoggerFactory.getLogger(ExceptionAspect.class);
 
-    @Pointcut(value = "execution(* ua.edu.ukma.event_management_system.controller.TicketController.createTicket(..))")
+    @Pointcut(value = "execution(* ua.edu.ukma.event_management_system.controller.api.TicketController.createTicket(..))")
     private void createTicket() {}
 
     @AfterThrowing(

@@ -1,7 +1,6 @@
-package ua.edu.ukma.event_management_system.controller;
+package ua.edu.ukma.event_management_system.controller.api;
 
 import jakarta.validation.Valid;
-import org.apache.logging.log4j.MarkerManager;
 import org.modelmapper.ModelMapper;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
