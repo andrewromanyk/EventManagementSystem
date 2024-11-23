@@ -3,6 +3,7 @@ package ua.edu.ukma.event_management_system.service;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
@@ -31,7 +32,7 @@ public class EventServiceImpl implements EventService {
     private EventRatingRepository eventRatingRepository;
 
     @Autowired
-    public void setModelMapper(ModelMapper modelMapper) {
+    public void setModelMapper(@Lazy ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 

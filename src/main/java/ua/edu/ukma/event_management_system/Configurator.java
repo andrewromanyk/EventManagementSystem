@@ -34,23 +34,42 @@ public class Configurator {
 
     private final static Logger logger = LoggerFactory.getLogger(Configurator.class);
 
-    @Bean
-    @ConditionalOnSingleCandidate(BuildingService.class)
-    public BuildingService buildingService() {
-        return new BuildingServiceImpl();
+    private TicketService ticketService;
+    private BuildingService buildingService;
+    private EventService eventService;
+
+    @Autowired
+    public void setBuildingService(BuildingService buildingService) {
+        this.buildingService = buildingService;
     }
 
-    @Bean
-    @ConditionalOnSingleCandidate(EventService.class)
-    public EventService eventService() {
-        return new EventServiceImpl();
+    @Autowired
+    public void setTicketService(TicketService ticketService) {
+        this.ticketService = ticketService;
     }
 
-    @Bean
-    @ConditionalOnSingleCandidate(TicketService.class)
-    public TicketService ticketService() {
-        return new TicketServiceImpl();
+    @Autowired
+    public void setEventService(EventService eventService) {
+        this.eventService = eventService;
     }
+
+//    @Bean
+//    @ConditionalOnSingleCandidate(BuildingService.class)
+//    public BuildingService buildingService() {
+//        return new BuildingServiceImpl();
+//    }
+
+//    @Bean
+//    @ConditionalOnSingleCandidate(EventService.class)
+//    public EventService eventService() {
+//        return new EventServiceImpl();
+//    }
+
+//    @Bean
+//    @ConditionalOnSingleCandidate(TicketService.class)
+//    public TicketService ticketService() {
+//        return new TicketServiceImpl();
+//    }
 
     @Primary
     @Bean
@@ -67,7 +86,7 @@ public class Configurator {
         logger.info("Created 1 part modelmapper");
 
         // dto to entity
-        Converter<Long, BuildingEntity> toBuildingConverter = ctx -> mapperResult.map(buildingService().getBuildingById(ctx.getSource()), BuildingEntity.class);
+        Converter<Long, BuildingEntity> toBuildingConverter = ctx -> mapperResult.map(buildingService.getBuildingById(ctx.getSource()), BuildingEntity.class);
         TypeMap<EventDto, EventEntity> eventMapperRev = mapperResult.createTypeMap(EventDto.class, EventEntity.class);
         eventMapperRev.addMappings(mapper -> mapper.using(toBuildingConverter).map(EventDto::getBuilding, EventEntity::setBuilding));
 
@@ -86,7 +105,7 @@ public class Configurator {
         logger.info("Created 3 part modelmapper");
 
         // dto to model
-        Converter<Long, BuildingRating> toRatingConverter = ctx -> mapperResult.map(buildingService().getRatingById(ctx.getSource()), BuildingRating.class);
+        Converter<Long, BuildingRating> toRatingConverter = ctx -> mapperResult.map(buildingService.getRatingById(ctx.getSource()), BuildingRating.class);
         TypeMap<BuildingDto, Building> buildingDtoToDomain = mapperResult.createTypeMap(BuildingDto.class, Building.class);
         buildingDtoToDomain.addMappings(mapper -> mapper.using(toRatingConverter).map(BuildingDto::getRating, Building::setRating));
         logger.info("Created 4 part modelmapper");
@@ -98,7 +117,7 @@ public class Configurator {
         logger.info("Created 5 part modelmapper");
 
         // dto to domain
-        Converter<Integer, Event> idToEvent = ctx -> mapperResult.map(eventService().getEventById(ctx.getSource()), Event.class);
+        Converter<Integer, Event> idToEvent = ctx -> mapperResult.map(eventService.getEventById(ctx.getSource()), Event.class);
         TypeMap<TicketDto, Ticket> ticketDtoToDomain = mapperResult.createTypeMap(TicketDto.class, Ticket.class);
         ticketDtoToDomain.addMappings(mapper -> mapper.using(idToEvent).map(TicketDto::getEvent, Ticket::setEvent));
         logger.info("Created 6 part modelmapper");
