@@ -46,11 +46,11 @@ public class Configurator {
         return new EventServiceImpl();
     }
 
-//    @Bean
-//    @ConditionalOnSingleCandidate(TicketService.class)
-//    public TicketService ticketService() {
-//        return new TicketServiceImpl();
-//    }
+    @Bean
+    @ConditionalOnSingleCandidate(TicketService.class)
+    public TicketService ticketService() {
+        return new TicketServiceImpl();
+    }
 
     @Primary
     @Bean
