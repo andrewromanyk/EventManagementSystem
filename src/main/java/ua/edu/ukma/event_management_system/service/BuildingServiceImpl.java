@@ -116,6 +116,12 @@ public class BuildingServiceImpl implements BuildingService {
                 .toList();
     }
 
+    @Override
+    public BuildingRating getRatingById(long id) {
+        return toDomain(buildingRatingRepository.findById((long) id)
+                .orElseThrow());
+    }
+
     private BuildingDto toDto(Building building) {
         return modelMapper.map(building, BuildingDto.class);
     }

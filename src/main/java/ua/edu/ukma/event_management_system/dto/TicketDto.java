@@ -12,7 +12,7 @@ import java.time.LocalDateTime;
 public class TicketDto {
     private long id;
     private UserDto user;
-    private EventDto event;
+    private int event;
     private int price;
     private LocalDateTime purchaseDate;
 

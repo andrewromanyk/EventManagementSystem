@@ -25,18 +25,33 @@ import java.util.Optional;
 public class EventServiceImpl implements EventService {
 
     private ModelMapper modelMapper;
-    private final EventRepository eventRepository;
-    private final BuildingRepository buildingRepository;
-    private final BuildingService buildingService;
-    private final EventRatingRepository eventRatingRepository;
+    private EventRepository eventRepository;
+    private BuildingRepository buildingRepository;
+    private BuildingService buildingService;
+    private EventRatingRepository eventRatingRepository;
 
     @Autowired
-    public EventServiceImpl(ModelMapper modelMapper, BuildingRepository buildingRepository, EventRepository eventRepository,
-                            BuildingService buildingService, EventRatingRepository eventRatingRepository) {
-        this.buildingRepository = buildingRepository;
+    public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+    }
+
+    @Autowired
+    public void setEventRepository(EventRepository eventRepository) {
         this.eventRepository = eventRepository;
+    }
+
+    @Autowired
+    public void setBuildingRepository(BuildingRepository buildingRepository) {
+        this.buildingRepository = buildingRepository;
+    }
+
+    @Autowired
+    public void setBuildingService(BuildingService buildingService) {
         this.buildingService = buildingService;
+    }
+
+    @Autowired
+    public void setEventRatingRepository(EventRatingRepository eventRatingRepository) {
         this.eventRatingRepository = eventRatingRepository;
     }
 

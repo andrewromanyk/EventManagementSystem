@@ -26,19 +26,22 @@ import java.util.Optional;
 public class TicketServiceImpl implements TicketService {
 
     private ModelMapper modelMapper;
-    private final EventService eventService;
-
-    @Autowired
+    private EventService eventService;
     private TicketRepository ticketRepository;
 
     @Autowired
-    public TicketServiceImpl(EventService eventService) {  //DI with constructor
+    public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
 
     @Autowired
     void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
+    }
+
+    @Autowired
+    void setTicketRepository(TicketRepository ticketRepository) {
+        this.ticketRepository = ticketRepository;
     }
 
     @Override
@@ -68,7 +71,8 @@ public class TicketServiceImpl implements TicketService {
         Optional<TicketEntity> existingUserOpt = ticketRepository.findById(id);
         if (existingUserOpt.isPresent()) {
             TicketEntity existingTicket = existingUserOpt.get();
-            existingTicket.setEvent(toEntity(updatedTicket.getEvent()));
+            Event updatedEvent = eventService.getEventById(updatedTicket.getEvent());
+            existingTicket.setEvent(toEntity(updatedEvent));
             existingTicket.setPrice(updatedTicket.getPrice());
             existingTicket.setUser(toEntity(updatedTicket.getUser()));
             existingTicket.setPurchaseDate(updatedTicket.getPurchaseDate());
@@ -133,6 +137,10 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private EventEntity toEntity(EventDto event){
+        return modelMapper.map(event, EventEntity.class);
+    }
+
+    private EventEntity toEntity(Event event){
         return modelMapper.map(event, EventEntity.class);
     }
 
