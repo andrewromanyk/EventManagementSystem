@@ -9,6 +9,7 @@ import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.domain.Ticket;
 import ua.edu.ukma.event_management_system.dto.TicketDto;
 import ua.edu.ukma.event_management_system.exceptions.EventFullException;
+import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 
 import java.util.List;

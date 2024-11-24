@@ -1,4 +1,4 @@
-package ua.edu.ukma.event_management_system.controller.page;
+package ua.edu.ukma.event_management_system.controller.api;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
