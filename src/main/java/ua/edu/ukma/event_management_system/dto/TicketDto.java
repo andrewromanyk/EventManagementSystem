@@ -11,8 +11,8 @@ import java.time.LocalDateTime;
 @AllArgsConstructor
 public class TicketDto {
     private long id;
-    private UserDto user;
-    private EventDto event;
+    private long user;
+    private long event;
     private int price;
     private LocalDateTime purchaseDate;
 

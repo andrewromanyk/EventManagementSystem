@@ -24,4 +24,6 @@ public interface BuildingService {
     List<BuildingRating> getAllByBuildingIdAndRating(long buildingId, byte rating);
 
     List<Building> getAllByCapacity(int capacity);
+
+    BuildingRating getRatingById(long id);
 }

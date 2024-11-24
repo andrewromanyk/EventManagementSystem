@@ -33,4 +33,16 @@ public class BuildingRatingEntity {
     }
 
     public BuildingRatingEntity() {}
+
+    @Override
+    public String toString() {
+        return "BuildingRatingEntity{"
+                +
+                "id: " + id +
+                ", building :{ id: " + getBuilding().getId() + ", ratingSize: " + getBuilding().getRating().size() + "}, " +
+                ", rating: " + rating +
+                ", author: " + author +
+                ", comment: " + comment +
+                "}";
+    }
 }

@@ -3,6 +3,7 @@ package ua.edu.ukma.event_management_system.service;
 import org.modelmapper.ModelMapper;
 import org.slf4j.*;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -10,7 +11,6 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.web.server.ResponseStatusException;
-import ua.edu.ukma.event_management_system.controller.UserController;
 import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.UserDto;
@@ -35,7 +35,7 @@ public class UserServiceImpl implements UserService {
     private JwtService jwtService;
 
     @Autowired
-    void setModelMapper(ModelMapper modelMapper) {
+    void setModelMapper(@Lazy ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
     @Autowired
@@ -43,11 +43,11 @@ public class UserServiceImpl implements UserService {
         this.userRepository = userRepository;
     }
     @Autowired
-    public void setPasswordEncoder(PasswordEncoder passwordEncoder) {
+    public void setPasswordEncoder(@Lazy PasswordEncoder passwordEncoder) {
         this.passwordEncoder = passwordEncoder;
     }
     @Autowired
-    public void setAuthenticationManager(AuthenticationManager authenticationManager) {
+    public void setAuthenticationManager(@Lazy AuthenticationManager authenticationManager) {
         this.authenticationManager = authenticationManager;
     }
     @Autowired

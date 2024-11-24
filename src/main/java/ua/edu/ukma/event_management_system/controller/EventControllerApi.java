@@ -14,9 +14,9 @@ import ua.edu.ukma.event_management_system.domain.Event;
 import java.util.*;
 
 @RestController
-@RequestMapping("event")
+@RequestMapping("api/event")
 @ConditionalOnExpression("${api.event.enable}")
-public class EventController {
+public class EventControllerApi {
 
     private ModelMapper modelMapper;
     private EventService eventService;
