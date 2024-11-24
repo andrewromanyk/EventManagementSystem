@@ -3,9 +3,7 @@ package ua.edu.ukma.event_management_system.controller;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
-import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
-import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.BindingResult;
@@ -20,7 +18,7 @@ import jakarta.validation.Valid;
 
 import java.util.*;
 
-@Controller
+@RestController
 @RequestMapping("building")
 @ConditionalOnExpression("${api.building.enable}")
 public class BuildingController {
@@ -39,43 +37,34 @@ public class BuildingController {
 	}
 
 	@GetMapping("/{id}")
-	public String getBuilding(@PathVariable long id, Model model) {
-		List<BuildingDto> buildings = new ArrayList<>();
-		buildings.add(toDto(buildingService.getBuildingById(id)));
-		model.addAttribute("buildings", buildings);
-		return "buildings";
+	public BuildingDto getBuilding(@PathVariable long id) {
+		return toDto(buildingService.getBuildingById(id));
 	}
 
 	@GetMapping("/")
-	public String getBuildings(@RequestParam(required = false) Integer capacity, Model model) {
-		List<BuildingDto> buildings;
+	public List<BuildingDto> getBuildings(@RequestParam(required = false) Integer capacity) {
 		if (capacity == null) {
-			buildings = buildingService.getAllBuildings()
+			return buildingService.getAllBuildings()
 					.stream()
 					.map(this::toDto)
 					.toList();
 		} else {
-			buildings = buildingService.getAllByCapacity(capacity)
+			return buildingService.getAllByCapacity(capacity)
 					.stream()
 					.map(this::toDto)
 					.toList();
 		}
-
-		model.addAttribute("buildings", buildings);
-		return "buildings";
 	}
 
 	@PostMapping
-	public String createNewBuilding(@ModelAttribute("buildingDto") @Valid BuildingDto buildingDto,
-									BindingResult bindingResult, Model model) {
+	public ResponseEntity<?> createNewBuilding(@ModelAttribute("buildingDto") @Valid BuildingDto buildingDto,
+											   BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()){
 			Map<String, String> errors = new HashMap<>();
 			bindingResult.getFieldErrors().forEach(error -> {
 				errors.put(error.getField(), error.getDefaultMessage());
 			});
-
-			model.addAttribute("errors", errors);
-			return "error-page";
+			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 
 		if(buildingDto.getDescription() == null || buildingDto.getDescription().isEmpty()){
@@ -88,11 +77,11 @@ public class BuildingController {
 		}
 
 		Building returned = buildingService.createBuilding(buildingDto);
-		return "buildings";
+		return new ResponseEntity<>(returned, HttpStatus.CREATED);
 	}
 
+
 	@PutMapping("/{id}")
-	@ResponseBody
 	public ResponseEntity<?> updateBuilding(@PathVariable long id, @RequestBody @Valid BuildingDto buildingDto,
 							   BindingResult bindingResult) {
 		if(bindingResult.hasErrors()){
@@ -107,7 +96,6 @@ public class BuildingController {
 	}
 
 	@DeleteMapping("/{id}")
-	@ResponseBody
 	public ResponseEntity<?> deleteBuilding(@PathVariable long id) {
 		buildingService.deleteBuilding(id);
 		return new ResponseEntity<>(HttpStatus.OK);
@@ -118,7 +106,6 @@ public class BuildingController {
 	}
 
 	@GetMapping("/{buildingId}/{rating}")
-	@ResponseBody
 	public List<BuildingRatingDto> getRated(@PathVariable long buildingId, @PathVariable byte rating) {
 		return buildingService.getAllByBuildingIdAndRating(buildingId, rating)
 				.stream()

@@ -22,12 +22,6 @@ public class FormController {
         this.ticketService = service;
     }
 
-    @GetMapping("/building-form")
-    public String createBuildingForm(Model model) {
-        model.addAttribute("buildingDto", new BuildingDto());
-        return "building-form";
-    }
-
     @GetMapping("/main")
     public String mainPage(Model model, @AuthenticationPrincipal UserDetails userDetails) {
         model.addAttribute("tickets", ticketService.getAllTicketsForUser(userDetails.getUsername()));
