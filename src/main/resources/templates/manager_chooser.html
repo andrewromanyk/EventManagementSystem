@@ -13,15 +13,7 @@
 </head>
 
 <body>
-    <header>
-        <h1 id=name>
-            Event
-            <br>
-            Manager
-        </h1>
-        <img id=icon alt="Event Manager" src="../static/em-icon.png"
-             th:src="@{/em-icon.png}">
-    </header>
+<div th:insert="page-parts :: heading"></div>
 
     <div class="fullOutside">
         <button class="managing-button" sec:authorize="hasAuthority('ORGANIZER')">Manage Events</button>
@@ -30,16 +22,7 @@
         <button class="managing-button" sec:authorize="hasAuthority('ADMIN')">Manage Buildings</button>
     </div>
 
-    <footer>
-        <ul>
-            <li>
-                <a href="/login">Main Site</a>
-            </li>
-            <li>
-                <a href="/FAQ.html">FAQ</a>
-            </li>
-        </ul>
-    </footer>
+<div th:insert="page-parts :: footing"></div>
 </body>
 
 </html>

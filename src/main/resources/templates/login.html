@@ -13,15 +13,7 @@
 </head>
 
 <body>
-<header>
-    <h1 id=name>
-        Event
-        <br>
-        Manager
-    </h1>
-    <img id=icon alt="Event Manager" src="../static/em-icon.png"
-         th:src="@{/em-icon.png}">
-</header>
+<div th:insert="page-parts :: heading"></div>
 
 <div class="fullOutside">
     <div class="mainText">
@@ -45,64 +37,8 @@
 
 </div>
 
-<!--<script>-->
-<!--    async function login(username, password) {-->
-<!--        // Create the request payload-->
-<!--        const loginData = {-->
-<!--            username: username,-->
-<!--            password: password-->
-<!--        };-->
 
-<!--        // Send the login request using fetch-->
-<!--        const response = await fetch('/login', {-->
-<!--            method: 'POST',-->
-<!--            headers: {-->
-<!--                'Content-Type': 'application/x-www-form-urlencoded',  // Content type of the request-->
-<!--            },-->
-<!--            body: new URLSearchParams(loginData)  // Encode the data for the request-->
-<!--        });-->
-
-<!--        // Handle the response-->
-<!--        if (response.ok) {-->
-<!--            // const data = await response.json();  // Parse the JSON response-->
-<!--            //-->
-<!--            // const token = data.token;  // Assuming the token is returned as a JSON property-->
-<!--            // console.log('Received token:', token);-->
-<!--            //-->
-<!--            // // Save the token in localStorage (or sessionStorage)-->
-<!--            // localStorage.setItem('jwtToken', token);  // You can also use sessionStorage instead-->
-
-<!--            // Optionally, redirect or update UI-->
-<!--            window.location.href = '/main';  // Redirect after successful login-->
-<!--        } else {-->
-<!--            console.error('Login failed');-->
-<!--            alert('Login failed, please try again.');-->
-<!--        }-->
-<!--    }-->
-
-<!--    // Attach to the form submit event-->
-<!--    document.getElementById('loginForm').addEventListener('submit', function(e) {-->
-<!--        e.preventDefault();  // Prevent default form submission-->
-
-<!--        const username = document.getElementById('username').value;-->
-<!--        const password = document.getElementById('pass').value;-->
-
-<!--        // Call the login function with the entered values-->
-<!--        login(username, password);-->
-<!--    });-->
-
-<!--</script>-->
-
-<footer>
-    <ul class="footerList">
-        <li>
-            <a href="/login">Main Site</a>
-        </li>
-        <li>
-            <a href="/FAQ.html">FAQ</a>
-        </li>
-    </ul>
-</footer>
+<div th:insert="page-parts :: footing"></div>
 </body>
 
 </html>

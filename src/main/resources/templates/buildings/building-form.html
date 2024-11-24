@@ -13,13 +13,7 @@
 </head>
 
 <body>
-<header>
-    <h1 id=name>Add new
-        <br>
-        Building</h1>
-    <img id=icon alt="Event Manager" src="../../static/em-icon.png"
-         th:src="@{/em-icon.png}">
-</header>
+<div th:insert="page-parts :: heading"></div>
 
 <div class="fullOutside">
     <div class="mainText">
@@ -53,16 +47,8 @@
 
 </div>
 
-<footer>
-    <ul>
-        <li>
-            <a href="/login">Main Site</a>
-        </li>
-        <li>
-            <a href="/FAQ.html">FAQ</a>
-        </li>
-    </ul>
-</footer>
+
+<div th:insert="page-parts :: footing"></div>
 </body>
 
 </html>

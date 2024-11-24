@@ -1,0 +1,22 @@
+<link rel="stylesheet" href="../static/styles/basic.css"
+      th:href="@{styles/basic.css}">
+<header th:fragment="heading">
+        <h1 id=name>
+            Event
+            <br>
+            Manager
+        </h1>
+        <img id=icon alt="Event Manager" src="../static/em-icon.png"
+             th:src="@{/em-icon.png}">
+</header>
+
+<footer th:fragment="footing">
+    <ul class="footerList">
+        <li>
+            <a href="/login">Main Site</a>
+        </li>
+        <li>
+            <a href="/FAQ.html">FAQ</a>
+        </li>
+    </ul>
+</footer>

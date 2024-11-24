@@ -18,14 +18,7 @@
 </head>
 
 <body>
-<header>
-    <h1 id=name>Building
-        <br>
-        Details
-    </h1>
-    <img id=icon alt="Event Manager" src="../static/em-icon.png"
-         th:src="@{/em-icon.png}">
-</header>
+<div th:insert="page-parts :: heading"></div>
 
 <div class="container fullOutside">
 
@@ -50,16 +43,7 @@
 
 </div>
 
-<footer>
-    <ul>
-        <li>
-            <a href="/login">Main Site</a>
-        </li>
-        <li>
-            <a href="/FAQ.html">FAQ</a>
-        </li>
-    </ul>
-</footer>
+<div th:insert="page-parts :: footing"></div>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/js/bootstrap.bundle.min.js"
         integrity="sha384-gtEjrD/SeCtmISkJkNUaaKMoLD0//ElJ19smozuHV6z3Iehds+3Ulb9Bn9Plx0x4"
