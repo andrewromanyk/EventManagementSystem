@@ -26,7 +26,7 @@ public class BuildingDto {
 	@Size(max = 500, message = "Description must be less than 500 characters long")
 	private String description;
 	//@Valid
-	private List<Long> rating = new ArrayList<>();
+	private List<Long> rating;
 
 	public BuildingDto(int id, String address, int hourlyRate, int areaM2, int capacity, String description) {
 		this.id = id;

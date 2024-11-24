@@ -1,6 +1,9 @@
 package ua.edu.ukma.event_management_system.service;
 
+import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
@@ -28,6 +31,9 @@ public class BuildingServiceImpl implements BuildingService {
     private ModelMapper modelMapper;
     private BuildingRepository buildingRepository;
     private BuildingRatingRepository buildingRatingRepository;
+
+    private static final Logger logger = LoggerFactory.getLogger(BuildingServiceImpl.class);
+
 
     @Autowired
     void setBuildingRepository(BuildingRepository buildingRepository) {
@@ -128,6 +134,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     private Building toDomain(BuildingEntity buildingEntity) {
+        Hibernate.initialize(buildingEntity.getRating());
         return modelMapper.map(buildingEntity, Building.class);
     }
 
