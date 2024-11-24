@@ -59,7 +59,7 @@ public class DatabasePopulatorService {
         buildingRepository.save(building1);
         buildingRepository.save(building2);
 
-        byte[] image = Files.readAllBytes(Path.of("D:\\naukma\\3\\Spring\\event-management-system\\src\\main\\resources\\stock_photo.jpg"));
+        byte[] image = Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg"));
 
         EventEntity event1 = new EventEntity("queen-concert", LocalDateTime.now().plusDays(10),
                 LocalDateTime.now().plusDays(10).plusHours(2),
