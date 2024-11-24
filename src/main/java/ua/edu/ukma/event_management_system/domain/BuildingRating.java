@@ -7,7 +7,7 @@ import lombok.NoArgsConstructor;
 @NoArgsConstructor
 public class BuildingRating {
 	private long id;
-	private Building building;
+	private long building;
 	private byte rating;
 	private User author;
 	private String comment;

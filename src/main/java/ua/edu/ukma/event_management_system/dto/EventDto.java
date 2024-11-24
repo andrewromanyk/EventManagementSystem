@@ -18,8 +18,9 @@ public class EventDto {
     private String description;
     private int numberOfTickets;
     private int minAgeRestriction;
-    private List<EventRatingDto> rating;
+    private List<Long> rating;
     private List<UserDto> users;
+    private byte[] image;
 
     public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
                     LocalDateTime dateTimeEnd, long building, String description,
@@ -39,7 +40,7 @@ public class EventDto {
     public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
                     LocalDateTime dateTimeEnd, long building, String description,
                     int numberOfTickets, int minAgeRestriction, List<UserDto> users,
-                    List<EventRatingDto> rating){
+                    List<Long> rating){
         this(id, eventTitle, dateTimeStart, dateTimeEnd, building, description,
                 numberOfTickets, minAgeRestriction, users);
         this.rating = rating;
