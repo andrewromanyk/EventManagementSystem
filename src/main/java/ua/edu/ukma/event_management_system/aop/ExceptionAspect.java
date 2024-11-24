@@ -21,8 +21,8 @@ public class ExceptionAspect {
             throwing = "exception",
             argNames = "exception, ticket")
     public void catchFullEvent(EventFullException exception, TicketDto ticket) {
-        logger.error("Could not create ticket for User(id={}, name={}) and Event(id={}) because {}",
-                ticket.getUser().getId(), ticket.getUser().getUsername(),
+        logger.error("Could not create ticket for User(id={}) and Event(id={}) because {}",
+                ticket.getUser(),
                 ticket.getEvent(),
                 exception.getMessage());
     }

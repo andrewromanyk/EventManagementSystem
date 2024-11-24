@@ -15,6 +15,7 @@ import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
 import ua.edu.ukma.event_management_system.entity.TicketEntity;
 import ua.edu.ukma.event_management_system.entity.UserEntity;
+import ua.edu.ukma.event_management_system.exceptions.EventFullException;
 import ua.edu.ukma.event_management_system.repository.TicketRepository;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
@@ -47,6 +48,11 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public Ticket createTicket(TicketDto ticket) {
+        TicketEntity ticketEntity = dtoToEntity(ticket);
+        EventEntity event = ticketEntity.getEvent();
+        if (event.getNumberOfTickets() <= event.getUsers().size()) {
+            throw new EventFullException("Event(id=" + event.getId() + ", name=" + event.getEventTitle() + ") is already full");
+        }
         return toDomain(ticketRepository.save(dtoToEntity(ticket)));
     }
 
@@ -69,16 +75,16 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void updateTicket(long id, TicketDto updatedTicket) {
-        Optional<TicketEntity> existingUserOpt = ticketRepository.findById(id);
-        if (existingUserOpt.isPresent()) {
-            TicketEntity existingTicket = existingUserOpt.get();
-            Event updatedEvent = eventService.getEventById(updatedTicket.getEvent());
-            existingTicket.setEvent(toEntity(updatedEvent));
-            existingTicket.setPrice(updatedTicket.getPrice());
-            existingTicket.setUser(toEntity(updatedTicket.getUser()));
-            existingTicket.setPurchaseDate(updatedTicket.getPurchaseDate());
-            ticketRepository.save(existingTicket);
-        }
+//        Optional<TicketEntity> existingUserOpt = ticketRepository.findById(id);
+//        if (existingUserOpt.isPresent()) {
+//            TicketEntity existingTicket = existingUserOpt.get();
+//            Event updatedEvent = eventService.getEventById(updatedTicket.getEvent());
+//            existingTicket.setEvent(toEntity(updatedEvent));
+//            existingTicket.setPrice(updatedTicket.getPrice());
+//            existingTicket.setUser(toEntity(updatedTicket.getUser()));
+//            existingTicket.setPurchaseDate(updatedTicket.getPurchaseDate());
+//            ticketRepository.save(existingTicket);
+//        }
     }
 
     @Override
@@ -114,7 +120,8 @@ public class TicketServiceImpl implements TicketService {
     }
 
     private TicketEntity dtoToEntity(TicketDto ticketDto) {
-        return modelMapper.map(ticketDto, TicketEntity.class);
+        Ticket tick = modelMapper.map(ticketDto, Ticket.class);
+        return modelMapper.map(tick, TicketEntity.class);
     }
 
     private UserDto toDto(User user) {

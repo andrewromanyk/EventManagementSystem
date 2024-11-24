@@ -43,7 +43,7 @@ public class TicketController {
 		return toDto(ticketService.getTicketById(id));
 	}
 
-	@GetMapping("/")
+	@GetMapping
 	public List<TicketDto> getTickets() {
 		return ticketService.getAllTickets()
 				.stream()
@@ -51,12 +51,12 @@ public class TicketController {
 				.toList();
 	}
 
-	@PostMapping("/")
+	@PostMapping
 	public void createTicket(@RequestBody @Valid TicketDto ticketDto) throws EventFullException {
-		Event event = eventService.getEventById(ticketDto.getId());
-		if (event.getUsers().size() >= event.getNumberOfTickets()) {
-			throw new EventFullException("Event is full!");
-		}
+//		Event event = eventService.getEventById(ticketDto.getId());
+//		if (event.getUsers().size() >= event.getNumberOfTickets()) {
+//			throw new EventFullException("Event is full!");
+//		}
 		ticketService.createTicket(ticketDto);
 	}
 

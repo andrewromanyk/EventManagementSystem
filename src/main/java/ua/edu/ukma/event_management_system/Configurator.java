@@ -9,18 +9,17 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import ua.edu.ukma.event_management_system.domain.Building;
-import ua.edu.ukma.event_management_system.domain.BuildingRating;
-import ua.edu.ukma.event_management_system.domain.Event;
-import ua.edu.ukma.event_management_system.domain.Ticket;
+import ua.edu.ukma.event_management_system.domain.*;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.TicketDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
+import ua.edu.ukma.event_management_system.entity.TicketEntity;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
+import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
 import java.util.ArrayList;
 import java.util.stream.Collectors;
@@ -33,6 +32,7 @@ public class Configurator {
     private TicketService ticketService;
     private BuildingService buildingService;
     private EventService eventService;
+    private UserService userService;
 
     @Autowired
     public void setBuildingService(BuildingService buildingService) {
@@ -47,6 +47,11 @@ public class Configurator {
     @Autowired
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
+    }
+
+    @Autowired
+    public void setUserService(UserService userService) {
+        this.userService = userService;
     }
 
     @Primary
@@ -92,13 +97,19 @@ public class Configurator {
         // domain to dto
         TypeMap<Ticket, TicketDto> ticketToDto = mapperResult.createTypeMap(Ticket.class, TicketDto.class);
         ticketToDto.addMappings(mapper -> mapper.map(src -> src.getEvent().getId(), TicketDto::setEvent));
+        ticketToDto.addMappings(mapper -> mapper.map(src -> src.getUser().getId(), TicketDto::setUser));
         logger.info("Created 5 part modelmapper");
 
         // dto to domain
-        Converter<Integer, Event> idToEvent = ctx -> mapperResult.map(eventService.getEventById(ctx.getSource()), Event.class);
+        Converter<Long, Event> idToEvent = ctx -> eventService.getEventById(ctx.getSource());
+        Converter<Long, User> idToUser = ctx -> userService.getUserById(ctx.getSource());
         TypeMap<TicketDto, Ticket> ticketDtoToDomain = mapperResult.createTypeMap(TicketDto.class, Ticket.class);
         ticketDtoToDomain.addMappings(mapper -> mapper.using(idToEvent).map(TicketDto::getEvent, Ticket::setEvent));
+        ticketDtoToDomain.addMappings(mapper -> mapper.using(idToUser).map(TicketDto::getUser, Ticket::setUser));
         logger.info("Created 6 part modelmapper");
+
+        //domain to entity
+        mapperResult.typeMap(Ticket.class, TicketEntity.class);
 
         return mapperResult;
     }
