@@ -27,30 +27,45 @@
        th:src="@{/em-icon.png}">
 </header>
 
-<div class="container fullOutside">
+<div class="container">
+  <div class="text-center mb-4">
+    <a href="/create-event" class="btn btn-dark btn-lg">Create Event</a>
+  </div>
 
-  <div class="row w-100">
-    <a href="/create-event" class="btn btn-dark btn-lg btn-block" role="button">Create Event</a>
-    <div class="col-12 text-center p-1 shadow-sm">
-      <h3>Buildings</h3>
-      <div class="building-list">
-        <div th:each="event : ${events}" class="card shadow-sm">
-          <label class="card-body">
-            <h5 class="card-title" th:text="${event.eventTitle}"></h5>
-            <h6 class="card-subtitle mb-2 text-muted" th:text="${event.dateTimeStart}"></h6>
-            <h6 class="card-subtitle mb-2 text-muted" th:text="${event.dateTimeEnd}"></h6>
-            <p class="card-text" th:text="'Building ' + ${event.building}"></p>
-            <p class="card-text" th:text="'Desc: ' + ${event.description}"></p>
-            <p class="card-text" th:text="'Num tickets: ' + ${event.numberOfTickets}"></p>
-            <p class="card-text" th:text="'Min age restriction: ' + ${event.minAgeRestriction}"></p>
-            <p class="card-text" th:text="'Image: ' + ${event.image}"></p>
-          </label>
+  <h2 class="text-center mb-4">Events</h2>
+
+  <div class="row">
+    <div th:each="event : ${events}" class="col-md-6 col-lg-4">
+      <div class="card shadow-sm">
+        <div class="card-body">
+          <h5 class="card-title text-primary" th:text="${event.eventTitle}"></h5>
+          <p class="card-text">
+            <strong>Building:</strong> <span th:text="${event.building.address}"></span>
+          </p>
+          <p class="card-text">
+            <strong>Description:</strong> <span th:text="${event.description}"></span>
+          </p>
+          <p class="card-text">
+            <strong>Number of Tickets:</strong> <span th:text="${event.numberOfTickets}"></span>
+          </p>
+          <p class="card-text">
+            <strong>Minimum Age Restriction:</strong> <span th:text="${event.minAgeRestriction}"></span>
+          </p>
+          <div th:if="${imageMap[event.id] != null}">
+            <img class="img-fluid rounded mb-3" alt="Event Image" th:src="${imageMap[event.id]}" />
+          </div>
+        </div>
+        <div class="card-footer text-muted">
+          <small>
+            <strong>Start:</strong> <span th:text="${event.dateTimeStart}"></span><br>
+            <strong>End:</strong> <span th:text="${event.dateTimeEnd}"></span>
+          </small>
         </div>
       </div>
     </div>
   </div>
-
 </div>
+
 
 <footer>
   <ul>
