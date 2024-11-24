@@ -8,6 +8,9 @@ import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.entity.*;
 import ua.edu.ukma.event_management_system.repository.*;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.time.LocalDateTime;
 
 @Service
@@ -32,7 +35,7 @@ public class DatabasePopulatorService {
         this.buildingRatingRepository = brr;
     }
 
-    public void populateDatabase() {
+    public void populateDatabase() throws IOException {
         UserEntity user1 = new UserEntity(UserRole.USER, "and123", "Andriy",
                 "Petrenko", "andriisuper@gmail.com",
                 "$2a$10$JFbuJfw3FZSs.9rDOO3jiOP2r9HjnJczXsWiqvEhkCyyWVHNjuQyy", // Andri1Sup3r
@@ -56,9 +59,11 @@ public class DatabasePopulatorService {
         buildingRepository.save(building1);
         buildingRepository.save(building2);
 
+        byte[] image = Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg"));
+
         EventEntity event1 = new EventEntity("queen-concert", LocalDateTime.now().plusDays(10),
                 LocalDateTime.now().plusDays(10).plusHours(2),
-                building2, "A great queen concert", 100, 18);
+                building2, "A great queen concert", 100, 18, image);
 
         EventEntity event2 = new EventEntity("it-conference", LocalDateTime.now().plusHours(3),
                 LocalDateTime.now().plusHours(6),

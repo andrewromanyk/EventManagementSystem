@@ -9,7 +9,7 @@ import org.hibernate.validator.constraints.Range;
 @NoArgsConstructor
 public class EventRatingDto {
     private long id;
-    private EventDto event;
+    private int event;
     @Range(min = 0, max = 10, message = "Rating must be in range [1, 10].")
     private byte rating;
     private UserDto author;

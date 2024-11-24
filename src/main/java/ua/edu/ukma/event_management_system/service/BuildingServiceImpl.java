@@ -1,9 +1,13 @@
 package ua.edu.ukma.event_management_system.service;
 
+import org.hibernate.Hibernate;
 import org.modelmapper.ModelMapper;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.cache.annotation.CachePut;
 import org.springframework.cache.annotation.Cacheable;
+import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.aop.rate_limit.RateLimit;
 import ua.edu.ukma.event_management_system.domain.Building;
@@ -28,6 +32,9 @@ public class BuildingServiceImpl implements BuildingService {
     private BuildingRepository buildingRepository;
     private BuildingRatingRepository buildingRatingRepository;
 
+    private static final Logger logger = LoggerFactory.getLogger(BuildingServiceImpl.class);
+
+
     @Autowired
     void setBuildingRepository(BuildingRepository buildingRepository) {
         this.buildingRepository = buildingRepository;
@@ -39,7 +46,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Autowired
-    void setModelMapper(ModelMapper modelMapper) {
+    void setModelMapper(@Lazy ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
     }
 
@@ -116,11 +123,18 @@ public class BuildingServiceImpl implements BuildingService {
                 .toList();
     }
 
+    @Override
+    public BuildingRating getRatingById(long id) {
+        return toDomain(buildingRatingRepository.findById((long) id)
+                .orElseThrow());
+    }
+
     private BuildingDto toDto(Building building) {
         return modelMapper.map(building, BuildingDto.class);
     }
 
     private Building toDomain(BuildingEntity buildingEntity) {
+        Hibernate.initialize(buildingEntity.getRating());
         return modelMapper.map(buildingEntity, Building.class);
     }
 
