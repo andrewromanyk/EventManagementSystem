@@ -1,11 +1,14 @@
 package ua.edu.ukma.event_management_system.entity;
 
 import jakarta.persistence.*;
+import org.hibernate.annotations.Type;
 import org.springframework.context.annotation.Lazy;
 import ua.edu.ukma.event_management_system.domain.Building;
 
 import lombok.*;
 
+import java.awt.image.BufferedImage;
+import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -40,6 +43,10 @@ public class EventEntity {
     @Column(nullable = false)
     private int minAgeRestriction;
 
+    @Lob
+    @Column(name = "event_image")
+    private byte[] image;
+
     @ManyToMany
     @JoinTable(name="ticket",
     joinColumns = @JoinColumn(name = "event_id"),
@@ -59,5 +66,17 @@ public class EventEntity {
         this.description = description;
         this.numberOfTickets = numberOfTickets;
         this.minAgeRestriction = minAgeRestriction;
+    }
+
+    public EventEntity(String eventTitle, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd,
+                       BuildingEntity building, String description, int numberOfTickets, int minAgeRestriction, byte[] image) {
+        this.eventTitle = eventTitle;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeEnd = dateTimeEnd;
+        this.building = building;
+        this.description = description;
+        this.numberOfTickets = numberOfTickets;
+        this.minAgeRestriction = minAgeRestriction;
+        this.image = image;
     }
 }

@@ -4,7 +4,6 @@ import org.modelmapper.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnSingleCandidate;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Primary;
@@ -19,9 +18,6 @@ import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.TicketDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
-import ua.edu.ukma.event_management_system.service.BuildingServiceImpl;
-import ua.edu.ukma.event_management_system.service.EventServiceImpl;
-import ua.edu.ukma.event_management_system.service.TicketServiceImpl;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
@@ -52,24 +48,6 @@ public class Configurator {
     public void setEventService(EventService eventService) {
         this.eventService = eventService;
     }
-
-//    @Bean
-//    @ConditionalOnSingleCandidate(BuildingService.class)
-//    public BuildingService buildingService() {
-//        return new BuildingServiceImpl();
-//    }
-
-//    @Bean
-//    @ConditionalOnSingleCandidate(EventService.class)
-//    public EventService eventService() {
-//        return new EventServiceImpl();
-//    }
-
-//    @Bean
-//    @ConditionalOnSingleCandidate(TicketService.class)
-//    public TicketService ticketService() {
-//        return new TicketServiceImpl();
-//    }
 
     @Primary
     @Bean

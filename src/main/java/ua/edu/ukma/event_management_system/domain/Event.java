@@ -17,4 +17,5 @@ public class Event {
     private int minAgeRestriction;
     private List<EventRating> rating;
     private List<User> users;
+    private byte[] image;
 }

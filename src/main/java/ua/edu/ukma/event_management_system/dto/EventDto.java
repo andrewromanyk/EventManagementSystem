@@ -20,6 +20,7 @@ public class EventDto {
     private int minAgeRestriction;
     private List<Long> rating;
     private List<UserDto> users;
+    private byte[] image;
 
     public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
                     LocalDateTime dateTimeEnd, long building, String description,
