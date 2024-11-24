@@ -10,6 +10,7 @@ header {
     width: 100%;
     background-color: #1B1F23;
     display: flex;
+
 }
 
 #name {
@@ -24,6 +25,41 @@ header {
     position: absolute;
     width: 100px;
     height: 100px;
+}
+
+#icon-container {
+    position: absolute;
+    text-align: center; /* Center-align its contents if multiple items are added */
+    width: 100%; /* Optional: spans the width of the header */
+}
+
+#login-reg {
+    position: absolute;
+    text-align: center; /* Center-align its contents if multiple items are added */
+    width: 100%; /* Optional: spans the width of the header */
+}
+
+#user-icon {
+    display: inline-block;
+    margin: 0 auto;
+    padding-top: 20px;
+    width: 50px;
+    height: 50px;
+}
+
+.log-reg-button {
+    background-color: #F0F8FF;
+    color: #1B1F23;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    cursor: pointer;
+    transition: background-color 0.15s ease;
+}
+
+.log-reg-button:hover {
+    background-color: #444a50;
 }
 
 .fullOutside{

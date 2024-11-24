@@ -42,7 +42,7 @@ textarea:focus {
     box-shadow: 0px 0px 5px rgba(27, 31, 35, 0.2);
 }
 
-button {
+.submit {
     background-color: #1B1F23;
     color: aliceblue;
     padding: 10px 20px;
@@ -53,7 +53,7 @@ button {
     transition: background-color 0.3s ease;
 }
 
-button:hover {
+.submit:hover {
     background-color: #444a50;
 }
 
