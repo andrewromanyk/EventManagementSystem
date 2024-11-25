@@ -30,7 +30,7 @@
             <h3>Buildings</h3>
             <div class="building-list">
                 <div th:each="building : ${buildings}" class="card shadow-sm">
-                    <a th:href="@{/building/{id}(id=${building.id})}" class="building-link">
+                    <a th:href="@{~/building/{id}(id=${building.id})}" class="building-link">
                         <label class="card-body">
                             <h5 class="card-title" th:text="${building.address}"></h5>
                             <h6 class="card-subtitle mb-2 text-muted" th:text="${building.description}"></h6>

@@ -14,7 +14,7 @@ import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 import java.util.List;
 
 @RestController
-@RequestMapping("ticket")
+@RequestMapping("api/ticket")
 @ConditionalOnExpression("${api.ticket.enable}")
 public class TicketController {
 

@@ -57,7 +57,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    @RateLimit(maxRequests = 3)
+//    @RateLimit(maxRequests = 3)
 //    @Cacheable(cacheNames="buildings")
     public List<Building> getAllBuildings() {
         return buildingRepository.findAll()
