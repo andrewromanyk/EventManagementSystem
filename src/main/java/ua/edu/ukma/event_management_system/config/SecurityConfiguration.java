@@ -70,6 +70,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/manage/cache").hasAuthority("ADMIN")
 						.requestMatchers("/manage/**").hasAuthority("USER")
 						.requestMatchers("/api/**").hasAuthority("ADMIN")
+						.requestMatchers(HttpMethod.GET, "/ticket/**").hasAuthority("USER")
 						.anyRequest().authenticated())
 //				.httpBasic(Customizer.withDefaults())
 				.sessionManagement(session ->

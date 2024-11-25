@@ -1,7 +1,9 @@
 package ua.edu.ukma.event_management_system.views;
 
 import jakarta.validation.Valid;
+import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -9,8 +11,11 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
+import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.domain.User;
+import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
@@ -19,15 +24,13 @@ import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
-import java.util.Base64;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 @Controller
 @RequestMapping("event")
 public class EventController {
 
+	private ModelMapper modelMapper;
 	private EventService eventService;
 	private BuildingService buildingService;
 	private UserService userService;
@@ -89,8 +92,12 @@ public class EventController {
 
 	@GetMapping("/create")
 	public String showCreateEventForm(Model model) {
-		//add building attribute here to track in the create-form
-		model.addAttribute("event", new Event());
+		List<BuildingDto> buildings = buildingService.getAllBuildings()
+				.stream()
+				.map(this::toDto)
+				.toList();
+		model.addAttribute("buildings", buildings);
+		model.addAttribute("event", new EventDto());
 		return "events/event-form";
 	}
 
@@ -103,5 +110,24 @@ public class EventController {
 		eventDto.setImage(image.getBytes());
 		eventService.createEvent(eventDto);
 		return "redirect:/event/";
+	}
+
+	@DeleteMapping("/{id}")
+	public String deleteEvent(@PathVariable long id, RedirectAttributes redirectAttributes) {
+		try {
+			eventService.deleteEvent(id);
+			redirectAttributes.addFlashAttribute("successMessage", "Event successfully deleted.");
+		} catch (Exception e) {
+			redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete the event. Please try again.");
+		}
+		return "redirect:/event/";
+	}
+
+	private BuildingDto toDto(Building building) {
+		return modelMapper.map(building, BuildingDto.class);
+	}
+
+	private EventDto toDto(Event event) {
+		return modelMapper.map(event, EventDto.class);
 	}
 }

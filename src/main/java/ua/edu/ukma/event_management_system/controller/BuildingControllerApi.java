@@ -21,7 +21,7 @@ import java.util.*;
 @RestController
 @RequestMapping("api/building")
 @ConditionalOnExpression("${api.building.enable}")
-public class BuildingController {
+public class BuildingControllerApi {
 
 	private ModelMapper modelMapper;
 	private BuildingService buildingService;
