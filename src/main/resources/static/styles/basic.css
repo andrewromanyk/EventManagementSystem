@@ -10,7 +10,38 @@ header {
     width: 100%;
     background-color: #1B1F23;
     display: flex;
+    align-items: center;
+    justify-content: space-between;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.1);
+}
 
+/* Styling the navigation container */
+#header-navigation {
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+    margin: 0 auto;
+}
+
+/* Style for navigation buttons */
+.nav-button {
+    color: #F0F8FF;
+    background-color: #444a50;
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 16px;
+    font-family: Arial, sans-serif;
+    font-weight: bold;
+    cursor: pointer;
+    transition: all 0.3s ease;
+}
+
+.nav-button:hover {
+    background-color: #F0F8FF;
+    color: #1B1F23;
+    transform: scale(1.05);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
 #name {
@@ -27,24 +58,47 @@ header {
     height: 100px;
 }
 
-#icon-container {
-    position: absolute;
-    text-align: center; /* Center-align its contents if multiple items are added */
-    width: 100%; /* Optional: spans the width of the header */
+#login-reg {
+    display: flex;
+    gap: 10px; /* Space between buttons */
+    align-items: center; /* Align buttons vertically */
+    margin-left: auto; /* Pushes this section to the far right */
 }
 
+/*
 #login-reg {
     position: absolute;
-    text-align: center; /* Center-align its contents if multiple items are added */
-    width: 100%; /* Optional: spans the width of the header */
-}
+    text-align: center;
+    width: 100%;
+}*/
 
 #user-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    overflow: hidden;
+    border: 2px solid #F0F8FF;
+    cursor: pointer;
+}
+
+/*#user-icon {
     display: inline-block;
     margin: 0 auto;
     padding-top: 20px;
     width: 50px;
     height: 50px;
+}*/
+
+button{
+    color: white;
+    background-color: #555555;
+    font-size: 16px;
+    border: 2px solid #555555;
+}
+
+button:hover {
+  background-color: white;
+  color: #555555;
 }
 
 .log-reg-button {

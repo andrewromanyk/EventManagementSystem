@@ -1,4 +1,4 @@
-package ua.edu.ukma.event_management_system.views.buildings;
+package ua.edu.ukma.event_management_system.views;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -88,7 +88,7 @@ public class BuildingViewController {
         return "building-list";
     }
 
-    @GetMapping("/create-building")
+    @GetMapping("/create")
     public String createBuildingForm(Model model) {
         model.addAttribute("buildingDto", new BuildingDto());
         return "building-form";

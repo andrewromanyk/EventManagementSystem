@@ -23,8 +23,10 @@
 <div class="container fullOutside">
 
     <div class="row w-100">
-        <a href="/create-building" class="btn btn-dark btn-sm btn-block" role="button">Update Building</a>
-        <a href="/create-building" class="btn btn-dark btn-sm btn-block" role="button">Delete Building</a>
+        <div class="control-buttons">
+            <a href="/create-building" class="btn btn-warning btn-sm" sec:authorize="hasAuthority('ORGANIZER')" role="button">Update Building</a>
+            <a href="/create-building" class="btn btn-danger btn-sm" sec:authorize="hasAuthority('ORGANIZER')"role="button">Delete Building</a>
+        </div>
         <div class="col-12 text-center p-1 shadow-sm">
             <h3>Building</h3>
             <div class="building-list">

@@ -3,7 +3,7 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 
 <link rel="stylesheet" href="../static/styles/basic.css"
-      th:href="@{styles/basic.css}">
+      th:href="@{/styles/basic.css}">
 <header th:fragment="heading">
         <h1 id=name>
             Event
@@ -17,6 +17,12 @@
         <div id="login-reg" sec:authorize="!isAuthenticated()">
             <button class="log-reg-button" th:onclick="'location.href=\'' + @{/login} + '\''">Login</button>
             <button class="log-reg-button" th:onclick="'location.href=\'' + @{/register} + '\''">Register</button>
+        </div>
+        <div id="header-navigation">
+            <button class="nav-button" th:onclick="'location.href=\'' + @{/view-building/} + '\''">Buildings</button>
+            <button class="nav-button" th:onclick="'location.href=\'' + @{/view-event/} + '\''">Events</button>
+            <button class="nav-button" th:onclick="'location.href=\'' + @{/view-ticket/} + '\''">Tickets</button>
+            <button class="nav-button" th:onclick="'location.href=\'' + @{/view-user/} + '\''">Users</button>
         </div>
         <img id=icon alt="Event Manager" src="../static/em-icon.png"
              th:src="@{/em-icon.png}">

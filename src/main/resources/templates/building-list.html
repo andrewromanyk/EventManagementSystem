@@ -23,7 +23,9 @@
 <div class="container fullOutside">
 
     <div class="row w-100">
-        <a href="/create-building" class="btn btn-dark btn-lg btn-block" role="button">Create Building</a>
+        <div class="button-container">
+            <a href="http://localhost:8080/view-building/create" class="btn btn-success btn-block" sec:authorize="hasAuthority('ORGANIZER')" role="button">Create Building</a>
+        </div>
         <div class="col-12 text-center p-1 shadow-sm">
             <h3>Buildings</h3>
             <div class="building-list">
