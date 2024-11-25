@@ -37,9 +37,8 @@ public class BuildingViewController {
 
     @GetMapping("/{id}")
     public String getBuilding(@PathVariable long id, Model model) {
-        List<BuildingDto> building = new ArrayList<>();
-        building.add(toDto(buildingService.getBuildingById(id)));
-        model.addAttribute("buildings", building);
+        BuildingDto building = toDto(buildingService.getBuildingById(id));
+        model.addAttribute("building", building);
         return "buildings/building-details";
     }
 
@@ -109,12 +108,11 @@ public class BuildingViewController {
 //        return new ResponseEntity<>(HttpStatus.OK);
 //    }
 //
-//    @DeleteMapping("/{id}")
-//    @ResponseBody
-//    public ResponseEntity<?> deleteBuilding(@PathVariable long id) {
-//        buildingService.deleteBuilding(id);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
+    @DeleteMapping("/{id}")
+    public String deleteBuilding(@PathVariable long id) {
+        buildingService.deleteBuilding(id);
+        return "redirect:/building/";
+    }
 //
 //    @PostMapping("/{id}/rate")
 //    public void rateBuilding(@PathVariable long id) {

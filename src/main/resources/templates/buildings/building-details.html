@@ -24,13 +24,16 @@
 
     <div class="row w-100">
         <div class="control-buttons">
-            <a href="/create-building" class="btn btn-warning btn-sm" sec:authorize="hasAuthority('ORGANIZER')" role="button">Update Building</a>
-            <a href="/create-building" class="btn btn-danger btn-sm" sec:authorize="hasAuthority('ORGANIZER')"role="button">Delete Building</a>
+            <form th:action="@{/building/{id}(id=${building.id})}" method="post" sec:authorize="hasAuthority('ORGANIZER')">
+                <input type="hidden" name="_method" value="DELETE">
+                <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+            </form>
+            <a href="/create-building" role="button" class="btn btn-warning btn-sm">Update</a>
         </div>
         <div class="col-12 text-center p-1 shadow-sm">
             <h3>Building</h3>
             <div class="building-list">
-                <div th:each="building : ${buildings}" class="card shadow-sm">
+                <div class="card shadow-sm">
                     <label class="card-body">
                         <h5 class="card-title" th:text="${building.address}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${building.description}"></h6>
