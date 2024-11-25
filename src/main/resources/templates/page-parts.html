@@ -10,17 +10,19 @@
             <br>
             Manager
         </h1>
-        <div id="icon-container" sec:authorize="isAuthenticated()">
-            <a href="/myprofile">
-                <img id="user-icon" alt="user-icon" src="../static/blank-user.png"
-                     th:src="@{/blank-user.png}">
-            </a>
+        <div class="middle-container">
+            <div id="icon-container" sec:authorize="isAuthenticated()">
+                <a href="/myprofile">
+                    <img id="user-icon" alt="user-icon" src="../static/blank-user.png"
+                         th:src="@{/blank-user.png}">
+                </a>
+            </div>
+            <div id="login-reg" sec:authorize="!isAuthenticated()">
+                <button class="nav-button" th:onclick="'location.href=\'' + @{/login} + '\''">Login</button>
+                <button class="nav-button" th:onclick="'location.href=\'' + @{/register} + '\''">Register</button>
+            </div>
         </div>
-        <div id="login-reg" sec:authorize="!isAuthenticated()">
-            <button class="log-reg-button" th:onclick="'location.href=\'' + @{/login} + '\''">Login</button>
-            <button class="log-reg-button" th:onclick="'location.href=\'' + @{/register} + '\''">Register</button>
-        </div>
-        <div id="header-navigation">
+        <div id="header-navigation" sec:authorize="isAuthenticated()">
             <button class="nav-button" th:onclick="'location.href=\'' + @{/building/} + '\''"
                     sec:authorize="hasAuthority('ORGANIZER')">Buildings</button>
             <button class="nav-button" th:onclick="'location.href=\'' + @{/event/} + '\''"
@@ -30,9 +32,9 @@
             <button class="nav-button" th:onclick="'location.href=\'' + @{/user/} + '\''"
                     sec:authorize="hasAuthority('ADMIN')">Users</button>
         </div>
-        <a href="/main">
-        <img id=icon alt="Event Manager" src="../static/em-icon.png"
-             th:src="@{/em-icon.png}">
+        <a href="/main" class="icon-container">
+            <img id='icon' alt="Event Manager" src="../static/em-icon.png"
+                 th:src="@{/em-icon.png}">
         </a>
 </header>
 

@@ -44,7 +44,13 @@ header {
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.2);
 }
 
+.middle-container {
+    display: flex;
+    justify-content: center;
+}
+
 #name {
+    width: 30%;
     font-family: Verdana, sans-serif;
     color: aliceblue;
     padding-left: 10px;
@@ -53,16 +59,20 @@ header {
 #icon {
     top: 10px;
     right: 10px;
-    position: absolute;
     width: 100px;
     height: 100px;
+    position: absolute;
+}
+
+.icon-container {
+    width: 30%;
 }
 
 #login-reg {
     display: flex;
+    position: absolute;
     gap: 10px; /* Space between buttons */
     align-items: center; /* Align buttons vertically */
-    margin-left: auto; /* Pushes this section to the far right */
 }
 
 /*

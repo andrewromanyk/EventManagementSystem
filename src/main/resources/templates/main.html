@@ -3,10 +3,15 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>FAQ - Event Manager</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.1/dist/css/bootstrap.min.css"
+          rel="stylesheet" integrity="sha384-+0n0xVW2eSR5OomGNYDnhzAbDsOXxcvSN1TPprVMTNDbiYZCxYbOOl7+AMvyTG2x"
+          crossorigin="anonymous">
     <link rel="stylesheet" href="../static/styles/basic.css"
           th:href="@{/styles/basic.css}">
     <link rel="stylesheet" href="../static/styles/main.css"
           th:href="@{styles/main.css}">
+    <link rel="stylesheet" href="../../static/styles/buildings.css"
+          th:href="@{/styles/buildings.css}">
     <link rel="icon" href="../static/em-icon.png"
           th:href="@{/em-icon.png}">
     <script src="../static/scripts/auth.js" th:src="@{/scripts/auth.js}"></script>
@@ -18,19 +23,34 @@
     <div class="fullOutside">
         <div class="greeting">
             <br>
-            Welcome,&nbsp;<div sec:authentication="name" style="display: inline">[unknown name]</div>!
+            Current events:
         </div>
         <br>
-        <div th:if="${!tickets.isEmpty()}" class="tickets">
-            <span class="ticketName">Your tickets:</span>
-            <ol>
-                <li th:each="ticket : ${tickets}" class="ticketRow">
-                    <br>
-                    Event: <span class="ticketName" th:text="${ticket.event.eventTitle}"></span>
-                </li>
-            </ol>
+        <div class="row">
+            <div th:each="event : ${events}" class="col-md-6 col-lg-4">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary" th:text="${event.eventTitle}"></h5>
+                        <p class="card-text">
+                            <strong>Number of Tickets:</strong> <span th:text="${event.numberOfTickets}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Description:</strong> <span th:text="${event.description}"></span>
+                        </p>
+                        <div th:if="${imageMap[event.id] != null}">
+                            <img class="img-fluid rounded mb-3" alt="Event Image" th:src="${imageMap[event.id]}" />
+                        </div>
+                        <a th:href="@{'/event/' + ${event.id}}" class="btn btn-primary mt-3">Details</a>
+                    </div>
+                    <div class="card-footer text-muted">
+                        <small>
+                            <strong>Start:</strong> <span th:text="${#temporals.format(event.dateTimeStart, 'dd MMM yyyy HH:mm')}"></span><br>
+                            <strong>End:</strong> <span th:text="${#temporals.format(event.dateTimeEnd, 'dd MMM yyyy HH:mm')}"></span>
+                        </small>
+                    </div>
+                </div>
+            </div>
         </div>
-        <h4 th:if="${tickets.isEmpty()}">Seems like you have no events coming up!</h4>
     </div>
 
     <div th:insert="~{page-parts :: footing}"></div>
