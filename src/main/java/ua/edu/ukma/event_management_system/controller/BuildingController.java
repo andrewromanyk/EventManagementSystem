@@ -19,7 +19,7 @@ import jakarta.validation.Valid;
 import java.util.*;
 
 @RestController
-@RequestMapping("building")
+@RequestMapping("api/building")
 @ConditionalOnExpression("${api.building.enable}")
 public class BuildingController {
 

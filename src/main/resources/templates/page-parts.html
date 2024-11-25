@@ -19,10 +19,14 @@
             <button class="log-reg-button" th:onclick="'location.href=\'' + @{/register} + '\''">Register</button>
         </div>
         <div id="header-navigation">
-            <button class="nav-button" th:onclick="'location.href=\'' + @{/view-building/} + '\''">Buildings</button>
-            <button class="nav-button" th:onclick="'location.href=\'' + @{/view-event/} + '\''">Events</button>
-            <button class="nav-button" th:onclick="'location.href=\'' + @{/view-ticket/} + '\''">Tickets</button>
-            <button class="nav-button" th:onclick="'location.href=\'' + @{/view-user/} + '\''">Users</button>
+            <button class="nav-button" th:onclick="'location.href=\'' + @{/building/} + '\''"
+                    sec:authorize="hasAuthority('ORGANIZER')">Buildings</button>
+            <button class="nav-button" th:onclick="'location.href=\'' + @{/event/} + '\''"
+                    sec:authorize="isAuthenticated()">Events</button>
+            <button class="nav-button" th:onclick="'location.href=\'' + @{/ticket/} + '\''"
+                    sec:authorize="isAuthenticated()">Tickets</button>
+            <button class="nav-button" th:onclick="'location.href=\'' + @{/user/} + '\''"
+                    sec:authorize="hasAuthority('ADMIN')">Users</button>
         </div>
         <img id=icon alt="Event Manager" src="../static/em-icon.png"
              th:src="@{/em-icon.png}">

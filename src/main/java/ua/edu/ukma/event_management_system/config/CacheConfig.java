@@ -15,8 +15,8 @@ public class CacheConfig {
     @Bean
     public CacheManager cacheManager() {
         CustomCacheManager manager = new CustomCacheManager();
-        manager.putCache(new ConcurrentMapCache("buildings"));
-        manager.putCache(new ConcurrentMapCache("building"));
+//        manager.putCache(new ConcurrentMapCache("buildings"));
+//        manager.putCache(new ConcurrentMapCache("building"));
         return new CustomCacheManager();
     }
 }

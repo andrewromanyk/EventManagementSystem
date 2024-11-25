@@ -18,7 +18,7 @@ import jakarta.validation.Valid;
 import java.util.*;
 
 @Controller
-@RequestMapping("view-building")
+@RequestMapping("building")
 @ConditionalOnExpression("${api.building.enable}")
 public class BuildingViewController {
 
@@ -40,7 +40,7 @@ public class BuildingViewController {
         List<BuildingDto> building = new ArrayList<>();
         building.add(toDto(buildingService.getBuildingById(id)));
         model.addAttribute("buildings", building);
-        return "building-details";
+        return "buildings/building-details";
     }
 
     @GetMapping("/")
@@ -59,10 +59,10 @@ public class BuildingViewController {
         }
 
         model.addAttribute("buildings", buildings);
-        return "building-list";
+        return "buildings/building-list";
     }
 
-    @PostMapping
+    @PostMapping("/")
     public String createNewBuilding(@ModelAttribute("buildingDto") @Valid BuildingDto buildingDto,
                                     BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){
@@ -85,13 +85,13 @@ public class BuildingViewController {
         }
 
         buildingService.createBuilding(buildingDto);
-        return "building-list";
+        return "redirect:/building/";
     }
 
     @GetMapping("/create")
     public String createBuildingForm(Model model) {
         model.addAttribute("buildingDto", new BuildingDto());
-        return "building-form";
+        return "buildings/building-form";
     }
 
 //    @PutMapping("/{id}")
