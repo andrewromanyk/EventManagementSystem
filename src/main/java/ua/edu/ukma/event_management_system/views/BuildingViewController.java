@@ -3,6 +3,7 @@ package ua.edu.ukma.event_management_system.views;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -70,8 +71,8 @@ public class BuildingViewController {
                 errors.put(error.getField(), error.getDefaultMessage());
             });
 
-            model.addAttribute("errors", errors);
-            return "error-page";
+            model.addAttribute("error", errors);
+            return "error";
         }
 
         if(buildingDto.getDescription() == null || buildingDto.getDescription().isEmpty()){
@@ -109,8 +110,13 @@ public class BuildingViewController {
 //    }
 //
     @DeleteMapping("/{id}")
-    public String deleteBuilding(@PathVariable long id) {
-        buildingService.deleteBuilding(id);
+    public String deleteBuilding(@PathVariable long id, Model model) {
+        try{
+            buildingService.deleteBuilding(id);
+        }catch(DataIntegrityViolationException ex){
+            model.addAttribute("error", "Cannot delete building. It is referenced by other entities.");
+            return "error";
+        }
         return "redirect:/building/";
     }
 //
