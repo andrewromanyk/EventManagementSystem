@@ -10,7 +10,7 @@
           th:href="@{/em-icon.png}">
 </head>
 <body>
-<div th:insert="page-parts :: heading"></div>
+<div th:insert="~{page-parts :: heading}"></div>
 
     <div class="fullOutside" th:object="${user}">
         <div>
@@ -38,7 +38,7 @@
         </div>
     </div>
 
-<div th:insert="page-parts :: footing"></div>
+<div th:insert="~{page-parts :: footing}"></div>
 </body>
 
 <script>

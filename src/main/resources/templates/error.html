@@ -8,11 +8,11 @@
 </head>
 
 <body>
-<div th:insert="page-parts :: heading"></div>
+<div th:insert="~{page-parts :: heading}"></div>
     <h1>Oops! Something went wrong!</h1>
     <div th:each="error : ${errors}">
         <p th:text="${error}"></p>
     </div>
-<div th:insert="page-parts :: footing"></div>
+<div th:insert="~{page-parts :: footing}"></div>
 </body>
 </html>

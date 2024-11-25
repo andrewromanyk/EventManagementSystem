@@ -13,7 +13,7 @@
 </head>
 
 <body>
-    <div th:insert="page-parts :: heading"></div>
+    <div th:insert="~{page-parts :: heading}"></div>
 
     <div class="fullOutside">
         <div class="greeting">
@@ -33,7 +33,7 @@
         <h4 th:if="${tickets.isEmpty()}">Seems like you have no events coming up!</h4>
     </div>
 
-    <div th:insert="page-parts :: footing"></div>
+    <div th:insert="~{page-parts :: footing}"></div>
 </body>
 
 </html>
