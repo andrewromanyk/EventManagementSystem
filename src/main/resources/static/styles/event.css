@@ -1,0 +1,42 @@
+.innerOutside  {
+    display: flex;
+    align-items: center;
+}
+
+.fullOutside {
+    width: 80vh;
+    align-items: center;
+}
+
+.inner{
+    margin: 0 auto;
+}
+
+.button-cont {
+    text-align: center;
+    margin-top: 20px;
+}
+
+.button {
+    background-color: #1B1F23;
+    color: aliceblue;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.event-img {
+    max-width: 60%;
+    height: auto;
+    margin-right: 20px;
+    padding-left: 20px;
+}
+
+.card {
+    list-style: none;
+    font-family: Verdana, sans-serif;
+    max-width: 300px;
+}

@@ -1,0 +1,66 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport"
+          content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../../static/styles/basic.css"
+          th:href="@{/styles/basic.css}">
+    <link rel="stylesheet" href="../../static/styles/event.css"
+          th:href="@{/styles/event.css}">
+    <link rel="icon" href="../../static/em-icon.png"
+          th:href="@{/em-icon.png}">
+    <script>
+        function redirectToBuyTicket() {
+            const currentUrl = window.location.href;
+            const newUrl = currentUrl.endsWith("/") ? `${currentUrl}buy-ticket` : `${currentUrl}/buy-ticket`;
+            window.location.href = newUrl;
+        }
+    </script>
+</head>
+<body>
+<div th:insert="page-parts :: heading"></div>
+
+    <div class="fullOutside">
+        <div class="inner">
+            <div th:object="${event}" class="innerOutside col-md-6 col-lg-4">
+                <div>
+                    <img class="event-img img-fluid rounded mb-3" alt="Event Image" th:src="${imageMap}" />
+                </div>
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary" th:text="${event.eventTitle}"></h5>
+                        <p class="card-text">
+                            <strong>Building:</strong> <span th:text="${event.building.address}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Description:</strong> <span th:text="${event.description}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Number of Tickets:</strong> <span th:text="${event.numberOfTickets}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Minimum Age Restriction:</strong> <span th:text="${event.minAgeRestriction}"></span>
+                        </p>
+                        <div class="card-footer text-muted">
+                            <small>
+                                <strong>Start:</strong> <span th:text="${event.dateTimeStart}"></span><br>
+                                <strong>End:</strong> <span th:text="${event.dateTimeEnd}"></span>
+                            </small>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="button-cont">
+                <button class="button" onclick="redirectToBuyTicket()">
+                    Buy ticket
+                </button>
+            </div>
+        </div>
+    </div>
+
+<div th:insert="page-parts :: footing"></div>
+</body>
+</html>

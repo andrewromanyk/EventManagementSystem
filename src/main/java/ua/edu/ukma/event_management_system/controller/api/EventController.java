@@ -5,10 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
@@ -16,6 +13,9 @@ import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
 import java.util.Base64;
 import java.util.HashMap;
 import java.util.List;
@@ -49,6 +49,24 @@ public class EventController {
 		model.addAttribute("events", events); // Add events as usual
 		model.addAttribute("imageMap", imageMap); // Add the image map
 		return "events/events";
+	}
+
+	@GetMapping("/{id}")
+	public String get(@PathVariable long id, Model model) throws IOException {
+		Event event = eventService.getEventById(id);
+
+		// Prepare a map of event IDs to Base64-encoded images
+		String base64Image;
+		if (event.getImage() != null) {
+			base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(event.getImage());
+		}
+		else {
+			base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg")));
+		}
+
+		model.addAttribute("event", event); // Add events as usual
+		model.addAttribute("imageMap", base64Image); // Add the image map
+		return "events/event";
 	}
 
 	@GetMapping("/create")
