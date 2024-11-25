@@ -51,11 +51,13 @@ public class SecurityConfiguration {
 				.headers(httpSecurityHeadersConfigurer -> httpSecurityHeadersConfigurer.frameOptions(HeadersConfigurer.FrameOptionsConfig::disable))
 				.authorizeHttpRequests(request -> request
 						.requestMatchers("/login").permitAll()
+						.requestMatchers("/tologout").permitAll()
 						.requestMatchers("/FAQ.html").permitAll()
 						.requestMatchers("/styles/*.css").permitAll()
 						.requestMatchers("/*.png").permitAll()
 						.requestMatchers("/register/**").permitAll()
 						.requestMatchers("/register").permitAll()
+						.requestMatchers("/myprofile").hasAuthority("USER")
 						.requestMatchers(HttpMethod.GET, "/building/**").hasAuthority("USER")
 						.requestMatchers("/building/**").hasAuthority("ADMIN")
 						.requestMatchers(HttpMethod.GET, "/view-building/**").hasAuthority("USER")

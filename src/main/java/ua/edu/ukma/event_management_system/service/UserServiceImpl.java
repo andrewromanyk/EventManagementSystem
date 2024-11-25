@@ -77,6 +77,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
+    public User getUserByUsername(String username) {
+        return toDomain(userRepository.findByUsername(username));
+    }
+
+    @Override
     public void updateUser(long id, UserDto updatedUser) {
         Optional<UserEntity> existingUserOpt = userRepository.findById(id);
         if (existingUserOpt.isPresent()) {
