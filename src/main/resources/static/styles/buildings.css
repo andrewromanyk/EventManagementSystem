@@ -26,3 +26,8 @@
     display: flex;
     justify-content: center;
 }
+
+.building-link:hover{
+    cursor: pointer;
+    color: black;
+}

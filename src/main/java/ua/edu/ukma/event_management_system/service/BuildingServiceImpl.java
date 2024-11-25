@@ -58,7 +58,7 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     @RateLimit(maxRequests = 3)
-    @Cacheable(cacheNames="buildings")
+//    @Cacheable(cacheNames="buildings")
     public List<Building> getAllBuildings() {
         return buildingRepository.findAll()
                 .stream()
@@ -67,7 +67,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    @Cacheable(cacheNames="building", key = "#id")
+//    @Cacheable(cacheNames="building", key = "#id")
     public Building getBuildingById(Long id) {
 		return toDomain(buildingRepository
                 .findById(id)
@@ -75,7 +75,7 @@ public class BuildingServiceImpl implements BuildingService {
     }
 
     @Override
-    @CachePut(cacheNames = "building", key = "#id")
+//    @CachePut(cacheNames = "building", key = "#id")
     public void updateBuilding(Long id, BuildingDto updatedBuilding) {
         Optional<BuildingEntity> existingBuilding = buildingRepository.findById(id);
         if (existingBuilding.isPresent()) {

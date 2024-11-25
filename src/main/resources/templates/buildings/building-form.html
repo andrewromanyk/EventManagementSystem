@@ -4,11 +4,11 @@
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>Create Building - Event Manager</title>
-    <link rel="stylesheet" href="../static/styles/basic.css"
+    <link rel="stylesheet" href="../../static/styles/basic.css"
           th:href="@{/styles/basic.css}">
-    <link rel="stylesheet" href="../static/styles/forms.css"
+    <link rel="stylesheet" href="../../static/styles/forms.css"
           th:href="@{/styles/forms.css}">
-    <link rel="icon" href="../static/em-icon.png"
+    <link rel="icon" href="../../static/em-icon.png"
           th:href="@{/em-icon.png}">
 </head>
 
@@ -21,7 +21,7 @@
         Add building
     </div>
 
-    <form th:action="@{/building}" th:object="${buildingDto}" method="post">
+    <form th:action="@{/building/}" th:object="${buildingDto}" method="post">
 
         <label for="address">address:</label>
         <input type="text" id="address" th:field="*{address}" required minlength="1">
