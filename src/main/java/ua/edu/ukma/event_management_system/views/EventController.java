@@ -6,6 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
@@ -79,12 +80,13 @@ public class EventController {
 	}
 
 	@PostMapping("/create")
-	public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto, BindingResult result, Model model) {
+	public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto,  @RequestParam("image_cstm") MultipartFile image, BindingResult result, Model model) throws IOException {
 		if (result.hasErrors()) {
 			model.addAttribute("event", eventDto);
 			return "events/event-form";
 		}
+		eventDto.setImage(image.getBytes());
 		eventService.createEvent(eventDto);
-		return "redirect:/events";
+		return "redirect:/event/";
 	}
 }
