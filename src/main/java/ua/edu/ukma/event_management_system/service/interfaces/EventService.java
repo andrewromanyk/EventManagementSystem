@@ -23,5 +23,9 @@ public interface EventService {
 
     void deleteEvent(long eventId);
 
+    List<Event>getAllRelevant();
+
+    List<Event> getAllForOrganizer(Long organizerId);
+
 //    EventRatingEntity rateEvent(EventDto event, byte rating, UserDto author, String comment);
 }

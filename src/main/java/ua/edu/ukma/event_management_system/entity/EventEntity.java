@@ -47,6 +47,10 @@ public class EventEntity {
     @Column(name = "event_image")
     private byte[] image;
 
+    @ManyToOne
+    @JoinColumn(name = "user_id", nullable = false)
+    private UserEntity creator;
+
     @ManyToMany
     @JoinTable(name="ticket",
     joinColumns = @JoinColumn(name = "event_id"),
@@ -78,5 +82,18 @@ public class EventEntity {
         this.numberOfTickets = numberOfTickets;
         this.minAgeRestriction = minAgeRestriction;
         this.image = image;
+    }
+
+    public EventEntity(String eventTitle, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd,
+                       BuildingEntity building, String description, int numberOfTickets, int minAgeRestriction, byte[] image, UserEntity creator) {
+        this.eventTitle = eventTitle;
+        this.dateTimeStart = dateTimeStart;
+        this.dateTimeEnd = dateTimeEnd;
+        this.building = building;
+        this.description = description;
+        this.numberOfTickets = numberOfTickets;
+        this.minAgeRestriction = minAgeRestriction;
+        this.image = image;
+        this.creator = creator;
     }
 }

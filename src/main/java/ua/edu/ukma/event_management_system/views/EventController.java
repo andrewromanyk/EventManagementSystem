@@ -2,15 +2,19 @@ package ua.edu.ukma.event_management_system.views;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import ua.edu.ukma.event_management_system.domain.Event;
+import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
+import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -26,7 +30,12 @@ public class EventController {
 
 	private EventService eventService;
 	private BuildingService buildingService;
+	private UserService userService;
 
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 	@Autowired
 	public void setEventService(EventService eventService) {
 		this.eventService = eventService;
@@ -34,9 +43,15 @@ public class EventController {
 
 	@GetMapping("/")
 	public String get(Model model) throws IOException {
-		List<Event> events = eventService.getAllEvents();
+		UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUsername(details.getUsername());
+		List<Event> events = switch (user.getUserRole()) {
+            case ADMIN -> eventService.getAllEvents();
+            case ORGANIZER -> eventService.getAllForOrganizer(user.getId());
+            case USER -> eventService.getAllRelevant();
+        };
 
-		// Prepare a map of event IDs to Base64-encoded images
+        // Prepare a map of event IDs to Base64-encoded images
 		Map<Integer, String> imageMap = new HashMap<>();
 		for (Event event : events) {
 			if (event.getImage() != null) {

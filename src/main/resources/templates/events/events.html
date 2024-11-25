@@ -21,7 +21,7 @@
 <div th:insert="page-parts :: heading"></div>
 
 <div class="container">
-  <div class="text-center mb-4">
+  <div class="text-center mb-4" sec:authorize="hasAuthority('ORGANIZER')">
     <a href="/event/create" class="btn btn-dark btn-lg">Create Event</a>
   </div>
 

@@ -16,16 +16,10 @@ import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 public class ProfileController {
 
     private UserService userService;
-    private UserDetailsService userDetailsService;
 
     @Autowired
     public void setUserService(UserService userService) {
         this.userService = userService;
-    }
-
-    @Autowired
-    public void setUserService(UserDetailsService userService) {
-        this.userDetailsService = userService;
     }
 
     @GetMapping("/myprofile")
