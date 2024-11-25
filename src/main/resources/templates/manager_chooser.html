@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<div th:insert="page-parts :: heading"></div>
+<div th:insert="~{page-parts :: heading}"></div>
 
     <div class="fullOutside">
         <button class="managing-button" sec:authorize="hasAuthority('ORGANIZER')">Manage Events</button>
@@ -22,7 +22,7 @@
         <button class="managing-button" sec:authorize="hasAuthority('ADMIN')">Manage Buildings</button>
     </div>
 
-<div th:insert="page-parts :: footing"></div>
+<div th:insert="~{page-parts :: footing}"></div>
 </body>
 
 </html>

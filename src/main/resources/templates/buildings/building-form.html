@@ -13,7 +13,7 @@
 </head>
 
 <body>
-<div th:insert="page-parts :: heading"></div>
+<div th:insert="~{page-parts :: heading}"></div>
 
 <div class="fullOutside">
     <div class="mainText">
@@ -21,7 +21,9 @@
         Add building
     </div>
 
-    <form th:action="@{~/api/building}" th:object="${buildingDto}" method="post">
+    <form th:action="@{(${buildingDto.id} != null) ? '/building/' + ${buildingDto.id} : '/building/'}"
+          th:object="${buildingDto}" method="post">
+        <input type="hidden" name="_method" th:value="${buildingDto.id != null} ? 'PUT' : 'POST'">
 
         <label for="address">address:</label>
         <input type="text" id="address" th:field="*{address}" required minlength="1">
@@ -48,7 +50,7 @@
 </div>
 
 
-<div th:insert="page-parts :: footing"></div>
+<div th:insert="~{page-parts :: footing}"></div>
 </body>
 
 </html>

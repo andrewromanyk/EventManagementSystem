@@ -25,9 +25,9 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(excludeAutoConfiguration = SecurityConfiguration.class)
-@ContextConfiguration(classes = {BuildingController.class, ControllerExceptionHandler.class})
+@ContextConfiguration(classes = {BuildingControllerApi.class, ControllerExceptionHandler.class})
 @AutoConfigureMockMvc(addFilters = false)
-public class BuildingControllerTest {
+public class BuildingControllerApiTest {
 
 	@Autowired
 	private MockMvc mockMvc;

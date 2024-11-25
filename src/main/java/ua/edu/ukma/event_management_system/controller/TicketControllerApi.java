@@ -16,7 +16,7 @@ import java.util.List;
 @RestController
 @RequestMapping("api/ticket")
 @ConditionalOnExpression("${api.ticket.enable}")
-public class TicketController {
+public class TicketControllerApi {
 
 	private ModelMapper modelMapper;
 	private TicketService ticketService;

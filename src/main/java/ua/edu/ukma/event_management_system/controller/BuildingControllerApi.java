@@ -21,7 +21,7 @@ import java.util.*;
 @RestController
 @RequestMapping("api/building")
 @ConditionalOnExpression("${api.building.enable}")
-public class BuildingController {
+public class BuildingControllerApi {
 
 	private ModelMapper modelMapper;
 	private BuildingService buildingService;
@@ -79,7 +79,6 @@ public class BuildingController {
 		Building returned = buildingService.createBuilding(buildingDto);
 		return new ResponseEntity<>(returned, HttpStatus.CREATED);
 	}
-
 
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateBuilding(@PathVariable long id, @RequestBody @Valid BuildingDto buildingDto,

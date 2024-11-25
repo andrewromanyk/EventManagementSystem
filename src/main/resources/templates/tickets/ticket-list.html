@@ -20,30 +20,34 @@
 <body>
 <div th:insert="~{page-parts :: heading}"></div>
 
-<div class="container fullOutside">
-
-    <div class="row w-100">
-        <div class="button-container">
-            <a href="http://localhost:8080/building/create" class="btn btn-success btn-block" sec:authorize="hasAuthority('ORGANIZER')" role="button">Create new</a>
-        </div>
-        <div class="col-12 text-center p-1 shadow-sm">
-            <h3>Buildings</h3>
-            <div class="building-list">
-                <div th:each="building : ${buildings}" class="card shadow-sm">
-                    <a th:href="@{~/building/{id}(id=${building.id})}" class="building-link">
-                        <label class="card-body">
-                            <h5 class="card-title" th:text="${building.address}"></h5>
-                            <h6 class="card-subtitle mb-2 text-muted" th:text="${building.description}"></h6>
-                        </label>
-                        <p class="card-text" th:if="${avgRatings[building.id] == null}">No ratings yet</p>
-                        <p class="card-text" th:if="${avgRatings[building.id] != null}" th:text="'Rating: ' + ${avgRatings[building.id]}"></p>
-                    </a>
+<div class="container">
+    <div class="row">
+        <div th:each="ticket : ${tickets}" class="col-md-6 col-lg-4 mb-4">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-primary">
+                        <span th:text="${ticket.event.eventTitle}"></span>
+                    </h5>
+                    <p class="card-text">
+                        <strong>Building Address:</strong> <span th:text="${ticket.event.building.address}"></span>
+                    </p>
+                    <p class="card-text">
+                        <strong>Event End Date:</strong>
+                        <span th:text="${#temporals.format(ticket.event.dateTimeEnd, 'dd MMM yyyy HH:mm')}"></span>
+                    </p>
+                    <p class="card-text">
+                        <strong>Purchase Date:</strong>
+                        <span th:text="${#temporals.format(ticket.purchaseDate, 'dd MMM yyyy HH:mm')}"></span>
+                    </p>
+                    <p class="card-text">
+                        <strong>Price:</strong> <span th:text="${ticket.price} + ' USD'"></span>
+                    </p>
                 </div>
             </div>
         </div>
     </div>
-
 </div>
+
 
 
 <div th:insert="~{page-parts :: footing}"></div>

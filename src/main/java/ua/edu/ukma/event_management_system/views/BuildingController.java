@@ -21,7 +21,7 @@ import java.util.*;
 @Controller
 @RequestMapping("building")
 @ConditionalOnExpression("${api.building.enable}")
-public class BuildingViewController {
+public class BuildingController {
 
     private ModelMapper modelMapper;
     private BuildingService buildingService;
@@ -39,7 +39,14 @@ public class BuildingViewController {
     @GetMapping("/{id}")
     public String getBuilding(@PathVariable long id, Model model) {
         BuildingDto building = toDto(buildingService.getBuildingById(id));
+
+        List<BuildingRatingDto> ratings = building.getRating()
+                .stream()
+                .map(rId -> toDto(buildingService.getRatingById(rId)))
+                .toList();
+
         model.addAttribute("building", building);
+        model.addAttribute("ratings", ratings);
         return "buildings/building-details";
     }
 
@@ -58,7 +65,22 @@ public class BuildingViewController {
                     .toList();
         }
 
+        Map<Integer, Double> buildingAvgRating = new HashMap<>();
+        buildings.forEach(b -> {
+            if (b.getRating() != null && !b.getRating().isEmpty()) {
+                buildingAvgRating.put(
+                        b.getId(),
+                        b.getRating()
+                                .stream()
+                                .mapToInt(rId -> buildingService.getRatingById(rId).getRating())
+                                .average()
+                                .getAsDouble()
+                );
+            }
+        });
+
         model.addAttribute("buildings", buildings);
+        model.addAttribute("avgRatings", buildingAvgRating);
         return "buildings/building-list";
     }
 
@@ -95,21 +117,29 @@ public class BuildingViewController {
         return "buildings/building-form";
     }
 
-//    @PutMapping("/{id}")
-//    @ResponseBody
-//    public ResponseEntity<?> updateBuilding(@PathVariable long id, @RequestBody @Valid BuildingDto buildingDto,
-//                                            BindingResult bindingResult) {
-//        if(bindingResult.hasErrors()){
-//            Map<String, String> errors = new HashMap<>();
-//            bindingResult.getFieldErrors().forEach(error -> {
-//                errors.put(error.getField(), error.getDefaultMessage());
-//            });
-//            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-//        }
-//        buildingService.updateBuilding(id, buildingDto);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
+    @GetMapping("/{id}/edit")
+    public String editBuildingForm(@PathVariable long id, Model model){
+        BuildingDto buildingDto = toDto(buildingService.getBuildingById(id));
+        model.addAttribute("buildingDto", buildingDto);
+        return "buildings/building-form";
+    }
+
+    @PutMapping("/{id}")
+    public String updateBuilding(@PathVariable long id, @Valid BuildingDto buildingDto,
+                                            BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()){
+            List<String> errors = new ArrayList<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                String errorMessage = "Error for " + error.getField() + " field: " + error.getDefaultMessage();
+                errors.add(errorMessage);
+            });
+            model.addAttribute("errors", errors);
+            return "error";
+        }
+        buildingService.updateBuilding(id, buildingDto);
+        return "redirect:/building/";
+    }
+
     @DeleteMapping("/{id}")
     public String deleteBuilding(@PathVariable long id, Model model) {
         try{
