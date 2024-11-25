@@ -35,7 +35,7 @@ public class AuthControllerApi {
 		return ResponseEntity
 				.status(HttpStatus.FOUND)
 				.header(HttpHeaders.SET_COOKIE, cookie.toString())
-				.header(HttpHeaders.LOCATION, "/main")
+				.header(HttpHeaders.LOCATION, "/myprofile")
 				.body("Login successful");
 
 //		// Return the token in a JSON response
@@ -43,6 +43,23 @@ public class AuthControllerApi {
 //		response.put("token", token);
 //
 //		return ResponseEntity.ok(response);
+	}
+
+	@GetMapping("/tologout")
+	public ResponseEntity<?> logout() {
+		ResponseCookie cookie = ResponseCookie.from("jwtToken")
+				.httpOnly(true)
+				.secure(true)
+				.path("/")
+				.maxAge(0)
+				.sameSite("Strict")
+				.build();
+
+		return ResponseEntity
+				.status(HttpStatus.FOUND)
+				.header(HttpHeaders.SET_COOKIE, cookie.toString())
+				.header(HttpHeaders.LOCATION, "/FAQ.html")
+				.body("Login successful");
 	}
 
 //	@PostMapping("register")
