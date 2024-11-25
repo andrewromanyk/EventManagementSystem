@@ -33,25 +33,20 @@
         <div class="card-body">
           <h5 class="card-title text-primary" th:text="${event.eventTitle}"></h5>
           <p class="card-text">
-            <strong>Building:</strong> <span th:text="${event.building.address}"></span>
+            <strong>Number of Tickets:</strong> <span th:text="${event.numberOfTickets}"></span>
           </p>
           <p class="card-text">
             <strong>Description:</strong> <span th:text="${event.description}"></span>
           </p>
-          <p class="card-text">
-            <strong>Number of Tickets:</strong> <span th:text="${event.numberOfTickets}"></span>
-          </p>
-          <p class="card-text">
-            <strong>Minimum Age Restriction:</strong> <span th:text="${event.minAgeRestriction}"></span>
-          </p>
           <div th:if="${imageMap[event.id] != null}">
             <img class="img-fluid rounded mb-3" alt="Event Image" th:src="${imageMap[event.id]}" />
           </div>
+          <a th:href="@{'/event/' + ${event.id}}" class="btn btn-primary mt-3">Details</a>
         </div>
         <div class="card-footer text-muted">
           <small>
-            <strong>Start:</strong> <span th:text="${event.dateTimeStart}"></span><br>
-            <strong>End:</strong> <span th:text="${event.dateTimeEnd}"></span>
+            <strong>Start:</strong> <span th:text="${#temporals.format(event.dateTimeStart, 'dd MMM yyyy HH:mm')}"></span><br>
+            <strong>End:</strong> <span th:text="${#temporals.format(event.dateTimeEnd, 'dd MMM yyyy HH:mm')}"></span>
           </small>
         </div>
       </div>

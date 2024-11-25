@@ -36,7 +36,6 @@ public class EventController {
 	public String get(Model model) throws IOException {
 		List<Event> events = eventService.getAllEvents();
 
-		// Prepare a map of event IDs to Base64-encoded images
 		Map<Integer, String> imageMap = new HashMap<>();
 		for (Event event : events) {
 			if (event.getImage() != null) {
@@ -49,8 +48,8 @@ public class EventController {
 			}
 		}
 
-		model.addAttribute("events", events); // Add events as usual
-		model.addAttribute("imageMap", imageMap); // Add the image map
+		model.addAttribute("events", events);
+		model.addAttribute("imageMap", imageMap);
 		return "events/events";
 	}
 
@@ -58,7 +57,6 @@ public class EventController {
 	public String get(@PathVariable long id, Model model) throws IOException {
 		Event event = eventService.getEventById(id);
 
-		// Prepare a map of event IDs to Base64-encoded images
 		String base64Image;
 		if (event.getImage() != null) {
 			base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(event.getImage());
@@ -67,8 +65,8 @@ public class EventController {
 			base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg")));
 		}
 
-		model.addAttribute("event", event); // Add events as usual
-		model.addAttribute("imageMap", base64Image); // Add the image map
+		model.addAttribute("event", event);
+		model.addAttribute("img", base64Image);
 		return "events/event";
 	}
 
