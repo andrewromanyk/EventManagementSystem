@@ -1,4 +1,4 @@
-package ua.edu.ukma.event_management_system.controller.api;
+package ua.edu.ukma.event_management_system.controller;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
@@ -7,7 +7,7 @@ import org.springframework.web.server.ResponseStatusException;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
 @RestController
-public class AuthControllerRest {
+public class AuthControllerApi {
 
 	private UserService userService;
 

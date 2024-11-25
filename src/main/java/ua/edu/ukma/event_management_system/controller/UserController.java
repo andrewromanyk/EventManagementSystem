@@ -1,4 +1,4 @@
-package ua.edu.ukma.event_management_system.controller.api;
+package ua.edu.ukma.event_management_system.controller;
 
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;

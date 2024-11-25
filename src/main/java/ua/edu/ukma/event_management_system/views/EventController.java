@@ -1,4 +1,4 @@
-package ua.edu.ukma.event_management_system.controller.api;
+package ua.edu.ukma.event_management_system.views;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -6,9 +6,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
-import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.Event;
-import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
