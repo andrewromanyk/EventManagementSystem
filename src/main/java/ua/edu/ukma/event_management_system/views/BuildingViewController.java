@@ -66,12 +66,13 @@ public class BuildingViewController {
     public String createNewBuilding(@ModelAttribute("buildingDto") @Valid BuildingDto buildingDto,
                                     BindingResult bindingResult, Model model) {
         if(bindingResult.hasErrors()){
-            Map<String, String> errors = new HashMap<>();
+            List<String> errors = new ArrayList<>();
             bindingResult.getFieldErrors().forEach(error -> {
-                errors.put(error.getField(), error.getDefaultMessage());
+                String errorMessage = "Error for " + error.getField() + " field: " + error.getDefaultMessage();
+                errors.add(errorMessage);
             });
 
-            model.addAttribute("error", errors);
+            model.addAttribute("errors", errors);
             return "error";
         }
 
@@ -114,7 +115,9 @@ public class BuildingViewController {
         try{
             buildingService.deleteBuilding(id);
         }catch(DataIntegrityViolationException ex){
-            model.addAttribute("error", "Cannot delete building. It is referenced by other entities.");
+            List<String> errors = new ArrayList<>();
+            errors.add("Cannot delete building. It is referenced by other entities.");
+            model.addAttribute("errors", errors);
             return "error";
         }
         return "redirect:/building/";
