@@ -95,21 +95,29 @@ public class BuildingViewController {
         return "buildings/building-form";
     }
 
-//    @PutMapping("/{id}")
-//    @ResponseBody
-//    public ResponseEntity<?> updateBuilding(@PathVariable long id, @RequestBody @Valid BuildingDto buildingDto,
-//                                            BindingResult bindingResult) {
-//        if(bindingResult.hasErrors()){
-//            Map<String, String> errors = new HashMap<>();
-//            bindingResult.getFieldErrors().forEach(error -> {
-//                errors.put(error.getField(), error.getDefaultMessage());
-//            });
-//            return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
-//        }
-//        buildingService.updateBuilding(id, buildingDto);
-//        return new ResponseEntity<>(HttpStatus.OK);
-//    }
-//
+    @GetMapping("/{id}/edit")
+    public String editBuildingForm(@PathVariable long id, Model model){
+        BuildingDto buildingDto = toDto(buildingService.getBuildingById(id));
+        model.addAttribute("buildingDto", buildingDto);
+        return "buildings/building-form";
+    }
+
+    @PutMapping("/{id}")
+    public String updateBuilding(@PathVariable long id, @Valid BuildingDto buildingDto,
+                                            BindingResult bindingResult, Model model) {
+        if(bindingResult.hasErrors()){
+            List<String> errors = new ArrayList<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                String errorMessage = "Error for " + error.getField() + " field: " + error.getDefaultMessage();
+                errors.add(errorMessage);
+            });
+            model.addAttribute("errors", errors);
+            return "error";
+        }
+        buildingService.updateBuilding(id, buildingDto);
+        return "redirect:/building/";
+    }
+
     @DeleteMapping("/{id}")
     public String deleteBuilding(@PathVariable long id, Model model) {
         try{

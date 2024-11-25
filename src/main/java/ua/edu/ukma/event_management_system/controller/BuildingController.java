@@ -80,7 +80,6 @@ public class BuildingController {
 		return new ResponseEntity<>(returned, HttpStatus.CREATED);
 	}
 
-
 	@PutMapping("/{id}")
 	public ResponseEntity<?> updateBuilding(@PathVariable long id, @RequestBody @Valid BuildingDto buildingDto,
 							   BindingResult bindingResult) {

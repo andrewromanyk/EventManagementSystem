@@ -21,7 +21,9 @@
         Add building
     </div>
 
-    <form th:action="@{~/api/building}" th:object="${buildingDto}" method="post">
+    <form th:action="@{(${buildingDto.id} != null) ? '/building/' + ${buildingDto.id} : '/building/'}"
+          th:object="${buildingDto}" method="post">
+        <input type="hidden" name="_method" th:value="${buildingDto.id != null} ? 'PUT' : 'POST'">
 
         <label for="address">address:</label>
         <input type="text" id="address" th:field="*{address}" required minlength="1">
