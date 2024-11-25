@@ -32,7 +32,7 @@ public class EventController {
 	}
 
 	@GetMapping("/")
-	public String get(Model model) {
+	public String get(Model model) throws IOException {
 		List<Event> events = eventService.getAllEvents();
 
 		// Prepare a map of event IDs to Base64-encoded images
@@ -40,6 +40,10 @@ public class EventController {
 		for (Event event : events) {
 			if (event.getImage() != null) {
 				String base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(event.getImage());
+				imageMap.put(event.getId(), base64Image);
+			}
+			else {
+				String base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg")));
 				imageMap.put(event.getId(), base64Image);
 			}
 		}
@@ -81,6 +85,6 @@ public class EventController {
 			return "events/event-form";
 		}
 		eventService.createEvent(eventDto);
-		return "redirect:/event";
+		return "redirect:/events";
 	}
 }

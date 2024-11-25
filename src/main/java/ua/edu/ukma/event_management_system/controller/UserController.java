@@ -17,7 +17,7 @@ import org.springframework.http.HttpStatus;
 import java.util.*;
 
 @RestController
-@RequestMapping("user")
+@RequestMapping("api/user")
 @ConditionalOnExpression("${api.user.enable}")
 public class UserController {
 

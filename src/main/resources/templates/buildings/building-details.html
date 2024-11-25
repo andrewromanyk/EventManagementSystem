@@ -24,7 +24,7 @@
 
     <div class="row w-100">
         <div class="control-buttons">
-            <form th:action="@{/building/{id}(id=${building.id})}" method="post" sec:authorize="hasAuthority('ORGANIZER')">
+            <form th:action="@{~/api/building/{id}(id=${building.id})}" method="post" sec:authorize="hasAuthority('ORGANIZER')">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>
