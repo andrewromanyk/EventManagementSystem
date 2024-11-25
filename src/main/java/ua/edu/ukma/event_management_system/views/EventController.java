@@ -2,14 +2,19 @@ package ua.edu.ukma.event_management_system.views;
 
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 import ua.edu.ukma.event_management_system.domain.Event;
+import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
+import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
 import java.io.IOException;
 import java.nio.file.Files;
@@ -25,7 +30,12 @@ public class EventController {
 
 	private EventService eventService;
 	private BuildingService buildingService;
+	private UserService userService;
 
+	@Autowired
+	public void setUserService(UserService userService) {
+		this.userService = userService;
+	}
 	@Autowired
 	public void setEventService(EventService eventService) {
 		this.eventService = eventService;
@@ -33,7 +43,13 @@ public class EventController {
 
 	@GetMapping("/")
 	public String get(Model model) throws IOException {
-		List<Event> events = eventService.getAllEvents();
+		UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUsername(details.getUsername());
+		List<Event> events = switch (user.getUserRole()) {
+            case ADMIN -> eventService.getAllEvents();
+            case ORGANIZER -> eventService.getAllForOrganizer(user.getId());
+            case USER -> eventService.getAllRelevant();
+        };
 
 		// Prepare a map of event IDs to Base64-encoded images
 		Map<Integer, String> imageMap = new HashMap<>();
@@ -48,8 +64,8 @@ public class EventController {
 			}
 		}
 
-		model.addAttribute("events", events); // Add events as usual
-		model.addAttribute("imageMap", imageMap); // Add the image map
+		model.addAttribute("events", events);
+		model.addAttribute("imageMap", imageMap);
 		return "events/events";
 	}
 
@@ -66,8 +82,8 @@ public class EventController {
 			base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg")));
 		}
 
-		model.addAttribute("event", event); // Add events as usual
-		model.addAttribute("imageMap", base64Image); // Add the image map
+		model.addAttribute("event", event);
+		model.addAttribute("img", base64Image);
 		return "events/event";
 	}
 
@@ -79,12 +95,13 @@ public class EventController {
 	}
 
 	@PostMapping("/create")
-	public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto, BindingResult result, Model model) {
+	public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto,  @RequestParam("image_cstm") MultipartFile image, BindingResult result, Model model) throws IOException {
 		if (result.hasErrors()) {
 			model.addAttribute("event", eventDto);
 			return "events/event-form";
 		}
+		eventDto.setImage(image.getBytes());
 		eventService.createEvent(eventDto);
-		return "redirect:/events";
+		return "redirect:/event/";
 	}
 }

@@ -27,7 +27,7 @@
         <div class="inner">
             <div th:object="${event}" class="innerOutside col-md-6 col-lg-4">
                 <div>
-                    <img class="event-img img-fluid rounded mb-3" alt="Event Image" th:src="${imageMap}" />
+                    <img class="event-img img-fluid rounded mb-3" alt="Event Image" th:src="${img}" />
                 </div>
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -46,8 +46,8 @@
                         </p>
                         <div class="card-footer text-muted">
                             <small>
-                                <strong>Start:</strong> <span th:text="${event.dateTimeStart}"></span><br>
-                                <strong>End:</strong> <span th:text="${event.dateTimeEnd}"></span>
+                                <strong>Start:</strong> <span th:text="${#temporals.format(event.dateTimeStart, 'dd MMM yyyy HH:mm')}"></span><br>
+                                <strong>End:</strong> <span th:text="${#temporals.format(event.dateTimeEnd, 'dd MMM yyyy HH:mm')}"></span>
                             </small>
                         </div>
                     </div>

@@ -19,6 +19,7 @@ import ua.edu.ukma.event_management_system.repository.EventRepository;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
@@ -118,6 +119,16 @@ public class EventServiceImpl implements EventService {
     @Override
     public void deleteEvent(long eventId) {
         eventRepository.deleteById(eventId);
+    }
+
+    @Override
+    public List<Event> getAllRelevant() {
+        return eventRepository.findEventEntitiesByDateTimeEndAfter(LocalDateTime.now()).stream().map(this::toDomain).toList();
+    }
+
+    @Override
+    public List<Event> getAllForOrganizer(Long organizerId) {
+        return eventRepository.findEventEntitiesByCreator_Id(organizerId).stream().map(this::toDomain).toList();
     }
 
     private Event toDomain(EventEntity event){

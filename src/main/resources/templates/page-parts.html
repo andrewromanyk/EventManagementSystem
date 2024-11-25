@@ -11,8 +11,10 @@
             Manager
         </h1>
         <div id="icon-container" sec:authorize="isAuthenticated()">
-            <img id="user-icon" alt="user-icon" src="../static/blank-user.png"
-                 th:src="@{/blank-user.png}">
+            <a href="/myprofile">
+                <img id="user-icon" alt="user-icon" src="../static/blank-user.png"
+                     th:src="@{/blank-user.png}">
+            </a>
         </div>
         <div id="login-reg" sec:authorize="!isAuthenticated()">
             <button class="log-reg-button" th:onclick="'location.href=\'' + @{/login} + '\''">Login</button>
@@ -28,8 +30,10 @@
             <button class="nav-button" th:onclick="'location.href=\'' + @{/user/} + '\''"
                     sec:authorize="hasAuthority('ADMIN')">Users</button>
         </div>
+        <a href="/main">
         <img id=icon alt="Event Manager" src="../static/em-icon.png"
              th:src="@{/em-icon.png}">
+        </a>
 </header>
 
 <footer th:fragment="footing">
