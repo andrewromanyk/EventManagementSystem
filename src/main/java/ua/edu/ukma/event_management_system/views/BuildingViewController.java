@@ -39,7 +39,14 @@ public class BuildingViewController {
     @GetMapping("/{id}")
     public String getBuilding(@PathVariable long id, Model model) {
         BuildingDto building = toDto(buildingService.getBuildingById(id));
+
+        List<BuildingRatingDto> ratings = building.getRating()
+                .stream()
+                .map(rId -> toDto(buildingService.getRatingById(rId)))
+                .toList();
+
         model.addAttribute("building", building);
+        model.addAttribute("ratings", ratings);
         return "buildings/building-details";
     }
 
@@ -58,7 +65,22 @@ public class BuildingViewController {
                     .toList();
         }
 
+        Map<Integer, Double> buildingAvgRating = new HashMap<>();
+        buildings.forEach(b -> {
+            if (b.getRating() != null && !b.getRating().isEmpty()) {
+                buildingAvgRating.put(
+                        b.getId(),
+                        b.getRating()
+                                .stream()
+                                .mapToInt(rId -> buildingService.getRatingById(rId).getRating())
+                                .average()
+                                .getAsDouble()
+                );
+            }
+        });
+
         model.addAttribute("buildings", buildings);
+        model.addAttribute("avgRatings", buildingAvgRating);
         return "buildings/building-list";
     }
 

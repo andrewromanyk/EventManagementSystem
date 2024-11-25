@@ -35,6 +35,8 @@
                             <h5 class="card-title" th:text="${building.address}"></h5>
                             <h6 class="card-subtitle mb-2 text-muted" th:text="${building.description}"></h6>
                         </label>
+                        <p class="card-text" th:if="${avgRatings[building.id] == null}">No ratings yet</p>
+                        <p class="card-text" th:if="${avgRatings[building.id] != null}" th:text="'Rating: ' + ${avgRatings[building.id]}"></p>
                     </a>
                 </div>
             </div>
