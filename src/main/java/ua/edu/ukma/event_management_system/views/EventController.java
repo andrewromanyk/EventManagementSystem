@@ -51,7 +51,7 @@ public class EventController {
             case USER -> eventService.getAllRelevant();
         };
 
-        // Prepare a map of event IDs to Base64-encoded images
+		// Prepare a map of event IDs to Base64-encoded images
 		Map<Integer, String> imageMap = new HashMap<>();
 		for (Event event : events) {
 			if (event.getImage() != null) {
@@ -64,8 +64,8 @@ public class EventController {
 			}
 		}
 
-		model.addAttribute("events", events); // Add events as usual
-		model.addAttribute("imageMap", imageMap); // Add the image map
+		model.addAttribute("events", events);
+		model.addAttribute("imageMap", imageMap);
 		return "events/events";
 	}
 
@@ -82,8 +82,8 @@ public class EventController {
 			base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg")));
 		}
 
-		model.addAttribute("event", event); // Add events as usual
-		model.addAttribute("imageMap", base64Image); // Add the image map
+		model.addAttribute("event", event);
+		model.addAttribute("img", base64Image);
 		return "events/event";
 	}
 

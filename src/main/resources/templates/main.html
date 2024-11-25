@@ -21,7 +21,7 @@
             Welcome,&nbsp;<div sec:authentication="name" style="display: inline">[unknown name]</div>!
         </div>
         <br>
-        <div class="tickets">
+        <div th:if="${!tickets.isEmpty()}" class="tickets">
             <span class="ticketName">Your tickets:</span>
             <ol>
                 <li th:each="ticket : ${tickets}" class="ticketRow">
@@ -30,6 +30,7 @@
                 </li>
             </ol>
         </div>
+        <h4 th:if="${tickets.isEmpty()}">Seems like you have no events coming up!</h4>
     </div>
 
     <div th:insert="page-parts :: footing"></div>
