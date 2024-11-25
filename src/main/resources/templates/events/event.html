@@ -21,7 +21,7 @@
     </script>
 </head>
 <body>
-<div th:insert="page-parts :: heading"></div>
+<div th:insert="~{page-parts :: heading}"></div>
 
     <div class="fullOutside">
         <div class="inner">
@@ -61,6 +61,6 @@
         </div>
     </div>
 
-<div th:insert="page-parts :: footing"></div>
+<div th:insert="~{page-parts :: footing}"></div>
 </body>
 </html>
