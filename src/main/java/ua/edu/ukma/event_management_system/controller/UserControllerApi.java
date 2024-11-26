@@ -19,9 +19,9 @@ import java.util.*;
 @RestController
 @RequestMapping("api/user")
 @ConditionalOnExpression("${api.user.enable}")
-public class UserController {
+public class UserControllerApi {
 
-    private static final Logger logger = LoggerFactory.getLogger(UserController.class);
+    private static final Logger logger = LoggerFactory.getLogger(UserControllerApi.class);
     private static final Marker USER_ACTION_MARKER = MarkerFactory.getMarker("USER_ACTION");
     private static final Marker VALIDATION_MARKER = MarkerFactory.getMarker("VALIDATION");
     private static final Marker USER_ERROR_MARKER = MarkerFactory.getMarker("USER_ERROR");

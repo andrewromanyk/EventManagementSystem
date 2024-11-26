@@ -23,8 +23,8 @@
 <div class="container fullOutside">
 
     <div class="row w-100">
-        <div class="control-buttons">
-            <form th:action="@{~/api/user/{id}(id=${user.id})}" method="post" sec:authorize="hasAuthority('ORGANIZER')">
+        <div class="control-buttons" sec:authorize="hasAuthority('ADMIN')">
+            <form th:action="@{~/api/user/{id}(id=${user.id})}" method="post">
                 <input type="hidden" name="_method" value="DELETE">
                 <button type="submit" class="btn btn-danger btn-sm">Delete</button>
             </form>
@@ -36,20 +36,12 @@
                 <div class="card shadow-sm">
                     <label class="card-body">
                         <h5 class="card-title" th:text="${user.username}"></h5>
-                        <h6 class="card-subtitle mb-2 text-muted" th:text="${user.surname} + ' ' + ${user.name}"></h6>
-                        <h6 class="card-subtitle mb-2 text-muted" th:text="${user.role}"></h6>
+                        <h6 class="card-subtitle mb-2 text-muted" th:text="${user.lastName} + ' ' + ${user.firstName}"></h6>
+                        <h6 class="card-subtitle mb-2 text-muted" th:text="${user.userRole}"></h6>
                         <p class="card-text" th:text="'age: ' + ${user.age} + ' years'"></p>
                         <p class="card-text" th:text="'phone: ' + ${user.phoneNumber}"></p>
                         <p class="card-text" th:text="'email: ' + ${user.email}"></p>
                     </label>
-                </div>
-            </div>
-            <div th:if="${!ratings.isEmpty()}">
-                <h3>Ratings</h3>
-                <div th:each="rating : ${ratings}" class="card">
-                    <h5 class="card-title" th:text="${rating.author.username}"></h5>
-                    <h5 class="card-subtitle mb2" th:text="${rating.comment}"></h5>
-                    <p class="card-text" th:text="'Rating: ' + ${rating.rating}"></p>
                 </div>
             </div>
         </div>

@@ -9,6 +9,7 @@ import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.ukma.event_management_system.domain.User;
+import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
@@ -16,7 +17,6 @@ import java.util.*;
 
 @Controller
 @RequestMapping("user")
-@ConditionalOnExpression("${api.user.enable}")
 public class UserController {
     private ModelMapper modelMapper;
     private UserService userService;
@@ -32,40 +32,29 @@ public class UserController {
     }
 
     @GetMapping("/{id}")
-    public String getBuilding(@PathVariable long id, Model model) {
+    public String getUser(@PathVariable long id, Model model) {
         UserDto user = toDto(userService.getUserById(id));
-
         model.addAttribute("user", user);
-//        model.addAttribute("ratings", ratings);
-        return "user/user-details";
+        return "users/user-details";
+    }
+
+    @GetMapping("/{id}/edit")
+    public String edit(@PathVariable long id, Model model) {
+        UserDto user = toDto(userService.getUserById(id));
+        model.addAttribute("userDto", user);
+        model.addAttribute("roles", UserRole.values());
+        return "users/user-form";
     }
 
     @GetMapping("/")
-    public String getBuildings(Model model) {
+    public String getUsers(Model model) {
         List<UserDto> users;
         users = userService.getAllUsers()
                 .stream()
                 .map(this::toDto)
                 .toList();
-
-
-//        Map<Integer, Double> buildingAvgRating = new HashMap<>();
-//        buildings.forEach(b -> {
-//            if (b.getRating() != null && !b.getRating().isEmpty()) {
-//                buildingAvgRating.put(
-//                        b.getId(),
-//                        b.getRating()
-//                                .stream()
-//                                .mapToInt(rId -> buildingService.getRatingById(rId).getRating())
-//                                .average()
-//                                .getAsDouble()
-//                );
-//            }
-//        });
-
-        model.addAttribute("buildings", users);
-//        model.addAttribute("avgRatings", buildingAvgRating);
-        return "buildings/building-list";
+        model.addAttribute("users", users);
+        return "users/user-list";
     }
 
 //    @PostMapping("/")

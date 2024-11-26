@@ -20,7 +20,6 @@ import java.util.*;
 
 @Controller
 @RequestMapping("building")
-@ConditionalOnExpression("${api.building.enable}")
 public class BuildingController {
 
     private ModelMapper modelMapper;
