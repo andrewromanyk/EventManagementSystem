@@ -10,6 +10,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.domain.UserRole;
+import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
@@ -31,6 +32,17 @@ public class UserController {
         this.userService = userService;
     }
 
+    @GetMapping("/")
+    public String getUsers(Model model) {
+        List<UserDto> users;
+        users = userService.getAllUsers()
+                .stream()
+                .map(this::toDto)
+                .toList();
+        model.addAttribute("users", users);
+        return "users/user-list";
+    }
+
     @GetMapping("/{id}")
     public String getUser(@PathVariable long id, Model model) {
         UserDto user = toDto(userService.getUserById(id));
@@ -46,15 +58,20 @@ public class UserController {
         return "users/user-form";
     }
 
-    @GetMapping("/")
-    public String getUsers(Model model) {
-        List<UserDto> users;
-        users = userService.getAllUsers()
-                .stream()
-                .map(this::toDto)
-                .toList();
-        model.addAttribute("users", users);
-        return "users/user-list";
+    @PutMapping("/{id}")
+    public String updateBuilding(@PathVariable long id, @Valid UserDto userDto,
+                                 BindingResult bindingResult, Model model) {
+        if (bindingResult.hasErrors()){
+            List<String> errors = new ArrayList<>();
+            bindingResult.getFieldErrors().forEach(error -> {
+                String errorMessage = "Error for " + error.getField() + " field: " + error.getDefaultMessage();
+                errors.add(errorMessage);
+            });
+            model.addAttribute("errors", errors);
+            return "error";
+        }
+        userService.updateUser(id, userDto);
+        return "redirect:/user/" + id;
     }
 
 //    @PostMapping("/")
