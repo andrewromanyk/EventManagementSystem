@@ -94,17 +94,24 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public List<Ticket> getAllTicketsForUser(UserDto user) {
-        return modelMapper.map(ticketRepository.findAllByUserId((int) user.getId()), List.class);
+        return ticketRepository.findAllByUserId((int) user.getId())
+                .stream().map(this::toDomain).toList();
     }
 
     @Override
     public List<Ticket> getAllTicketsForUser(String name){
-        return modelMapper.map(ticketRepository.findAllByUserUsername(name), List.class);
+        return ticketRepository.findAllByUserUsername(name).stream().map(this::toDomain).toList();
     }
 
     @Override
     public List<Long> getAllTicketsCreatedToday() {
         return ticketRepository.findAllCreatedToday();
+    }
+
+    @Override
+    public List<Ticket> getAllTicketsCreatedByUser(long user) {
+        return ticketRepository.findTicketEntitiesByEvent_Creator_Id(user)
+                .stream().map(this::toDomain).toList();
     }
 
     private TicketDto toDto(Ticket ticket) {
