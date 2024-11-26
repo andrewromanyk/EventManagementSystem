@@ -99,22 +99,31 @@ public class EventController {
 
 	@GetMapping("/create")
 	public String showCreateEventForm(Model model) {
-//		List<BuildingDto> buildings = buildingService.getAllBuildings()
-//				.stream()
-//				.map(this::toDto)
-//				.toList();
-//		model.addAttribute("buildings", buildings);
+		List<BuildingDto> buildings = buildingService.getAllBuildings()
+				.stream()
+				.map(this::toDto)
+				.toList();
+		model.addAttribute("buildings", buildings);
 		model.addAttribute("event", new EventDto());
 		return "events/event-form";
 	}
 
 	@PostMapping("/create")
-	public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto,  @RequestParam("image_cstm") MultipartFile image, BindingResult result, Model model) throws IOException {
+	public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto,  @RequestParam("image_cstm") MultipartFile image,
+							  BindingResult result, Model model, RedirectAttributes redirectAttributes) throws IOException {
 		if (result.hasErrors()) {
 			model.addAttribute("event", eventDto);
 			return "events/event-form";
 		}
+		if (eventDto.getDateTimeEnd().isBefore(eventDto.getDateTimeStart())) {
+			model.addAttribute("event", eventDto);
+			model.addAttribute("error", "Event cannot end before it started!");
+			return "events/event-form";
+		}
 		eventDto.setImage(image.getBytes());
+		UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUsername(details.getUsername());
+		eventDto.setCreator(user.getId());
 		eventService.createEvent(eventDto);
 		return "redirect:/event/";
 	}

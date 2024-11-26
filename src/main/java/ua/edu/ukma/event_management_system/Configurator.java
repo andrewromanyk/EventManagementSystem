@@ -13,10 +13,8 @@ import ua.edu.ukma.event_management_system.domain.*;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.TicketDto;
-import ua.edu.ukma.event_management_system.entity.BuildingEntity;
-import ua.edu.ukma.event_management_system.entity.BuildingRatingEntity;
-import ua.edu.ukma.event_management_system.entity.EventEntity;
-import ua.edu.ukma.event_management_system.entity.TicketEntity;
+import ua.edu.ukma.event_management_system.dto.UserDto;
+import ua.edu.ukma.event_management_system.entity.*;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
@@ -69,8 +67,10 @@ public class Configurator {
 
         // Event: dto to entity
         Converter<Long, BuildingEntity> toBuildingConverter = ctx -> mapperResult.map(buildingService.getBuildingById(ctx.getSource()), BuildingEntity.class);
+        Converter<Long, UserEntity> toUserConverter = ctx -> mapperResult.map(userService.getUserById(ctx.getSource()), UserEntity.class);
         TypeMap<EventDto, EventEntity> eventMapperRev = mapperResult.createTypeMap(EventDto.class, EventEntity.class);
         eventMapperRev.addMappings(mapper -> mapper.using(toBuildingConverter).map(EventDto::getBuilding, EventEntity::setBuilding));
+        eventMapperRev.addMappings(mapper -> mapper.using(toUserConverter).map(EventDto::getCreator, EventEntity::setCreator));
 
         logger.info("Created Event reverse mappings");
 
