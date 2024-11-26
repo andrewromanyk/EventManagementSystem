@@ -33,11 +33,11 @@
     </div>
     <div class="mb-3">
       <label for="numberOfTickets" class="form-label">Number of Tickets</label>
-      <input type="number" class="form-control" id="numberOfTickets" name="numberOfTickets" th:field="*{numberOfTickets}" required>
+      <input type="number" class="form-control" id="numberOfTickets" name="numberOfTickets" th:field="*{numberOfTickets}" required min="2">
     </div>
     <div class="mb-3">
       <label for="minAgeRestriction" class="form-label">Minimum Age Restriction</label>
-      <input type="number" class="form-control" id="minAgeRestriction" name="minAgeRestriction" th:field="*{minAgeRestriction}" required>
+      <input type="number" class="form-control" id="minAgeRestriction" name="minAgeRestriction" th:field="*{minAgeRestriction}" required  min="0">
     </div>
     <div class="mb-3">
       <label for="dateTimeStart" class="form-label">Start Date & Time</label>

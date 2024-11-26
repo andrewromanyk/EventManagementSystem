@@ -1,10 +1,48 @@
-body {
-    padding: 0;
-    margin: 0;
+html, body {
     height: 100%;
-    width: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
     background: #bec8d1;
 }
+
+body > *:not(footer) {
+    flex: 1;
+    padding-bottom: 50px;
+}
+
+footer {
+    width: 100%;
+    background-color: #1B1F23;
+    color: aliceblue;
+    text-align: center;
+    padding: 10px 0;
+    margin-top: auto;
+}
+
+.footerList {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+}
+
+.footerList li {
+    display: inline;
+}
+
+.footerList a {
+    color: aliceblue;
+    text-decoration: none;
+}
+
+.footerList a:hover {
+    text-decoration: underline;
+}
+
 
 header {
     width: 100%;
@@ -47,6 +85,7 @@ header {
 .middle-container {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 #name {
@@ -58,10 +97,11 @@ header {
 
 #icon {
     top: 10px;
-    right: 10px;
+    margin-right: 10px;
     width: 100px;
     height: 100px;
-    position: absolute;
+    float:right;
+    clear: right;
 }
 
 .icon-container {
@@ -148,7 +188,8 @@ button:hover {
 footer{
     width: 100%;
     background-color: #1B1F23;
-    display: flex;
+    position: fixed;
+    bottom: 0;
 }
 
 li{
@@ -163,4 +204,13 @@ li{
 a{
     text-decoration: none;
     color: inherit;
+}
+
+.footerList{
+    list-style: none;
+    font-family: Verdana, sans-serif;
+    color: aliceblue;
+    padding-left: 10px;
+    font-size: 12px;
+    text-align: center;
 }

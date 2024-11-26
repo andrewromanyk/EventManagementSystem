@@ -1,5 +1,6 @@
 <!doctype html>
-<html lang="en">
+<html lang="en"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport"
@@ -12,13 +13,6 @@
           th:href="@{/styles/event.css}">
     <link rel="icon" href="../../static/em-icon.png"
           th:href="@{/em-icon.png}">
-    <script>
-        function redirectToBuyTicket() {
-            const currentUrl = window.location.href;
-            const newUrl = currentUrl.endsWith("/") ? `${currentUrl}buy-ticket` : `${currentUrl}/buy-ticket`;
-            window.location.href = newUrl;
-        }
-    </script>
 </head>
 <body>
 <div th:insert="~{page-parts :: heading}"></div>
@@ -31,19 +25,19 @@
                 </div>
                 <div class="card shadow-sm">
                     <div class="card-body">
-                        <h5 class="card-title text-primary" th:text="${event.eventTitle}"></h5>
-                        <p class="card-text">
+                        <h5 class="card-title text-primary" th:text="${event.eventTitle}">Name</h5>
+                        <h5 class="card-text">
                             <strong>Building:</strong> <span th:text="${event.building.address}"></span>
-                        </p>
-                        <p class="card-text">
+                        </h5>
+                        <h5 class="card-text">
                             <strong>Description:</strong> <span th:text="${event.description}"></span>
-                        </p>
-                        <p class="card-text">
+                        </h5>
+                        <h5 class="card-text">
                             <strong>Number of Tickets:</strong> <span th:text="${event.numberOfTickets}"></span>
-                        </p>
-                        <p class="card-text">
+                        </h5>
+                        <h5 class="card-text">
                             <strong>Minimum Age Restriction:</strong> <span th:text="${event.minAgeRestriction}"></span>
-                        </p>
+                        </h5>
                         <div class="card-footer text-muted">
                             <small>
                                 <strong>Start:</strong> <span th:text="${#temporals.format(event.dateTimeStart, 'dd MMM yyyy HH:mm')}"></span><br>
@@ -54,9 +48,15 @@
                 </div>
             </div>
             <div class="button-cont">
-                <button class="button" onclick="redirectToBuyTicket()">
-                    Buy ticket
-                </button>
+                <a th:href="@{'/event/' + ${event.id} + '/buy-ticket'}">
+                    <button class="button">
+                        Buy ticket
+                    </button>
+                </a>
+            </div>
+            <div class="button-cont" sec:authorize="hasAuthority('ORGANIZER')">
+                <button class="button" style="background-color: #C94F4F">Delete</button>
+                <button class="button" style="background-color: gold">Update</button>
             </div>
         </div>
     </div>

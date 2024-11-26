@@ -43,6 +43,14 @@ public class EventController {
 	public void setEventService(EventService eventService) {
 		this.eventService = eventService;
 	}
+	@Autowired
+	public void setBuildingService(BuildingService buildingService) {
+		this.buildingService = buildingService;
+	}
+	@Autowired
+	public void setModelMapper(ModelMapper modelMapper) {
+		this.modelMapper = modelMapper;
+	}
 
 	@GetMapping("/")
 	public String get(Model model) throws IOException {
@@ -92,11 +100,11 @@ public class EventController {
 
 	@GetMapping("/create")
 	public String showCreateEventForm(Model model) {
-		List<BuildingDto> buildings = buildingService.getAllBuildings()
-				.stream()
-				.map(this::toDto)
-				.toList();
-		model.addAttribute("buildings", buildings);
+//		List<BuildingDto> buildings = buildingService.getAllBuildings()
+//				.stream()
+//				.map(this::toDto)
+//				.toList();
+//		model.addAttribute("buildings", buildings);
 		model.addAttribute("event", new EventDto());
 		return "events/event-form";
 	}
