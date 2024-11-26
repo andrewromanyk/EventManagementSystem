@@ -12,6 +12,8 @@
           th:href="@{/styles/basic.css}">
     <link rel="stylesheet" href="../../static/styles/buildings.css"
           th:href="@{/styles/buildings.css}">
+    <link rel="stylesheet" href="../../static/styles/ticket-list.css"
+          th:href="@{/styles/ticket-list.css}">
     <link rel="icon" href="../../static/em-icon.png"
           th:href="@{/em-icon.png}">
     <title>View buildings - Event Manager</title>
@@ -20,34 +22,55 @@
 <body>
 <div th:insert="~{page-parts :: heading}"></div>
 
-<div class="container">
-    <div class="row">
-        <div th:each="ticket : ${tickets}" class="col-md-6 col-lg-4 mb-4">
-            <div class="card shadow-sm">
-                <div class="card-body">
-                    <h5 class="card-title text-primary">
-                        <span th:text="${ticket.event.eventTitle}"></span>
-                    </h5>
-                    <p class="card-text">
-                        <strong>Building Address:</strong> <span th:text="${ticket.event.building.address}"></span>
-                    </p>
-                    <p class="card-text">
-                        <strong>Event End Date:</strong>
-                        <span th:text="${#temporals.format(ticket.event.dateTimeEnd, 'dd MMM yyyy HH:mm')}"></span>
-                    </p>
-                    <p class="card-text">
-                        <strong>Purchase Date:</strong>
-                        <span th:text="${#temporals.format(ticket.purchaseDate, 'dd MMM yyyy HH:mm')}"></span>
-                    </p>
-                    <p class="card-text">
-                        <strong>Price:</strong> <span th:text="${ticket.price} + ' USD'"></span>
-                    </p>
+<div class="fullOutside">
+    <div class="container" th:if="${!tickets.isEmpty()}">
+        <div class="row">
+            <div th:each="ticket : ${tickets}" th:class="${ticket.event.getDateTimeEnd().isBefore(T(java.time.LocalDateTime).now())} ? 'dimmed col-md-6 col-lg-4 mb-4' : 'col-md-6 col-lg-4 mb-4'">
+                <div class="card shadow-sm">
+                    <div class="card-body">
+                        <h5 class="card-title text-primary">
+                            <a th:href="@{~/event/{id}(id=${ticket.event.id})}">
+                                <span th:text="${ticket.event.eventTitle}">title</span>
+                            </a>
+                        </h5>
+                        <p class="card-text">
+                            <strong>Building Address:</strong> <span th:text="${ticket.event.building.address}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Event End Date:</strong>
+                            <span th:text="${#temporals.format(ticket.event.dateTimeEnd, 'dd MMM yyyy HH:mm')}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Purchase Date:</strong>
+                            <span th:text="${#temporals.format(ticket.purchaseDate, 'dd MMM yyyy HH:mm')}"></span>
+                        </p>
+                        <p class="card-text">
+                            <strong>Price:</strong> <span th:text="${ticket.price} + ' USD'"></span>
+                        </p>
+                        <div sec:authorize="hasAuthority('ORGANIZER')">
+                            <p class="card-text">
+                                <strong>User's full name:</strong>
+                                <span th:text="${ticket.user.firstName}"></span>
+                                <span th:text="${ticket.user.lastName}"></span>
+                            </p>
+                            <p class="card-text">
+                                <strong>User's email:</strong> <span th:text="${ticket.user.email}"></span>
+                            </p>
+                        </div>
+                    </div>
+                    <div class="button-cont">
+                        <a th:href="@{'/ticket/' + ${ticket.id}}">
+                            <button class="button">Return</button>
+                        </a>
+                    </div>
                 </div>
             </div>
         </div>
     </div>
+    <div th:if="${tickets.isEmpty()}" style="font-st">
+        You have no tickets.
+    </div>
 </div>
-
 
 
 <div th:insert="~{page-parts :: footing}"></div>

@@ -25,4 +25,6 @@ public interface TicketService {
 	List<Ticket> getAllTicketsForUser(String name);
 
 	List<Long> getAllTicketsCreatedToday();
+
+	List<Ticket> getAllTicketsCreatedByUser(long user);
 }

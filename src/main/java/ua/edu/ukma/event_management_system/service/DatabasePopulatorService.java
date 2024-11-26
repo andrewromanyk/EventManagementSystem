@@ -61,8 +61,8 @@ public class DatabasePopulatorService {
 
         byte[] image = Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg"));
 
-        EventEntity event1 = new EventEntity("queen-concert", LocalDateTime.now().plusDays(10),
-                LocalDateTime.now().plusDays(10).plusHours(2),
+        EventEntity event1 = new EventEntity("queen-concert", LocalDateTime.now().minusDays(10),
+                LocalDateTime.now().minusDays(10).plusHours(2),
                 building2, "A great queen concert", 100, 18, image, admin);
 
         EventEntity event2 = new EventEntity("it-conference", LocalDateTime.now().plusHours(3),
