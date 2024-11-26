@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="button-cont" sec:authorize="hasAuthority('ORGANIZER')">
+            <div class="button-cont">
                 <a th:href="@{'/event/' + ${event.id} + '/buy-ticket'}">
                     <button class="button">
                         Buy ticket
