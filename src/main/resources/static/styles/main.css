@@ -29,12 +29,3 @@ ol{
     color: black;
     font-size: 15px;
 }
-
-.footerList{
-    list-style: none;
-    font-family: Verdana, sans-serif;
-    color: aliceblue;
-    padding-left: 10px;
-    font-size: 12px;
-    text-align: center;
-}

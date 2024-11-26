@@ -47,6 +47,7 @@ header {
 .middle-container {
     display: flex;
     justify-content: center;
+    align-items: center;
 }
 
 #name {
@@ -58,10 +59,11 @@ header {
 
 #icon {
     top: 10px;
-    right: 10px;
+    margin-right: 10px;
     width: 100px;
     height: 100px;
-    position: absolute;
+    float:right;
+    clear: right;
 }
 
 .icon-container {
@@ -163,4 +165,13 @@ li{
 a{
     text-decoration: none;
     color: inherit;
+}
+
+.footerList{
+    list-style: none;
+    font-family: Verdana, sans-serif;
+    color: aliceblue;
+    padding-left: 10px;
+    font-size: 12px;
+    text-align: center;
 }

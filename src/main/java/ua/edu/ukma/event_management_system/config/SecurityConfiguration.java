@@ -61,7 +61,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/building").hasAuthority("ADMIN")
 						.requestMatchers("/building/**").hasAuthority("ADMIN")
 						.requestMatchers(HttpMethod.GET, "/api/building/**").hasAuthority("USER")
-						.requestMatchers(HttpMethod.GET, "/event/**").hasAuthority("USER")
+						.requestMatchers(HttpMethod.GET, "/event/**").permitAll()
 						.requestMatchers("/event/**").hasAuthority("ORGANIZER")
 						.requestMatchers("/user").hasAuthority("ORGANIZER")
 						.requestMatchers("/user/**").hasAuthority("USER")
@@ -73,6 +73,9 @@ public class SecurityConfiguration {
 						.requestMatchers(HttpMethod.GET, "/ticket/**").hasAuthority("USER")
 						.anyRequest().authenticated())
 //				.httpBasic(Customizer.withDefaults())
+				.exceptionHandling(exception -> exception
+						.authenticationEntryPoint((request, response, authException) ->
+								response.sendRedirect("/login")))
 				.sessionManagement(session ->
 						session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
 				.logout(LogoutConfigurer::permitAll)

@@ -43,6 +43,14 @@ public class EventController {
 	public void setEventService(EventService eventService) {
 		this.eventService = eventService;
 	}
+	@Autowired
+	public void setBuildingService(BuildingService buildingService) {
+		this.buildingService = buildingService;
+	}
+	@Autowired
+	public void setModelMapper(ModelMapper modelMapper) {
+		this.modelMapper = modelMapper;
+	}
 
 	@GetMapping("/")
 	public String get(Model model) throws IOException {
