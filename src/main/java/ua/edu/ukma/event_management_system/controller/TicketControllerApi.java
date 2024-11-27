@@ -5,6 +5,7 @@ import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.web.bind.annotation.*;
+import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.domain.Ticket;
 import ua.edu.ukma.event_management_system.dto.TicketDto;
 import ua.edu.ukma.event_management_system.exceptions.EventFullException;
@@ -52,10 +53,10 @@ public class TicketControllerApi {
 
 	@PostMapping
 	public void createTicket(@RequestBody @Valid TicketDto ticketDto) throws EventFullException {
-//		Event event = eventService.getEventById(ticketDto.getId());
-//		if (event.getUsers().size() >= event.getNumberOfTickets()) {
-//			throw new EventFullException("Event is full!");
-//		}
+		Event event = eventService.getEventById(ticketDto.getId());
+		if (event.getUsers().size() >= event.getNumberOfTickets()) {
+			throw new EventFullException("Event is full!");
+		}
 		ticketService.createTicket(ticketDto);
 	}
 

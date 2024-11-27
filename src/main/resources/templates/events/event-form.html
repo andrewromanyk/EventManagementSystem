@@ -24,7 +24,9 @@
 <div class="container mt-4">
   <h2 class="text-center mb-4">Create Event</h2>
   <span class="text-center mb-4" th:text="${error}">text</span>
-  <form action="#" th:action="@{~/event/create}" th:object="${event}" method="post" class="shadow-sm p-4" enctype="multipart/form-data">
+  <form action="#" th:action="@{(${event.id} != null) ? '/event/' + ${event.id} : '/event/'}" th:object="${event}" method="post" class="shadow-sm p-4" enctype="multipart/form-data">
+    <input type="hidden" name="_method" th:value="${event.id != null} ? 'PUT' : 'POST'">
+
     <div class="mb-3">
       <label for="eventTitle" class="form-label">Event Title</label>
       <input type="text" class="form-control" id="eventTitle" name="eventTitle" th:field="*{eventTitle}" required>
@@ -47,11 +49,11 @@
     </div>
     <div class="mb-3">
       <label for="dateTimeStart" class="form-label">Start Date & Time</label>
-      <input type="datetime-local" class="form-control" id="dateTimeStart" name="dateTimeStart" th:field="*{dateTimeStart}" required>
+      <input type="datetime-local" class="form-control" id="dateTimeStart" name="dateTimeStart" th:value="${dateTimeStartString}" required>
     </div>
     <div class="mb-3">
       <label for="dateTimeEnd" class="form-label">End Date & Time</label>
-      <input type="datetime-local" class="form-control" id="dateTimeEnd" name="dateTimeEnd" th:field="*{dateTimeEnd}" required>
+      <input type="datetime-local" class="form-control" id="dateTimeEnd" name="dateTimeEnd" th:value="${dateTimeEndString}" required>
     </div>
     <div class="mb-3">
       <label for="buildingId" class="form-label">Building</label>
@@ -63,7 +65,7 @@
     </div>
     <div class="mb-3">
       <label for="image" class="form-label">Event Image</label>
-      <input type="file" class="form-control" id="image" name="image_cstm">
+      <input type="file" class="form-control" id="image" name="image_cstm" th:value="${event_img}">
     </div>
     <div class="text-center">
       <button type="submit" class="btn btn-dark">Create Event</button>

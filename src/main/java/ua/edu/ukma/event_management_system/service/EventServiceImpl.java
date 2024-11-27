@@ -97,6 +97,11 @@ public class EventServiceImpl implements EventService {
             existingEvent.setEventTitle(updatedEvent.getEventTitle());
             existingEvent.setDateTimeStart(updatedEvent.getDateTimeStart());
             existingEvent.setDateTimeEnd(updatedEvent.getDateTimeEnd());
+            existingEvent.setImage(updatedEvent.getImage());
+            existingEvent.setDescription(updatedEvent.getDescription());
+            existingEvent.setNumberOfTickets(updatedEvent.getNumberOfTickets());
+            existingEvent.setMinAgeRestriction(updatedEvent.getMinAgeRestriction());
+            existingEvent.setPrice(updatedEvent.getPrice());
 
             BuildingEntity buildingEntity = buildingRepository.findById(updatedEvent.getBuilding()).get();
             if(buildingEntity != null){
@@ -144,21 +149,4 @@ public class EventServiceImpl implements EventService {
         return modelMapper.map(event, EventEntity.class);
     }
 
-    private BuildingEntity toEntity(BuildingDto building){
-        return modelMapper.map(building, BuildingEntity.class);
-    }
-
-    private UserEntity toEntity(UserDto user){
-        return modelMapper.map(user, UserEntity.class);
-    }
-
-    private EventDto toDto(EventEntity event){
-        return modelMapper.map(event, EventDto.class);
-    }
-
-
-//    @Override
-//    public EventRatingEntity rateEvent(EventDto event, byte rating, UserDto author, String comment) {
-//        return eventRatingRepository.save(new EventRatingEntity(toEntity(event), rating, toEntity(author), comment));
-//    }
 }

@@ -67,8 +67,9 @@
                 </div>
             </div>
             <div class="button-cont" sec:authorize="hasAuthority('ORGANIZER')">
-                <button class="button" style="background-color: #C94F4F">Delete</button>
-                <button class="button" style="background-color: gold">Update</button>
+                <a th:href="@{~/event/{id}/edit(id=${event.id})}">
+                    <button class="button" style="background-color: gold">Update</button>
+                </a>
             </div>
         </div>
     </div>

@@ -1,7 +1,9 @@
 package ua.edu.ukma.event_management_system.views;
 
+import org.slf4j.Logger;
 import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -24,6 +26,7 @@ import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -34,6 +37,8 @@ public class EventController {
 	private EventService eventService;
 	private BuildingService buildingService;
 	private UserService userService;
+
+	private Logger log = LoggerFactory.getLogger(EventController.class);
 
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -83,8 +88,14 @@ public class EventController {
 	@GetMapping("/{id}")
 	public String get(@PathVariable long id, Model model) throws IOException {
 		Event event = eventService.getEventById(id);
-		UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-		User user = userService.getUserByUsername(details.getUsername());
+		UserDetails detail;
+		User user = null;
+		try {
+			detail = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+			user = userService.getUserByUsername(detail.getUsername());
+		} catch (Exception e) {
+			log.info("User is not authorized.");
+		}
 
 		// Prepare a map of event IDs to Base64-encoded images
 		String base64Image;
@@ -96,7 +107,7 @@ public class EventController {
 		}
 
 		model.addAttribute("event", event);
-		model.addAttribute("isAllowedToBuy", user.getAge()>=event.getMinAgeRestriction());
+		model.addAttribute("isAllowedToBuy", user == null || user.getAge() >= event.getMinAgeRestriction());
 		model.addAttribute("img", base64Image);
 		return "events/event";
 	}
@@ -163,6 +174,32 @@ public class EventController {
 		model.addAttribute("ticket", ticket);
 		model.addAttribute("event", event);
 		return "tickets/ticket-form";
+	}
+
+	@GetMapping("/{id}/edit")
+	public String edit(@PathVariable long id, Model model) {
+		Event event = eventService.getEventById(id);
+		List<BuildingDto> buildings = buildingService.getAllBuildings()
+				.stream()
+				.map(this::toDto)
+				.toList();
+		String formattedDate1 = event.getDateTimeStart().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+		String formattedDate2= event.getDateTimeEnd().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+		model.addAttribute("dateTimeStartString", formattedDate1);
+		model.addAttribute("dateTimeEndString", formattedDate2);
+		model.addAttribute("buildings", buildings);
+		model.addAttribute("event", event);
+		return "events/event-form";
+	}
+
+	@PutMapping("/{id}")
+	public String editPut(@PathVariable long id, @ModelAttribute EventDto event, @RequestParam("image_cstm") MultipartFile image) throws IOException {
+		if (image.isEmpty()) {
+			event.setImage(eventService.getEventById(id).getImage());
+		}
+		else event.setImage(image.getBytes());
+		eventService.updateEvent(id, event);
+		return "redirect:/event/";
 	}
 
 	private BuildingDto toDto(Building building) {
