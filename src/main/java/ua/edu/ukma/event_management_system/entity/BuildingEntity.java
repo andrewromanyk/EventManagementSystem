@@ -38,7 +38,7 @@ public class BuildingEntity {
     private String description;
 
     @Setter
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "building")
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "building")
     private List<BuildingRatingEntity> rating;
 
     public BuildingEntity(String address, int hourlyRate, int areaM2, int capacity, String description) {
