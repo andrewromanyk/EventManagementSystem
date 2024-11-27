@@ -59,32 +59,4 @@
 <div th:insert="~{page-parts :: footing}"></div>
 </body>
 
-<script th:src="@{/js/bcrypt.js}"></script>
-
-<script>
-    async function encryptPassword(){
-        const passwordField = document.getElementById("password");
-        const form = passwordField.closest("form");
-
-        if(passwordField && passwordField.value){
-            try {
-                const hashedPassword = await bcrypt.hash(passwordField.value, 10);
-                passwordField.value = hashedPassword;
-                console.log("Hashed Password:", hashedPassword);
-                form.submit();
-            } catch (error) {
-                console.error("Error hashing password:", error);
-            }
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", () => {
-    const form = document.querySelector("form");
-    form.addEventListener("submit", async (event) => {
-        event.preventDefault();
-        await encryptPassword();
-    });
-});
-
-</script>
 </html>
