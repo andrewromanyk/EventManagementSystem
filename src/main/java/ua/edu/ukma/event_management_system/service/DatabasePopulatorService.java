@@ -10,6 +10,7 @@ import ua.edu.ukma.event_management_system.repository.*;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 
 @Service
@@ -33,15 +34,15 @@ public class DatabasePopulatorService {
         UserEntity user1 = new UserEntity(UserRole.USER, "and123", "Andriy",
                 "Petrenko", "andriisuper@gmail.com",
                 "$2a$10$JFbuJfw3FZSs.9rDOO3jiOP2r9HjnJczXsWiqvEhkCyyWVHNjuQyy", // Andri1Sup3r
-                "380999777444", LocalDateTime.of(2005, 01, 01, 0, 1));
+                "380999777444", LocalDate.of(2005, 01, 01));
         UserEntity user2 = new UserEntity(UserRole.ORGANIZER, "maria_shevchenko", "Maria",
                 "Shevchenko", "shevchenkoM@gmail.com",
                 "$2a$10$lhATh/lhdonUDlGJrhZtiOU0U8AB18UvdIeTr2mTAMObZZ3G4e2Ui", // maria1234
-                "380111486754", LocalDateTime.of(2010, 01, 01, 0, 1));
+                "380111486754", LocalDate.of(2010, 01, 01));
         UserEntity admin = new UserEntity(UserRole.ADMIN, "admin", "Admin",
                 "eqwe", "emsAdmin@gmail.com",
                 "$2a$10$NY5RpFbjoy4TnN.DPH/OEOhnq0.2/sNcfwbJHLW5YTfW.wOugwTsS", // admin123
-                "380777777777", LocalDateTime.of(1995, 01, 01, 0, 1));
+                "380777777777", LocalDate.of(1995, 01, 01));
         userRepository.save(user1);
         userRepository.save(user2);
         userRepository.save(admin);

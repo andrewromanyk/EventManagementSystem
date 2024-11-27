@@ -16,6 +16,7 @@ import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.UserDto;
 
+import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -80,7 +81,7 @@ class ModelMapperTest {
         user.setEmail("john.doe@example.com");
         user.setPhoneNumber("+380147852369");
         user.setPassword("password");
-        user.setDateOfBirth(LocalDateTime.of(2004, 11, 2, 1, 1));
+        user.setDateOfBirth(LocalDate.of(2004, 11, 2));
         return user;
     }
 
@@ -94,7 +95,7 @@ class ModelMapperTest {
         userDto.setEmail("john.doe@example.com");
         userDto.setPhoneNumber("+380147852369");
         userDto.setPassword("password");
-        userDto.setDateOfBirth(LocalDateTime.of(2004, 11, 2, 1, 1));
+        userDto.setDateOfBirth(LocalDate.of(2004, 11, 2));
         return userDto;
     }
 

@@ -5,7 +5,7 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 
 @NoArgsConstructor
 @Data
@@ -24,9 +24,9 @@ public class UserDto {
     private String password;
     @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$")
     private String phoneNumber;
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
-    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, LocalDateTime dateOfBirth) {
+    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, LocalDate dateOfBirth) {
         this.id = id;
         this.userRole = userRole;
         this.username = username;
@@ -37,7 +37,7 @@ public class UserDto {
         this.dateOfBirth = dateOfBirth;
     }
 
-    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, LocalDateTime dateOfBirth) {
+    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, LocalDate dateOfBirth) {
         this.id = id;
         this.userRole = userRole;
         this.username = username;
