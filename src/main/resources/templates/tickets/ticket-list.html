@@ -26,7 +26,7 @@
     <div class="container" th:if="${!tickets.isEmpty()}">
         <div class="row">
             <div th:each="ticket : ${tickets}" th:class="${ticket.event.getDateTimeEnd().isBefore(T(java.time.LocalDateTime).now())} ? 'dimmed col-md-6 col-lg-4 mb-4' : 'col-md-6 col-lg-4 mb-4'">
-                <div class="card shadow-sm">
+                <div class="card">
                     <div class="card-body">
                         <h5 class="card-title text-primary">
                             <a th:href="@{~/event/{id}(id=${ticket.event.id})}">

@@ -23,10 +23,10 @@
 <div class="container fullOutside">
 
     <div class="row w-100">
-        <div class="col-12 text-center p-1 shadow-sm">
+        <div class="col-12 text-center p-1">
             <h3>Users</h3>
             <div class="building-list">
-                <div th:each="user : ${users}" class="card shadow-sm">
+                <div th:each="user : ${users}" class="card">
                     <a th:href="@{~/user/{id}(id=${user.id})}" class="building-link">
                         <label class="card-body">
                             <h5 class="card-title" th:text="${user.username}"></h5>
