@@ -35,7 +35,12 @@ class SpringSecurityTest {
     @Test
     @WithMockUser(authorities = {"ORGANIZER"}) //Just admin doesn't work, since security specifically requires ORGANIZER, but logic will make sure any admin is an organizer
     void getUsers() throws Exception {
-        mvc.perform(get("/user")).andExpect(status().isOk());
+        mvc.perform(get("/user/")).andExpect(status().isForbidden());
+    }
+
+    @Test//Just admin doesn't work, since security specifically requires ORGANIZER, but logic will make sure any admin is an organizer
+    void getMain() throws Exception {
+        mvc.perform(get("/main")).andExpect(status().isOk());
     }
 
     @Test

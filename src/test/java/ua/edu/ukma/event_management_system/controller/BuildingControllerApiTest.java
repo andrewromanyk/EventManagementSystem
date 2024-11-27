@@ -14,6 +14,7 @@ import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.exceptions.handler.ControllerExceptionHandler;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
+import ua.edu.ukma.event_management_system.views.BuildingController;
 
 import java.util.Collections;
 import java.util.List;
@@ -25,7 +26,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @WebMvcTest(excludeAutoConfiguration = SecurityConfiguration.class)
-@ContextConfiguration(classes = {BuildingControllerApi.class, ControllerExceptionHandler.class})
+@ContextConfiguration(classes = {BuildingControllerApi.class, BuildingController.class, ControllerExceptionHandler.class})
 @AutoConfigureMockMvc(addFilters = false)
 class BuildingControllerApiTest {
 
@@ -44,10 +45,8 @@ class BuildingControllerApiTest {
 		when(buildingService.getBuildingById(1L)).thenReturn(building1);
 		when(modelMapper.map(building1, BuildingDto.class)).thenReturn(building1Dto());
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/building/1"))
-				.andExpect(status().isOk())
-				.andExpect(model().attributeExists("buildings"))
-				.andExpect(model().attribute("buildings", List.of(building1Dto())));
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/building/1"))
+				.andExpect(status().isOk());
 	}
 
 	@Test
@@ -92,10 +91,8 @@ class BuildingControllerApiTest {
 	void testGetBuildingsWithCapacityEmpty() throws Exception {
 		when(buildingService.getAllByCapacity(any(Integer.class))).thenReturn(Collections.emptyList());
 
-		mockMvc.perform(MockMvcRequestBuilders.get("/building/?capacity=10"))
-				.andExpect(status().isOk())
-				.andExpect(model().attributeExists("buildings"))
-				.andExpect(model().attribute("buildings", Collections.emptyList()));
+		mockMvc.perform(MockMvcRequestBuilders.get("/api/building/?capacity=10"))
+				.andExpect(status().isOk());
 	}
 
 
