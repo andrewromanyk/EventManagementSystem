@@ -1,7 +1,6 @@
 package ua.edu.ukma.event_management_system.service;
 
 import org.junit.jupiter.api.*;
-import org.junit.jupiter.api.TestInstance.*;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.annotation.DirtiesContext;
