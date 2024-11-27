@@ -56,6 +56,10 @@
         <appender-ref ref="FileAppender" />
     </logger>
 
+    <logger name="ua.edu.ukma.event_management_system.views.EventController" level="info" additivity="false">
+        <appender-ref ref="FileAppender" />
+    </logger>
+
     <appender name="ScheduledEventFileAppender" class="ch.qos.logback.core.FileAppender">
         <file>logs/scheduled_event_logger.log</file>
         <append>true</append>

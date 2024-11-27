@@ -75,16 +75,15 @@ public class TicketServiceImpl implements TicketService {
 
     @Override
     public void updateTicket(long id, TicketDto updatedTicket) {
-//        Optional<TicketEntity> existingUserOpt = ticketRepository.findById(id);
-//        if (existingUserOpt.isPresent()) {
-//            TicketEntity existingTicket = existingUserOpt.get();
-//            Event updatedEvent = eventService.getEventById(updatedTicket.getEvent());
-//            existingTicket.setEvent(toEntity(updatedEvent));
-//            existingTicket.setPrice(updatedTicket.getPrice());
-//            existingTicket.setUser(toEntity(updatedTicket.getUser()));
-//            existingTicket.setPurchaseDate(updatedTicket.getPurchaseDate());
-//            ticketRepository.save(existingTicket);
-//        }
+        Optional<TicketEntity> existingUserOpt = ticketRepository.findById(id);
+        if (existingUserOpt.isPresent()) {
+            TicketEntity existingTicket = existingUserOpt.get();
+            Event updatedEvent = eventService.getEventById(updatedTicket.getEvent());
+            existingTicket.setEvent(toEntity(updatedEvent));
+            existingTicket.setPrice(updatedTicket.getPrice());
+            existingTicket.setPurchaseDate(updatedTicket.getPurchaseDate());
+            ticketRepository.save(existingTicket);
+        }
     }
 
     @Override
@@ -99,7 +98,7 @@ public class TicketServiceImpl implements TicketService {
     }
 
     @Override
-    public List<Ticket> getAllTicketsForUser(String name){
+    public List<Ticket> getAllTicketsForUser(String name) {
         return ticketRepository.findAllByUserUsername(name).stream().map(this::toDomain).toList();
     }
 
@@ -114,60 +113,26 @@ public class TicketServiceImpl implements TicketService {
                 .stream().map(this::toDomain).toList();
     }
 
-    private TicketDto toDto(Ticket ticket) {
-        return modelMapper.map(ticket, TicketDto.class);
-    }
-
     private Ticket toDomain(TicketEntity ticketEntity) {
         return modelMapper.map(ticketEntity, Ticket.class);
     }
 
-    private TicketEntity toEntity(Ticket ticket) {
-        return modelMapper.map(ticket, TicketEntity.class);
-    }
 
     private TicketEntity dtoToEntity(TicketDto ticketDto) {
         Ticket tick = modelMapper.map(ticketDto, Ticket.class);
         return modelMapper.map(tick, TicketEntity.class);
     }
 
-    private UserDto toDto(User user) {
-        return modelMapper.map(user, UserDto.class);
-    }
-
-    private User toDomain(UserEntity user) {
-        return modelMapper.map(user, User.class);
-    }
-
-    private UserEntity toEntity(User user) {
-        return modelMapper.map(user, UserEntity.class);
-    }
-
     private UserEntity dtoToEntity(UserDto userDto) {
         return modelMapper.map(userDto, UserEntity.class);
     }
 
-    private Event toDomain(EventEntity event){
-        return modelMapper.map(event, Event.class);
-    }
-
-    private EventEntity toEntity(EventDto event){
+    private EventEntity toEntity(EventDto event) {
         return modelMapper.map(event, EventEntity.class);
     }
 
-    private EventEntity toEntity(Event event){
+    private EventEntity toEntity(Event event) {
         return modelMapper.map(event, EventEntity.class);
     }
 
-    private BuildingEntity toEntity(BuildingDto building){
-        return modelMapper.map(building, BuildingEntity.class);
-    }
-
-    private UserEntity toEntity(UserDto user){
-        return modelMapper.map(user, UserEntity.class);
-    }
-
-    private EventDto toDto(EventEntity event){
-        return modelMapper.map(event, EventDto.class);
-    }
 }
