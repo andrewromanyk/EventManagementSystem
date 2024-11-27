@@ -58,7 +58,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public User createUser(UserDto user) {
        // user.setPassword(passwordEncoder.encode(user.getPassword())); already receives encoded password
-        logger.info(USER_ACTION_MARKER, "PASSWORD RECEIVED FROM USER: " + user.getPassword());
+        logger.info(USER_ACTION_MARKER, "PASSWORD RECEIVED FROM USER: {}", user.getPassword());
         User returned = toDomain(userRepository.save(dtoToEntity(user)));
         logger.info(USER_ACTION_MARKER, "Got user");
         return returned;
@@ -130,16 +130,8 @@ public class UserServiceImpl implements UserService {
         }
     }
 
-    private UserDto toDto(User user) {
-        return modelMapper.map(user, UserDto.class);
-    }
-
     private User toDomain(UserEntity user) {
         return modelMapper.map(user, User.class);
-    }
-
-    private UserEntity toEntity(User user) {
-        return modelMapper.map(user, UserEntity.class);
     }
 
     private UserEntity dtoToEntity(UserDto userDto) {

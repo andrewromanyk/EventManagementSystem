@@ -29,6 +29,8 @@ public class UserControllerApi {
     private ModelMapper modelMapper;
     private UserService userService;
 
+    private static final String USER_ID = "userID";
+
     @Autowired
     public void setModelMapper(ModelMapper modelMapper) {
         this.modelMapper = modelMapper;
@@ -42,7 +44,7 @@ public class UserControllerApi {
     @GetMapping("/{id}")
     public UserDto getUser(@PathVariable long id) {
         try{
-            MDC.put("userId", String.valueOf(id));
+            MDC.put(USER_ID, String.valueOf(id));
             return toDto(userService.getUserById(id));
         }finally{
             MDC.clear();
@@ -59,12 +61,12 @@ public class UserControllerApi {
     }
 
     @PostMapping
-    public ResponseEntity<?> createNewUser(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) {
+    public ResponseEntity<Map<String, String>> createNewUser(@RequestBody @Valid UserDto userDto, BindingResult bindingResult) {
         if (bindingResult.hasErrors()) {
             Map<String, String> errors = new HashMap<>();
-            bindingResult.getFieldErrors().forEach(error -> {
-                errors.put(error.getField(), error.getDefaultMessage());
-            });
+            bindingResult.getFieldErrors().forEach(error ->
+                errors.put(error.getField(), error.getDefaultMessage())
+            );
             return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
         }
         userService.createUser(userDto);
@@ -74,12 +76,12 @@ public class UserControllerApi {
     @PutMapping("/{id}")
     public ResponseEntity<?> updateUser(@PathVariable long id, @RequestBody @Valid UserDto userDto, BindingResult bindingResult) {
         try {
-            MDC.put("userId", String.valueOf(id));
+            MDC.put(USER_ID, String.valueOf(id));
             if (bindingResult.hasErrors()) {
                 Map<String, String> errors = new HashMap<>();
-                bindingResult.getFieldErrors().forEach(error -> {
-                    errors.put(error.getField(), error.getDefaultMessage());
-                });
+                bindingResult.getFieldErrors().forEach(error ->
+                    errors.put(error.getField(), error.getDefaultMessage())
+                );
                 logger.error(VALIDATION_MARKER, "Validation error occured: {}", errors);
                 return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
             }
@@ -92,12 +94,12 @@ public class UserControllerApi {
     }
 
     @DeleteMapping("/{id}")
-    public ResponseEntity<?> deleteUser(@PathVariable long id) {
+    public ResponseEntity<String> deleteUser(@PathVariable long id) {
         try {
-            MDC.put("userId", String.valueOf(id));
+            MDC.put(USER_ID, String.valueOf(id));
             boolean userRemoved = userService.removeUser(id);
             if(!userRemoved) {
-                logger.warn(USER_ERROR_MARKER, "User deletion failed. User not found.", id);
+                logger.warn(USER_ERROR_MARKER, "User deletion failed. User {} not found.", id);
                 return new ResponseEntity<>("User not found", HttpStatus.NOT_FOUND);
             }
             logger.info(USER_ACTION_MARKER, "Deleted user");

@@ -3,7 +3,6 @@ package ua.edu.ukma.event_management_system.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.temporal.ChronoUnit;
 

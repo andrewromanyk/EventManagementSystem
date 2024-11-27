@@ -1,14 +1,9 @@
 package ua.edu.ukma.event_management_system.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.Type;
-import org.springframework.context.annotation.Lazy;
-import ua.edu.ukma.event_management_system.domain.Building;
 
 import lombok.*;
 
-import java.awt.image.BufferedImage;
-import java.sql.Blob;
 import java.time.LocalDateTime;
 import java.util.List;
 
@@ -60,32 +55,8 @@ public class EventEntity {
     inverseJoinColumns = @JoinColumn(name = "user_id"))
     private List<UserEntity> users;
 
-    @OneToMany(/*fetch = FetchType.LAZY,*/ mappedBy = "event")
+    @OneToMany(mappedBy = "event")
     private List<EventRatingEntity> rating;
-
-
-    public EventEntity(String eventTitle, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd,
-                       BuildingEntity building, String description, int numberOfTickets, int minAgeRestriction) {
-        this.eventTitle = eventTitle;
-        this.dateTimeStart = dateTimeStart;
-        this.dateTimeEnd = dateTimeEnd;
-        this.building = building;
-        this.description = description;
-        this.numberOfTickets = numberOfTickets;
-        this.minAgeRestriction = minAgeRestriction;
-    }
-
-    public EventEntity(String eventTitle, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd,
-                       BuildingEntity building, String description, int numberOfTickets, int minAgeRestriction, byte[] image) {
-        this.eventTitle = eventTitle;
-        this.dateTimeStart = dateTimeStart;
-        this.dateTimeEnd = dateTimeEnd;
-        this.building = building;
-        this.description = description;
-        this.numberOfTickets = numberOfTickets;
-        this.minAgeRestriction = minAgeRestriction;
-        this.image = image;
-    }
 
     public EventEntity(String eventTitle, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd,
                        BuildingEntity building, String description, int numberOfTickets, int minAgeRestriction, byte[] image,

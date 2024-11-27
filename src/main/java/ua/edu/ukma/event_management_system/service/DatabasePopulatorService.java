@@ -3,7 +3,6 @@ package ua.edu.ukma.event_management_system.service;
 import org.springframework.stereotype.Service;
 
 import org.springframework.transaction.annotation.Transactional;
-import ua.edu.ukma.event_management_system.domain.Event;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.entity.*;
 import ua.edu.ukma.event_management_system.repository.*;
@@ -21,18 +20,13 @@ public class DatabasePopulatorService {
     private final EventRepository eventRepository;
     private final TicketRepository ticketRepository;
     private final UserRepository userRepository;
-    private final EventRatingRepository eventRatingRepository;
-    private final BuildingRatingRepository buildingRatingRepository;
 
     public DatabasePopulatorService(BuildingRepository br, EventRepository er,
-                                    TicketRepository tr, UserRepository ur,
-                                    EventRatingRepository err, BuildingRatingRepository brr) {
+                                    TicketRepository tr, UserRepository ur) {
         this.buildingRepository = br;
         this.eventRepository = er;
         this.ticketRepository = tr;
         this.userRepository = ur;
-        this.eventRatingRepository = err;
-        this.buildingRatingRepository = brr;
     }
 
     public void populateDatabase() throws IOException {

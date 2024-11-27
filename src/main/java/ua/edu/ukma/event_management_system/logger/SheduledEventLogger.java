@@ -17,7 +17,7 @@ public class SheduledEventLogger {
 
     private static final Logger logger = LoggerFactory.getLogger(SheduledEventLogger.class);
 
-    private EventRepository eventRepository;
+    private final EventRepository eventRepository;
 
     @Autowired
     public SheduledEventLogger(EventRepository eventRepository){

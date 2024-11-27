@@ -1,18 +1,14 @@
 package ua.edu.ukma.event_management_system.dto;
 
-import jakarta.validation.*;
+
 import jakarta.validation.constraints.*;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import ua.edu.ukma.event_management_system.exceptions.handler.ContentValidator;
-
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
 @NoArgsConstructor
 public class BuildingDto {
-	//@Min(value = 1, message = "Id is required and must be at least 1")
 	private int id;
 	@NotBlank(message = "Address is required")
 	private String address;
@@ -25,7 +21,6 @@ public class BuildingDto {
 	@Pattern(regexp = "^[A-Za-zА-Яа-я0-9 ,.:;-]+|^$", message = "Description contains invalid characters")
 	@Size(max = 500, message = "Description must be less than 500 characters long")
 	private String description;
-	//@Valid
 	private List<Long> rating;
 
 	public BuildingDto(int id, String address, int hourlyRate, int areaM2, int capacity, String description) {

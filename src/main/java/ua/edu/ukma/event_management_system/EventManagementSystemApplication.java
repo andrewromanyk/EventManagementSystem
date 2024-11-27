@@ -1,20 +1,18 @@
 package ua.edu.ukma.event_management_system;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.http.ResponseEntity;
-import org.springframework.web.client.RestTemplate;
-import ua.edu.ukma.event_management_system.entity.TicketEntity;
-import ua.edu.ukma.event_management_system.entity.UserEntity;
 import ua.edu.ukma.event_management_system.service.DatabasePopulatorService;
-
-import java.util.Optional;
 
 @SpringBootApplication
 public class EventManagementSystemApplication implements CommandLineRunner {
 
 	private final DatabasePopulatorService databasePopulatorService;
+	private static final Logger log = LoggerFactory.getLogger(EventManagementSystemApplication.class);
+
 
 	public EventManagementSystemApplication(DatabasePopulatorService databasePopulatorService) {
 		this.databasePopulatorService = databasePopulatorService;
@@ -27,6 +25,6 @@ public class EventManagementSystemApplication implements CommandLineRunner {
 	@Override
 	public void run(String... args) throws Exception {
 		databasePopulatorService.populateDatabase();
-		System.out.println("Database populated with test data successfully!");
+		log.info("Database populated with test data successfully!");
 	}
 }

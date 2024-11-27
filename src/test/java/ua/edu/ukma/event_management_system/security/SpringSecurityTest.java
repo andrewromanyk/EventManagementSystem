@@ -17,7 +17,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @AutoConfigureMockMvc
-public class SpringSecurityTest {
+class SpringSecurityTest {
 
     @Autowired
     private MockMvc mvc;
@@ -25,36 +25,28 @@ public class SpringSecurityTest {
     @LocalServerPort
     private int port;
 
-//    @Autowired
-//    private WebApplicationContext context;
-//
-//    @BeforeEach
-//    public void setup() {
-//        mvc = MockMvcBuilders.webAppContextSetup(context).build();
-//    }
-
     @ParameterizedTest
     @ValueSource(strings = {"USER", "ADMIN", "ORGANIZER"})
-    public void contextLoads(String role) throws Exception {
+    void contextLoads(String role) throws Exception {
         mvc.perform(get("/FAQ.html").with(user("testUser").roles(role))).andExpect(status().isOk());
     }
 
 
     @Test
     @WithMockUser(authorities = {"ORGANIZER"}) //Just admin doesn't work, since security specifically requires ORGANIZER, but logic will make sure any admin is an organizer
-    public void getUsers() throws Exception {
+    void getUsers() throws Exception {
         mvc.perform(get("/user")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"USER"})
-    public void isManagable() throws Exception {
+    void isManagable() throws Exception {
         mvc.perform(get("/manage")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"USER"})
-    public void userCantAccess() throws Exception {
+    void userCantAccess() throws Exception {
         mvc.perform(get("/user")).andExpect(status().isForbidden());
     }
 

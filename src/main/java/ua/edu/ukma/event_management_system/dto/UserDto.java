@@ -10,9 +10,7 @@ import java.time.LocalDateTime;
 @NoArgsConstructor
 @Data
 public class UserDto {
-   // @NotBlank(message = "Id is required")
     private long id;
-    //@NotBlank(message = "UserRole is required")
     private UserRole userRole;
     @NotBlank(message = "Username is required")
     private String username;

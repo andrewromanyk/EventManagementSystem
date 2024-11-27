@@ -2,21 +2,15 @@ package ua.edu.ukma.event_management_system.service;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnBean;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
 import ua.edu.ukma.event_management_system.domain.Event;
-import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
-import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 import ua.edu.ukma.event_management_system.entity.EventEntity;
-import ua.edu.ukma.event_management_system.entity.UserEntity;
 import ua.edu.ukma.event_management_system.exceptions.handler.ContentValidator;
 import ua.edu.ukma.event_management_system.repository.BuildingRepository;
-import ua.edu.ukma.event_management_system.repository.EventRatingRepository;
 import ua.edu.ukma.event_management_system.repository.EventRepository;
-import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
 
 import java.time.LocalDateTime;
@@ -29,8 +23,6 @@ public class EventServiceImpl implements EventService {
     private ModelMapper modelMapper;
     private EventRepository eventRepository;
     private BuildingRepository buildingRepository;
-    private BuildingService buildingService;
-    private EventRatingRepository eventRatingRepository;
 
     @Autowired
     public void setModelMapper(@Lazy ModelMapper modelMapper) {
@@ -45,16 +37,6 @@ public class EventServiceImpl implements EventService {
     @Autowired
     public void setBuildingRepository(BuildingRepository buildingRepository) {
         this.buildingRepository = buildingRepository;
-    }
-
-    @Autowired
-    public void setBuildingService(BuildingService buildingService) {
-        this.buildingService = buildingService;
-    }
-
-    @Autowired
-    public void setEventRatingRepository(EventRatingRepository eventRatingRepository) {
-        this.eventRatingRepository = eventRatingRepository;
     }
 
     @Override
@@ -73,18 +55,19 @@ public class EventServiceImpl implements EventService {
     }
 
     @Override
-    public Event createEvent(EventDto event) {
+    public void createEvent(EventDto event) {
         // Ensures the building is saved before saving the event
         EventEntity toSave = toEntity(event);
         BuildingEntity buildingEntity = toSave.getBuilding();
         if (buildingEntity != null) {
             Optional<BuildingEntity> existingBuilding = buildingRepository.findById(buildingEntity.getId());
-            if (!existingBuilding.isPresent())
+            if (existingBuilding.isEmpty())
                 buildingEntity = buildingRepository.save(buildingEntity);
             else
                 buildingEntity = existingBuilding.get();
         }
-        return toDomain(eventRepository.save(toSave));
+        toSave.setBuilding(buildingEntity);
+        toDomain(eventRepository.save(toSave));
     }
 
     @Override
@@ -103,7 +86,11 @@ public class EventServiceImpl implements EventService {
             existingEvent.setMinAgeRestriction(updatedEvent.getMinAgeRestriction());
             existingEvent.setPrice(updatedEvent.getPrice());
 
-            BuildingEntity buildingEntity = buildingRepository.findById(updatedEvent.getBuilding()).get();
+
+            Optional<BuildingEntity> build = buildingRepository.findById(updatedEvent.getBuilding());
+            if (build.isEmpty()) {return;}
+
+            BuildingEntity buildingEntity = build.get();
             if(buildingEntity != null){
                 Optional<BuildingEntity> existingBuilding = buildingRepository.findById(buildingEntity.getId());
                 if (!existingBuilding.isPresent()){

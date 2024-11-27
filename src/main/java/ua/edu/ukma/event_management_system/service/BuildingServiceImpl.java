@@ -5,11 +5,8 @@ import org.modelmapper.ModelMapper;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.cache.annotation.CachePut;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.context.annotation.Lazy;
 import org.springframework.stereotype.Service;
-import ua.edu.ukma.event_management_system.aop.rate_limit.RateLimit;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.BuildingRating;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
@@ -69,6 +66,7 @@ public class BuildingServiceImpl implements BuildingService {
     @Override
 //    @Cacheable(cacheNames="building", key = "#id")
     public Building getBuildingById(Long id) {
+        logger.info("Returned building with id: {}", id);
 		return toDomain(buildingRepository
                 .findById(id)
                 .orElseThrow(() -> new NoSuchElementException("Building not found: " + id)));
@@ -125,12 +123,8 @@ public class BuildingServiceImpl implements BuildingService {
 
     @Override
     public BuildingRating getRatingById(long id) {
-        return toDomain(buildingRatingRepository.findById((long) id)
+        return toDomain(buildingRatingRepository.findById(id)
                 .orElseThrow());
-    }
-
-    private BuildingDto toDto(Building building) {
-        return modelMapper.map(building, BuildingDto.class);
     }
 
     private Building toDomain(BuildingEntity buildingEntity) {
@@ -140,10 +134,6 @@ public class BuildingServiceImpl implements BuildingService {
 
     private BuildingRating toDomain(BuildingRatingEntity buildingRatingEntity) {
         return modelMapper.map(buildingRatingEntity, BuildingRating.class);
-    }
-
-    private BuildingEntity toEntity(Building building) {
-        return modelMapper.map(building, BuildingEntity.class);
     }
 
     private BuildingEntity dtoToEntity(BuildingDto buildingDto) {

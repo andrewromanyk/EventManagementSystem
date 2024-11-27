@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 public class ScheduledLogger {
     private static final Logger logger = LoggerFactory.getLogger(ScheduledLogger.class);
 
-    private TicketService ticketService;
+    private final TicketService ticketService;
 
     @Autowired
     public ScheduledLogger(TicketService ticketService) {

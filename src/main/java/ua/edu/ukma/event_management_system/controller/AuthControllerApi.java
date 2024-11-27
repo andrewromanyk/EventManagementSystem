@@ -17,7 +17,7 @@ public class AuthControllerApi {
 	}
 
 	@PostMapping("login")
-	public ResponseEntity<?> login(@RequestParam String username, @RequestParam String password) {
+	public ResponseEntity<String> login(@RequestParam String username, @RequestParam String password) {
 		if (username == null || password == null) {
 			throw new ResponseStatusException(HttpStatusCode.valueOf(401));
 		}
@@ -28,7 +28,7 @@ public class AuthControllerApi {
 				.httpOnly(true)
 				.secure(true)
 				.path("/")
-				.maxAge(24 * 60 * 60)
+				.maxAge(24 * 60 * (long) 60)
 				.sameSite("Strict")
 				.build();
 
@@ -37,16 +37,10 @@ public class AuthControllerApi {
 				.header(HttpHeaders.SET_COOKIE, cookie.toString())
 				.header(HttpHeaders.LOCATION, "/myprofile")
 				.body("Login successful");
-
-//		// Return the token in a JSON response
-//		Map<String, String> response = new HashMap<>();
-//		response.put("token", token);
-//
-//		return ResponseEntity.ok(response);
 	}
 
 	@GetMapping("/tologout")
-	public ResponseEntity<?> logout() {
+	public ResponseEntity<String> logout() {
 		ResponseCookie cookie = ResponseCookie.from("jwtToken")
 				.httpOnly(true)
 				.secure(true)
@@ -59,13 +53,7 @@ public class AuthControllerApi {
 				.status(HttpStatus.FOUND)
 				.header(HttpHeaders.SET_COOKIE, cookie.toString())
 				.header(HttpHeaders.LOCATION, "/FAQ.html")
-				.body("Login successful");
+				.body("Logout successful");
 	}
-
-//	@PostMapping("register")
-//	public void registerUser(@RequestBody UserDto userDto) {
-//		userDto.setUserRole(UserRole.USER);
-//		userService.createUser(userDto);
-//	}
 
 }

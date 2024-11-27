@@ -3,7 +3,6 @@ package ua.edu.ukma.event_management_system.dto;
 import lombok.*;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Data
@@ -23,28 +22,4 @@ public class EventDto {
     private byte[] image;
     private long creator;
     private double price;
-
-    public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
-                    LocalDateTime dateTimeEnd, long building, String description,
-                    int numberOfTickets, int minAgeRestriction, List<UserDto> users) {
-        this.id = id;
-        this.eventTitle = eventTitle;
-        this.dateTimeStart = dateTimeStart;
-        this.dateTimeEnd = dateTimeEnd;
-        this.building = building;
-        this.description = description;
-        this.numberOfTickets = numberOfTickets;
-        this.minAgeRestriction = minAgeRestriction;
-        this.rating = new ArrayList<>();
-        this.users = users;
-    }
-
-    public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
-                    LocalDateTime dateTimeEnd, long building, String description,
-                    int numberOfTickets, int minAgeRestriction, List<UserDto> users,
-                    List<Long> rating){
-        this(id, eventTitle, dateTimeStart, dateTimeEnd, building, description,
-                numberOfTickets, minAgeRestriction, users);
-        this.rating = rating;
-    }
 }

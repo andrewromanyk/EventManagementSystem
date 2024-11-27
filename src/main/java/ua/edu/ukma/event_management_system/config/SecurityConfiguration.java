@@ -7,7 +7,6 @@ import org.springframework.http.HttpMethod;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.AuthenticationProvider;
 import org.springframework.security.authentication.dao.DaoAuthenticationProvider;
-import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.authentication.configuration.AuthenticationConfiguration;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
@@ -24,6 +23,10 @@ import ua.edu.ukma.event_management_system.filter.JwtFilter;
 @Configuration
 @EnableWebSecurity
 public class SecurityConfiguration {
+
+	private static final String ORGANIZER = "ORGANIZER";
+	private static final String USER = "USER";
+	private static final String ADMIN = "ADMIN";
 
 	private UserDetailsService userDetailsService;
 	private PasswordEncoder passwordEncoder;
@@ -57,22 +60,22 @@ public class SecurityConfiguration {
 						.requestMatchers("/*.png").permitAll()
 						.requestMatchers("/register/**").permitAll()
 						.requestMatchers("/register").permitAll()
-						.requestMatchers("/myprofile").hasAuthority("USER")
-						.requestMatchers("/building").hasAuthority("ORGANIZER")
-						.requestMatchers("/building/**").hasAuthority("USER")
-						.requestMatchers(HttpMethod.GET, "/api/building/**").hasAuthority("USER")
+						.requestMatchers("/myprofile").hasAuthority(USER)
+						.requestMatchers("/building").hasAuthority(ORGANIZER)
+						.requestMatchers("/building/**").hasAuthority(USER)
+						.requestMatchers(HttpMethod.GET, "/api/building/**").hasAuthority(USER)
 						.requestMatchers(HttpMethod.GET, "/event/").permitAll()
 						.requestMatchers(HttpMethod.GET, "/event/*").permitAll()
-						.requestMatchers(HttpMethod.GET, "/event/**").hasAuthority("ORGANIZER")
-						.requestMatchers("/event/**").hasAuthority("ORGANIZER")
-						.requestMatchers("/user").hasAuthority("ORGANIZER")
-						.requestMatchers("/user/**").hasAuthority("USER")
-						.requestMatchers( "/ticket/**").hasAuthority("USER")
+						.requestMatchers(HttpMethod.GET, "/event/**").hasAuthority(ORGANIZER)
+						.requestMatchers("/event/**").hasAuthority(ORGANIZER)
+						.requestMatchers("/user").hasAuthority(ORGANIZER)
+						.requestMatchers("/user/**").hasAuthority(USER)
+						.requestMatchers( "/ticket/**").hasAuthority(USER)
 						.requestMatchers("/main").permitAll()
-						.requestMatchers("/manage/cache").hasAuthority("ADMIN")
-						.requestMatchers("/manage/**").hasAuthority("USER")
-						.requestMatchers("/api/**").hasAuthority("ADMIN")
-						.requestMatchers(HttpMethod.GET, "/ticket/**").hasAuthority("USER")
+						.requestMatchers("/manage/cache").hasAuthority(ADMIN)
+						.requestMatchers("/manage/**").hasAuthority(USER)
+						.requestMatchers("/api/**").hasAuthority(ADMIN)
+						.requestMatchers(HttpMethod.GET, "/ticket/**").hasAuthority(USER)
 						.anyRequest().authenticated())
 //				.httpBasic(Customizer.withDefaults())
 				.exceptionHandling(exception -> exception

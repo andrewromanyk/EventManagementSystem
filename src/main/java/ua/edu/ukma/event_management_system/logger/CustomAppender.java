@@ -9,6 +9,8 @@ import lombok.NoArgsConstructor;
 import org.slf4j.LoggerFactory;
 import lombok.AllArgsConstructor;
 
+import static java.lang.System.*;
+
 @NoArgsConstructor
 @AllArgsConstructor
 public class CustomAppender extends AppenderBase<ILoggingEvent> {
@@ -21,9 +23,9 @@ public class CustomAppender extends AppenderBase<ILoggingEvent> {
     @Override
     protected void append(ILoggingEvent iLoggingEvent) {
         if (layout != null) {
-            System.out.println(layout.doLayout(iLoggingEvent));
+            out.println(layout.doLayout(iLoggingEvent));
         } else {
-            System.out.println(iLoggingEvent.getFormattedMessage());
+            out.println(iLoggingEvent.getFormattedMessage());
         }
     }
 

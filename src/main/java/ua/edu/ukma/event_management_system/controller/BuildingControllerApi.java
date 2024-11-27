@@ -61,9 +61,9 @@ public class BuildingControllerApi {
 											   BindingResult bindingResult, Model model) {
 		if(bindingResult.hasErrors()){
 			Map<String, String> errors = new HashMap<>();
-			bindingResult.getFieldErrors().forEach(error -> {
-				errors.put(error.getField(), error.getDefaultMessage());
-			});
+			bindingResult.getFieldErrors().forEach(error ->
+				errors.put(error.getField(), error.getDefaultMessage())
+			);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 
@@ -85,9 +85,9 @@ public class BuildingControllerApi {
 							   BindingResult bindingResult) {
 		if(bindingResult.hasErrors()){
 			Map<String, String> errors = new HashMap<>();
-			bindingResult.getFieldErrors().forEach(error -> {
-				errors.put(error.getField(), error.getDefaultMessage());
-			});
+			bindingResult.getFieldErrors().forEach(error ->
+				errors.put(error.getField(), error.getDefaultMessage())
+			);
 			return new ResponseEntity<>(errors, HttpStatus.BAD_REQUEST);
 		}
 		buildingService.updateBuilding(id, buildingDto);
@@ -95,13 +95,9 @@ public class BuildingControllerApi {
 	}
 
 	@DeleteMapping("/{id}")
-	public ResponseEntity<?> deleteBuilding(@PathVariable long id) {
+	public ResponseEntity<Void> deleteBuilding(@PathVariable long id) {
 		buildingService.deleteBuilding(id);
 		return new ResponseEntity<>(HttpStatus.OK);
-	}
-
-	@PostMapping("/{id}/rate")
-	public void rateBuilding(@PathVariable long id) {
 	}
 
 	@GetMapping("/{buildingId}/{rating}")

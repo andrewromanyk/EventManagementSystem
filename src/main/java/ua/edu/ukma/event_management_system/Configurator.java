@@ -13,23 +13,19 @@ import ua.edu.ukma.event_management_system.domain.*;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.TicketDto;
-import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.entity.*;
 import ua.edu.ukma.event_management_system.service.interfaces.BuildingService;
 import ua.edu.ukma.event_management_system.service.interfaces.EventService;
-import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
 
 @Configuration
 public class Configurator {
 
-    private final static Logger logger = LoggerFactory.getLogger(Configurator.class);
+    private static final Logger logger = LoggerFactory.getLogger(Configurator.class);
 
-    private TicketService ticketService;
     private BuildingService buildingService;
     private EventService eventService;
     private UserService userService;
@@ -37,11 +33,6 @@ public class Configurator {
     @Autowired
     public void setBuildingService(BuildingService buildingService) {
         this.buildingService = buildingService;
-    }
-
-    @Autowired
-    public void setTicketService(TicketService ticketService) {
-        this.ticketService = ticketService;
     }
 
     @Autowired
@@ -80,7 +71,7 @@ public class Configurator {
                 : ctx.getSource()
                 .stream()
                 .map(BuildingRating::getId)
-                .collect(Collectors.toList());
+                .toList();
 
         TypeMap<Building, BuildingDto> buildingMapper = mapperResult.createTypeMap(Building.class, BuildingDto.class);
         buildingMapper.addMappings(mapper -> mapper.using(ratingConverter).map(Building::getRating, BuildingDto::setRating));
@@ -101,7 +92,7 @@ public class Configurator {
                                 : src.getRating()
                                 .stream()
                                 .map(ratingEntity -> mapperResult.map(ratingEntity, BuildingRating.class))
-                                .collect(Collectors.toList()),
+                                .toList(),
                         Building::setRating
                 )
         );

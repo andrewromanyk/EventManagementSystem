@@ -22,7 +22,7 @@ public class EventControllerApi {
     private EventService eventService;
 
     @Value("${outer.api.call.url}")
-    private String OUTER_API_CALL;
+    private String outerApiCall;
 
     @Autowired
     public void setModelWrapper(ModelMapper modelMapper){
@@ -52,7 +52,7 @@ public class EventControllerApi {
     public void createNewEvent(@RequestBody EventDto eventDto){
         if (eventDto.getDescription().isEmpty()){
             ResponseEntity<String> response = new RestTemplate()
-                    .getForEntity(OUTER_API_CALL, String.class);
+                    .getForEntity(outerApiCall, String.class);
             eventDto.setDescription(response.getBody());
         }
         eventService.createEvent(eventDto);

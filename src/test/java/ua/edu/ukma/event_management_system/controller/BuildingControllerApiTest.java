@@ -27,7 +27,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @WebMvcTest(excludeAutoConfiguration = SecurityConfiguration.class)
 @ContextConfiguration(classes = {BuildingControllerApi.class, ControllerExceptionHandler.class})
 @AutoConfigureMockMvc(addFilters = false)
-public class BuildingControllerApiTest {
+class BuildingControllerApiTest {
 
 	@Autowired
 	private MockMvc mockMvc;

@@ -2,7 +2,6 @@ package ua.edu.ukma.event_management_system.views;
 
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
 import org.springframework.dao.DataIntegrityViolationException;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -21,6 +20,10 @@ import java.util.*;
 @Controller
 @RequestMapping("building")
 public class BuildingController {
+
+    private static final String REDIRECT_BUILDING = "redirect:/building/";
+    private static final String ERRORS = "errors";
+    private static final String ERROR = "error";
 
     private ModelMapper modelMapper;
     private BuildingService buildingService;
@@ -93,8 +96,8 @@ public class BuildingController {
                 errors.add(errorMessage);
             });
 
-            model.addAttribute("errors", errors);
-            return "error";
+            model.addAttribute(ERRORS, errors);
+            return ERROR;
         }
 
         if(buildingDto.getDescription() == null || buildingDto.getDescription().isEmpty()){
@@ -107,7 +110,7 @@ public class BuildingController {
         }
 
         buildingService.createBuilding(buildingDto);
-        return "redirect:/building/";
+        return REDIRECT_BUILDING;
     }
 
     @GetMapping("/create")
@@ -132,11 +135,11 @@ public class BuildingController {
                 String errorMessage = "Error for " + error.getField() + " field: " + error.getDefaultMessage();
                 errors.add(errorMessage);
             });
-            model.addAttribute("errors", errors);
-            return "error";
+            model.addAttribute(ERRORS, errors);
+            return ERROR;
         }
         buildingService.updateBuilding(id, buildingDto);
-        return "redirect:/building/";
+        return REDIRECT_BUILDING;
     }
 
     @DeleteMapping("/{id}")
@@ -146,25 +149,12 @@ public class BuildingController {
         }catch(DataIntegrityViolationException ex){
             List<String> errors = new ArrayList<>();
             errors.add("Cannot delete building. It is referenced by other entities.");
-            model.addAttribute("errors", errors);
-            return "error";
+            model.addAttribute(ERRORS, errors);
+            return ERROR;
         }
-        return "redirect:/building/";
+        return REDIRECT_BUILDING;
     }
-//
-//    @PostMapping("/{id}/rate")
-//    public void rateBuilding(@PathVariable long id) {
-//    }
-//
-//    @GetMapping("/{buildingId}/{rating}")
-//    @ResponseBody
-//    public List<BuildingRatingDto> getRated(@PathVariable long buildingId, @PathVariable byte rating) {
-//        return buildingService.getAllByBuildingIdAndRating(buildingId, rating)
-//                .stream()
-//                .map(this::toDto)
-//                .toList();
-//    }
-//
+
     private BuildingDto toDto(Building building) {
         return modelMapper.map(building, BuildingDto.class);
     }

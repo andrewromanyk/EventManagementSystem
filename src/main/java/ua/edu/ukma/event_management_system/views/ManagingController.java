@@ -7,6 +7,8 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
+import java.util.Objects;
+
 @Controller
 @RequestMapping("manage")
 public class ManagingController {
@@ -25,8 +27,8 @@ public class ManagingController {
 
     @PostMapping("/cache")
     public String cleanBuildingCache(){
-        cacheManager.getCache("building").clear();
-        cacheManager.getCache("buildings").clear();
+        Objects.requireNonNull(cacheManager.getCache("building")).clear();
+        Objects.requireNonNull(cacheManager.getCache("buildings")).clear();
         return "manager_chooser";
     }
 }

@@ -20,7 +20,7 @@ import java.util.Map;
 public class JwtService {
 
 	private UserDetailsService userDetailsService;
-	private byte[] secretKey;
+	private final byte[] secretKey;
 
 	@Autowired
 	public void setUserDetailsService(UserDetailsService userDetailsService) {
@@ -30,8 +30,8 @@ public class JwtService {
 	public JwtService() {
 		try {
 			KeyGenerator keyGenerator = KeyGenerator.getInstance("HmacSHA256");
-			SecretKey secretKey = keyGenerator.generateKey();
-			this.secretKey = secretKey.getEncoded();
+			SecretKey key = keyGenerator.generateKey();
+			this.secretKey = key.getEncoded();
 		} catch (NoSuchAlgorithmException e) {
 			throw new RuntimeException(e);
 		}

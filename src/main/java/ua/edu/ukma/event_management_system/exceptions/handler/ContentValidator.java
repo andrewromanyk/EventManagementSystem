@@ -4,6 +4,8 @@ import ua.edu.ukma.event_management_system.exceptions.IllegalNameException;
 
 public class ContentValidator {
 
+    private ContentValidator(){}
+
     private static final String FORBIDDEN_CHARACTERS = "[ыэёъ]";
 
     public static void validateContent(String content) throws IllegalNameException {

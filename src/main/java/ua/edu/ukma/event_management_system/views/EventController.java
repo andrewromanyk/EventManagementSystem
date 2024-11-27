@@ -33,12 +33,18 @@ import java.util.*;
 @RequestMapping("event")
 public class EventController {
 
+	private static final String DATA_IMAGE = "data:image/png;base64,";
+	private static final String STOCK_PHOTO = "src/main/resources/stock_photo.jpg";
+	private static final String EVENT_FORM = "events/event-form";
+	private static final String EVENT = "event";
+	private static final String REDIRECT_EVENT = "redirect:/event/";
+
 	private ModelMapper modelMapper;
 	private EventService eventService;
 	private BuildingService buildingService;
 	private UserService userService;
 
-	private Logger log = LoggerFactory.getLogger(EventController.class);
+	private final Logger log = LoggerFactory.getLogger(EventController.class);
 
 	@Autowired
 	public void setUserService(UserService userService) {
@@ -71,11 +77,11 @@ public class EventController {
 		Map<Integer, String> imageMap = new HashMap<>();
 		for (Event event : events) {
 			if (event.getImage() != null) {
-				String base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(event.getImage());
+				String base64Image = DATA_IMAGE + Base64.getEncoder().encodeToString(event.getImage());
 				imageMap.put(event.getId(), base64Image);
 			}
 			else {
-				String base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg")));
+				String base64Image = DATA_IMAGE + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(STOCK_PHOTO)));
 				imageMap.put(event.getId(), base64Image);
 			}
 		}
@@ -100,13 +106,13 @@ public class EventController {
 		// Prepare a map of event IDs to Base64-encoded images
 		String base64Image;
 		if (event.getImage() != null) {
-			base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(event.getImage());
+			base64Image = DATA_IMAGE + Base64.getEncoder().encodeToString(event.getImage());
 		}
 		else {
-			base64Image = "data:image/png;base64," + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of("src/main/resources/stock_photo.jpg")));
+			base64Image = DATA_IMAGE + Base64.getEncoder().encodeToString(Files.readAllBytes(Path.of(STOCK_PHOTO)));
 		}
 
-		model.addAttribute("event", event);
+		model.addAttribute(EVENT, event);
 		model.addAttribute("isAllowedToBuy", user == null || user.getAge() >= event.getMinAgeRestriction());
 		model.addAttribute("img", base64Image);
 		return "events/event";
@@ -119,33 +125,33 @@ public class EventController {
 				.map(this::toDto)
 				.toList();
 		model.addAttribute("buildings", buildings);
-		model.addAttribute("event", new EventDto());
-		return "events/event-form";
+		model.addAttribute(EVENT, new EventDto());
+		return EVENT_FORM;
 	}
 
 	@PostMapping("/create")
 	public String createEvent(@Valid @ModelAttribute("event") EventDto eventDto,  @RequestParam("image_cstm") MultipartFile image,
 							  BindingResult result, Model model, RedirectAttributes redirectAttributes) throws IOException {
 		if (result.hasErrors()) {
-			model.addAttribute("event", eventDto);
-			return "events/event-form";
+			model.addAttribute(EVENT, eventDto);
+			return EVENT_FORM;
 		}
 		if (eventDto.getDateTimeEnd().isBefore(eventDto.getDateTimeStart())) {
-			model.addAttribute("event", eventDto);
+			model.addAttribute(EVENT, eventDto);
 			model.addAttribute("error", "Event cannot end before it started!");
-			return "events/event-form";
+			return EVENT_FORM;
 		}
 		if (!eventService.getAllThatIntersect(eventDto.getDateTimeStart(), eventDto.getDateTimeEnd(), eventDto.getBuilding()).isEmpty()) {
-			model.addAttribute("event", eventDto);
+			model.addAttribute(EVENT, eventDto);
 			model.addAttribute("error", "Building is already occupied for that time");
-			return "events/event-form";
+			return EVENT_FORM;
 		}
 		eventDto.setImage(image.getBytes());
 		UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.getUserByUsername(details.getUsername());
 		eventDto.setCreator(user.getId());
 		eventService.createEvent(eventDto);
-		return "redirect:/event/";
+		return REDIRECT_EVENT;
 	}
 
 	@DeleteMapping("/{id}")
@@ -156,7 +162,7 @@ public class EventController {
 		} catch (Exception e) {
 			redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete the event. Please try again.");
 		}
-		return "redirect:/event/";
+		return REDIRECT_EVENT;
 	}
 
 	@GetMapping("/{id}/buy-ticket")
@@ -172,7 +178,7 @@ public class EventController {
 		ticket.setPrice(event.getPrice());
 
 		model.addAttribute("ticket", ticket);
-		model.addAttribute("event", event);
+		model.addAttribute(EVENT, event);
 		return "tickets/ticket-form";
 	}
 
@@ -188,8 +194,8 @@ public class EventController {
 		model.addAttribute("dateTimeStartString", formattedDate1);
 		model.addAttribute("dateTimeEndString", formattedDate2);
 		model.addAttribute("buildings", buildings);
-		model.addAttribute("event", event);
-		return "events/event-form";
+		model.addAttribute(EVENT, event);
+		return EVENT_FORM;
 	}
 
 	@PutMapping("/{id}")
@@ -199,14 +205,11 @@ public class EventController {
 		}
 		else event.setImage(image.getBytes());
 		eventService.updateEvent(id, event);
-		return "redirect:/event/";
+		return REDIRECT_EVENT;
 	}
 
 	private BuildingDto toDto(Building building) {
 		return modelMapper.map(building, BuildingDto.class);
 	}
 
-	private EventDto toDto(Event event) {
-		return modelMapper.map(event, EventDto.class);
-	}
 }

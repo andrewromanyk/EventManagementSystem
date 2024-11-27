@@ -2,7 +2,6 @@ package ua.edu.ukma.event_management_system.entity;
 
 import jakarta.persistence.*;
 import lombok.*;
-import org.springframework.context.annotation.Lazy;
 
 import java.time.LocalDateTime;
 

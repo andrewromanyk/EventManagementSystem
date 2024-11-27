@@ -11,7 +11,7 @@ import java.util.List;
 
 public class UserPrincipal implements UserDetails {
 
-	private UserEntity user;
+	private final transient UserEntity user;
 
 	public UserPrincipal(UserEntity user) {
 		this.user = user;
@@ -24,16 +24,12 @@ public class UserPrincipal implements UserDetails {
 		List<GrantedAuthority> authorities = new ArrayList<>();
 		authorities.add(new SimpleGrantedAuthority(userRole.name()));
 
-		switch (userRole) {
-			case ADMIN:
-				authorities.add(new SimpleGrantedAuthority(UserRole.ORGANIZER.name()));
-				authorities.add(new SimpleGrantedAuthority(UserRole.USER.name()));
-				break;
-			case ORGANIZER:
-				authorities.add(new SimpleGrantedAuthority(UserRole.USER.name()));
-		}
-
-		System.out.println("User " + getUsername() + " has authorities " + authorities);
+        if (userRole == UserRole.ADMIN) {
+            authorities.add(new SimpleGrantedAuthority(UserRole.ORGANIZER.name()));
+            authorities.add(new SimpleGrantedAuthority(UserRole.USER.name()));
+        } else if (userRole == UserRole.ORGANIZER) {
+            authorities.add(new SimpleGrantedAuthority(UserRole.USER.name()));
+        }
 
 		return authorities;
 	}

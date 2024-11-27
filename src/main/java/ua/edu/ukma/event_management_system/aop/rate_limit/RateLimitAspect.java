@@ -40,8 +40,8 @@ public class RateLimitAspect {
 
     private String getCurrentUserId() {
         Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        if (principal instanceof UserDetails) {
-            return ((UserDetails) principal).getUsername();
+        if (principal instanceof UserDetails details) {
+            return (details).getUsername();
         } else {
             return null;
         }

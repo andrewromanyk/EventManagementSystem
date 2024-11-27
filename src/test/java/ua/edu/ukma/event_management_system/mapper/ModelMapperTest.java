@@ -14,7 +14,6 @@ import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 import ua.edu.ukma.event_management_system.dto.EventDto;
 import ua.edu.ukma.event_management_system.dto.UserDto;
-import ua.edu.ukma.event_management_system.entity.BuildingEntity;
 
 import java.time.LocalDateTime;
 import java.util.List;
@@ -40,7 +39,7 @@ class ModelMapperTest {
         building.setDescription("This is a test");
         building.setRating(List.of());
         return building;
-    };
+    }
 
     private Event getEventDomain1(){
         Event event = new Event();
@@ -72,18 +71,6 @@ class ModelMapperTest {
         return eventDto;
     }
 
-//    private BuildingEntity getBuildingEntity(){
-//        BuildingEntity building = new BuildingEntity();
-//        building.setId(2);
-//        building.setAddress("Bandery, 2");
-//        building.setHourlyRate(150);
-//        building.setAreaM2(100);
-//        building.setCapacity(100);
-//        building.setDescription("This is a test");
-//        building.setRating(List.of());
-//        return building;
-//    }
-
     private User getUserDomain(){
         User user = new User();
         user.setId(1);
@@ -94,7 +81,7 @@ class ModelMapperTest {
         user.setEmail("john.doe@example.com");
         user.setPhoneNumber("+380147852369");
         user.setPassword("password");
-        user.setAge(18);
+        user.setDateOfBirth(LocalDateTime.of(2004, 11, 2, 1, 1));
         return user;
     }
 
@@ -108,16 +95,17 @@ class ModelMapperTest {
         userDto.setEmail("john.doe@example.com");
         userDto.setPhoneNumber("+380147852369");
         userDto.setPassword("password");
-        userDto.setAge(18);
+        userDto.setDateOfBirth(LocalDateTime.of(2004, 11, 2, 1, 1));
         return userDto;
     }
 
     @Test
-    public void testModelMapper2() {
+    void testModelMapper2() {
         assertEquals(getUserDto(), modelMapper.map(getUserDomain(), UserDto.class));
     }
 
-    @Test void testModelMapper1() {
+    @Test
+    void testModelMapper1() {
         assertEquals(getEventDto1(), modelMapper.map(getEventDomain1(), EventDto.class));
     }
 

@@ -15,10 +15,10 @@ public class GETLoggerAspect {
     private static final Logger logger = LoggerFactory.getLogger(GETLoggerAspect.class);
 
     @Pointcut(value = "execution(* ua.edu.ukma.event_management_system.controller..get*(..))")
-    private void GETPointcut() {}
+    private void getPointCut() {}
 
-    @AfterReturning(pointcut = "GETPointcut()", returning = "result")
-    public void GETLogging(JoinPoint joinPoint, Object result) {
+    @AfterReturning(pointcut = "getPointCut()", returning = "result")
+    public void getLogging(JoinPoint joinPoint, Object result) {
         logger.info("Successfully returned {} from {} with id={}", result.getClass().getSimpleName(), joinPoint.getSignature().getName(), joinPoint.getArgs()[0]);
     }
 }
