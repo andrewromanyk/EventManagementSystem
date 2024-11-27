@@ -20,7 +20,7 @@ import org.springframework.security.test.context.support.WithMockUser;
 class SpringSecurityTest {
 
     @Autowired
-    private MockMvc mvc;
+    private MockMvc mockMvc;
 
     @LocalServerPort
     private int port;
@@ -28,31 +28,65 @@ class SpringSecurityTest {
     @ParameterizedTest
     @ValueSource(strings = {"USER", "ADMIN", "ORGANIZER"})
     void contextLoads(String role) throws Exception {
-        mvc.perform(get("/FAQ.html").with(user("testUser").roles(role))).andExpect(status().isOk());
+        mockMvc.perform(get("/FAQ.html").with(user("testUser").roles(role))).andExpect(status().isOk());
     }
 
 
     @Test
     @WithMockUser(authorities = {"ORGANIZER"}) //Just admin doesn't work, since security specifically requires ORGANIZER, but logic will make sure any admin is an organizer
     void getUsers() throws Exception {
-        mvc.perform(get("/user/")).andExpect(status().isForbidden());
+        mockMvc.perform(get("/user/")).andExpect(status().isForbidden());
     }
 
     @Test//Just admin doesn't work, since security specifically requires ORGANIZER, but logic will make sure any admin is an organizer
     void getMain() throws Exception {
-        mvc.perform(get("/main")).andExpect(status().isOk());
+        mockMvc.perform(get("/main")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"USER"})
     void isManagable() throws Exception {
-        mvc.perform(get("/manage")).andExpect(status().isOk());
+        mockMvc.perform(get("/manage")).andExpect(status().isOk());
     }
 
     @Test
     @WithMockUser(authorities = {"USER"})
     void userCantAccess() throws Exception {
-        mvc.perform(get("/user")).andExpect(status().isForbidden());
+        mockMvc.perform(get("/user")).andExpect(status().isForbidden());
+    }
+
+    @Test
+    void testPublicEndpoints() throws Exception {
+        mockMvc.perform(get("/login")).andExpect(status().isOk());
+        mockMvc.perform(get("/FAQ.html")).andExpect(status().isOk());
+        mockMvc.perform(get("/styles/basic.css")).andExpect(status().isOk());
+        mockMvc.perform(get("/main")).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = "USER")
+    void testUserProtectedEndpoints() throws Exception {
+        mockMvc.perform(get("/building/1")).andExpect(status().isOk());
+        mockMvc.perform(get("/user/1")).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ORGANIZER")
+    void testOrganizerProtectedEndpoints() throws Exception {
+        mockMvc.perform(get("/event/1")).andExpect(status().isOk());
+    }
+
+    @Test
+    @WithMockUser(authorities = "ADMIN")
+    void testAdminProtectedEndpoints() throws Exception {
+        mockMvc.perform(get("/api/event/1")).andExpect(status().isOk());
+    }
+
+    @Test
+    void testUnauthorizedAccess() throws Exception {
+        mockMvc.perform(get("/myprofile")).andExpect(status().is3xxRedirection());
+        mockMvc.perform(get("/building")).andExpect(status().is3xxRedirection());
+        mockMvc.perform(get("/manage/cache")).andExpect(status().is3xxRedirection());
     }
 
 }

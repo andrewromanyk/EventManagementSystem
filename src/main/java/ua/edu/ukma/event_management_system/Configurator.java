@@ -53,7 +53,7 @@ public class Configurator {
         // Event: domain to dto
         TypeMap<Event, EventDto> eventMapper = mapperResult.createTypeMap(Event.class, EventDto.class);
         eventMapper.addMappings(mapper -> mapper.map(src -> src.getBuilding().getId(), EventDto::setBuilding));
-
+        eventMapper.addMappings(mapper -> mapper.map(src -> src.getCreator().getId(), EventDto::setCreator));
         logger.info("Created Event mappings");
 
         // Event: dto to entity
