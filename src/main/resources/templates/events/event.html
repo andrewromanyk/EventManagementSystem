@@ -47,7 +47,7 @@
                     </div>
                 </div>
             </div>
-            <div class="button-cont">
+            <div class="button-cont" th:if="${event.getDateTimeEnd().isAfter(T(java.time.LocalDateTime).now())}">
                 <a th:href="@{'/event/' + ${event.id} + '/buy-ticket'}">
                     <button class="button">
                         Buy ticket

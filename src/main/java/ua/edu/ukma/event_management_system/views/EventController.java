@@ -13,6 +13,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import ua.edu.ukma.event_management_system.domain.Building;
 import ua.edu.ukma.event_management_system.domain.Event;
+import ua.edu.ukma.event_management_system.domain.Ticket;
 import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.EventDto;
@@ -137,6 +138,23 @@ public class EventController {
 			redirectAttributes.addFlashAttribute("errorMessage", "Failed to delete the event. Please try again.");
 		}
 		return "redirect:/event/";
+	}
+
+	@GetMapping("/{id}/buy-ticket")
+	public String buyTicket(@PathVariable long id, Model model) {
+		UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUsername(details.getUsername());
+
+		Event event = eventService.getEventById(id);
+
+		Ticket ticket = new Ticket();
+		ticket.setUser(user);
+		ticket.setEvent(event);
+		ticket.setPrice(event.getPrice());
+
+		model.addAttribute("ticket", ticket);
+		model.addAttribute("event", event);
+		return "tickets/ticket-form";
 	}
 
 	private BuildingDto toDto(Building building) {

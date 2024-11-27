@@ -22,6 +22,7 @@ public class EventDto {
     private List<UserDto> users;
     private byte[] image;
     private long creator;
+    private double price;
 
     public EventDto(int id, String eventTitle, LocalDateTime dateTimeStart,
                     LocalDateTime dateTimeEnd, long building, String description,

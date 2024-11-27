@@ -33,10 +33,11 @@
     height: auto;
     margin-right: 20px;
     padding-left: 20px;
+    margin-top: 50px;
 }
 
 .card {
     list-style: none;
     font-family: Verdana, sans-serif;
-    max-width: 300px;
+    margin-right: 50px;
 }

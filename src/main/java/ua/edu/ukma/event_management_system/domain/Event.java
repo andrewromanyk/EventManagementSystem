@@ -19,4 +19,5 @@ public class Event {
     private List<User> users;
     private byte[] image;
     private User creator;
+    private double price;
 }

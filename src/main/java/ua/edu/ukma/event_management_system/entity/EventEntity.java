@@ -51,6 +51,9 @@ public class EventEntity {
     @JoinColumn(name = "user_id", nullable = false)
     private UserEntity creator;
 
+    @Column(nullable = false)
+    private double price;
+
     @ManyToMany
     @JoinTable(name="ticket",
     joinColumns = @JoinColumn(name = "event_id"),
@@ -85,7 +88,8 @@ public class EventEntity {
     }
 
     public EventEntity(String eventTitle, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd,
-                       BuildingEntity building, String description, int numberOfTickets, int minAgeRestriction, byte[] image, UserEntity creator) {
+                       BuildingEntity building, String description, int numberOfTickets, int minAgeRestriction, byte[] image,
+                       UserEntity creator, double price) {
         this.eventTitle = eventTitle;
         this.dateTimeStart = dateTimeStart;
         this.dateTimeEnd = dateTimeEnd;
@@ -95,5 +99,6 @@ public class EventEntity {
         this.minAgeRestriction = minAgeRestriction;
         this.image = image;
         this.creator = creator;
+        this.price = price;
     }
 }

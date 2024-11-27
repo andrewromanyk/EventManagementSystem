@@ -25,7 +25,7 @@ public class TicketEntity {
     private EventEntity event;
 
     @Column(nullable = false)
-    private int price;
+    private double price;
 
     @Column(nullable = false)
     private LocalDateTime purchaseDate;

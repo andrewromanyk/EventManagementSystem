@@ -13,7 +13,7 @@ public class TicketDto {
     private long id;
     private long user;
     private long event;
-    private int price;
+    private double price;
     private LocalDateTime purchaseDate;
 
 }

@@ -5,16 +5,15 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 import ua.edu.ukma.event_management_system.domain.Ticket;
 import ua.edu.ukma.event_management_system.domain.User;
 import ua.edu.ukma.event_management_system.domain.UserRole;
+import ua.edu.ukma.event_management_system.dto.TicketDto;
 import ua.edu.ukma.event_management_system.service.interfaces.TicketService;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 @Controller
@@ -61,6 +60,13 @@ public class TicketController {
 			ticketService.removeTicket(id);
 		}
 
+		return "redirect:/ticket/";
+	}
+
+	@PostMapping("/")
+	public String create(@ModelAttribute TicketDto ticket) {
+		ticket.setPurchaseDate(LocalDateTime.now());
+		ticketService.createTicket(ticket);
 		return "redirect:/ticket/";
 	}
 }
