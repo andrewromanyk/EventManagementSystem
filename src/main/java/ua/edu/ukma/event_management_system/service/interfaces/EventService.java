@@ -8,6 +8,8 @@ import ua.edu.ukma.event_management_system.entity.EventRatingEntity;
 import ua.edu.ukma.event_management_system.entity.UserEntity;
 import ua.edu.ukma.event_management_system.repository.EventRepository;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
 import java.util.List;
 
 public interface EventService {
@@ -27,5 +29,6 @@ public interface EventService {
 
     List<Event> getAllForOrganizer(Long organizerId);
 
+    List<Event> getAllThatIntersect(LocalDateTime Start, LocalDateTime End, long id);
 //    EventRatingEntity rateEvent(EventDto event, byte rating, UserDto author, String comment);
 }

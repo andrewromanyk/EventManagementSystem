@@ -16,4 +16,5 @@ public interface EventRepository extends JpaRepository<EventEntity, Long> {
 
     List<EventEntity> findEventEntitiesByDateTimeEndAfter(LocalDateTime dateTime);
     List<EventEntity> findEventEntitiesByCreator_Id(Long id);
+    List<EventEntity> findEventEntitiesByBuildingIdAndDateTimeEndAfterAndDateTimeStartBefore(long id, LocalDateTime dateTimeStart, LocalDateTime dateTimeEnd);
 }

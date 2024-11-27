@@ -131,6 +131,11 @@ public class EventServiceImpl implements EventService {
         return eventRepository.findEventEntitiesByCreator_Id(organizerId).stream().map(this::toDomain).toList();
     }
 
+    @Override
+    public List<Event> getAllThatIntersect(LocalDateTime start, LocalDateTime end, long id) {
+        return eventRepository.findEventEntitiesByBuildingIdAndDateTimeEndAfterAndDateTimeStartBefore(id, start, end).stream().map(this::toDomain).toList();
+    }
+
     private Event toDomain(EventEntity event){
         return modelMapper.map(event, Event.class);
     }

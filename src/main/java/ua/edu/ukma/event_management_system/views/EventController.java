@@ -121,6 +121,11 @@ public class EventController {
 			model.addAttribute("error", "Event cannot end before it started!");
 			return "events/event-form";
 		}
+		if (!eventService.getAllThatIntersect(eventDto.getDateTimeStart(), eventDto.getDateTimeEnd(), eventDto.getBuilding()).isEmpty()) {
+			model.addAttribute("event", eventDto);
+			model.addAttribute("error", "Building is already occupied for that time");
+			return "events/event-form";
+		}
 		eventDto.setImage(image.getBytes());
 		UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 		User user = userService.getUserByUsername(details.getUsername());
