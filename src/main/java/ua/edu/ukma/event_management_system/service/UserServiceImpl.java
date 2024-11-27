@@ -86,13 +86,13 @@ public class UserServiceImpl implements UserService {
         Optional<UserEntity> existingUserOpt = userRepository.findById(id);
         if (existingUserOpt.isPresent()) {
             UserEntity existingUser = existingUserOpt.get();
-            existingUser.setUserRole(updatedUser.getUserRole());
+            if (updatedUser.getUserRole()!=null) existingUser.setUserRole(updatedUser.getUserRole());
             existingUser.setUsername(updatedUser.getUsername());
             existingUser.setFirstName(updatedUser.getFirstName());
             existingUser.setLastName(updatedUser.getLastName());
             existingUser.setEmail(updatedUser.getEmail());
             existingUser.setPhoneNumber(updatedUser.getPhoneNumber());
-            existingUser.setAge(updatedUser.getAge());
+            existingUser.setDateOfBirth(updatedUser.getDateOfBirth());
 
             if (!existingUser.getPassword().equals(updatedUser.getPassword())) {
                 existingUser.setPassword(passwordEncoder.encode(updatedUser.getPassword()));

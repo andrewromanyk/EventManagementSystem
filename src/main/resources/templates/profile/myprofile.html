@@ -1,5 +1,7 @@
 <!doctype html>
-<html lang="en" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <title>My Profile</title>
     <link rel="stylesheet" href="../../static/styles/myprofile.css"
@@ -34,6 +36,9 @@
             </div>
             <div class="logout">
                 <button id="logoutButton">Logout</button>
+                <a th:href="@{/user/{id}/edit(id=${user.id})}">
+                    <button class="edit-button">Edit</button>
+                </a>
             </div>
         </div>
     </div>

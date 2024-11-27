@@ -47,8 +47,8 @@
         <input type="text" id="phoneNumber" th:field="*{phoneNumber}" pattern="^\+?[0-9. ()-]{7,25}$" required>
         <br>
 
-        <label for="age">Age:</label>
-        <input type="number" id="age" th:field="*{age}" pattern="[0-9][0-9]" required>
+        <label for="dateOfBirth">Date of birth:</label>
+        <input type="datetime-local" id="dateOfBirth" th:field="*{dateOfBirth}" pattern="^\\+?[0-9. ()-]{7,25}$" required>
         <br>
 
         <button type="submit">Submit</button>

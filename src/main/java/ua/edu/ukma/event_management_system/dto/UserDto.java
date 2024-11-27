@@ -5,6 +5,8 @@ import lombok.Data;
 import lombok.NoArgsConstructor;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 
+import java.time.LocalDateTime;
+
 @NoArgsConstructor
 @Data
 public class UserDto {
@@ -24,12 +26,9 @@ public class UserDto {
     private String password;
     @Pattern(regexp = "^\\+?[0-9. ()-]{7,25}$")
     private String phoneNumber;
+    private LocalDateTime dateOfBirth;
 
-    @Min(value = 18, message = "Age should be at least 18")
-    @Max(value = 120, message = "Age should be less than 120")
-    private int age;
-
-    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, int age) {
+    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, LocalDateTime dateOfBirth) {
         this.id = id;
         this.userRole = userRole;
         this.username = username;
@@ -37,10 +36,10 @@ public class UserDto {
         this.lastName = lastName;
         this.email = email;
         this.phoneNumber = phoneNumber;
-        this.age = age;
+        this.dateOfBirth = dateOfBirth;
     }
 
-    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, int age) {
+    public UserDto(int id, UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, LocalDateTime dateOfBirth) {
         this.id = id;
         this.userRole = userRole;
         this.username = username;
@@ -49,6 +48,6 @@ public class UserDto {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.age = age;
+        this.dateOfBirth = dateOfBirth;
     }
 }

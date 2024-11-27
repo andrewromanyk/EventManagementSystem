@@ -41,3 +41,10 @@
     font-family: Verdana, sans-serif;
     margin-right: 50px;
 }
+
+.text-to-do {
+    margin-top: 15px;
+    font-family: Verdana, sans-serif;
+    color: black;
+    font-size: 15px;
+}

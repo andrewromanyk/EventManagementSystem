@@ -4,6 +4,8 @@ import jakarta.validation.Valid;
 import org.modelmapper.ModelMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.condition.ConditionalOnExpression;
+import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -14,6 +16,7 @@ import ua.edu.ukma.event_management_system.dto.BuildingDto;
 import ua.edu.ukma.event_management_system.dto.UserDto;
 import ua.edu.ukma.event_management_system.service.interfaces.UserService;
 
+import java.time.format.DateTimeFormatter;
 import java.util.*;
 
 @Controller
@@ -52,9 +55,19 @@ public class UserController {
 
     @GetMapping("/{id}/edit")
     public String edit(@PathVariable long id, Model model) {
+        UserDetails userDetails = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        User currentUser = userService.getUserByUsername(userDetails.getUsername());
+
+        if (currentUser.getUserRole() != UserRole.ADMIN && currentUser.getId() != id) {
+            model.addAttribute("errors", List.of("You cannot modify user that is not you!"));
+            return "error";
+        }
         UserDto user = toDto(userService.getUserById(id));
+        String formattedDate = user.getDateOfBirth().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+        model.addAttribute("dateOfBirthString", formattedDate);
         model.addAttribute("userDto", user);
         model.addAttribute("roles", UserRole.values());
+        model.addAttribute("canShow", currentUser.getUserRole() == UserRole.ADMIN);
         return "users/user-form";
     }
 

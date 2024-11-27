@@ -3,6 +3,10 @@ package ua.edu.ukma.event_management_system.domain;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+import java.time.LocalDateTime;
+import java.time.temporal.ChronoUnit;
+
 @Data
 @NoArgsConstructor
 public class User {
@@ -14,9 +18,14 @@ public class User {
     private String email;
     private String phoneNumber;
     private String password;
-    private int age;
+    private LocalDateTime dateOfBirth;
 
-    public User(long id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, String password, int age) {
+    public long getAge() {
+        LocalDateTime now = LocalDateTime.now();
+        return ChronoUnit.YEARS.between(dateOfBirth, now);
+    }
+
+    public User(long id, UserRole userRole, String username, String firstName, String lastName, String email, String phoneNumber, String password, LocalDateTime age) {
         this.id = id;
         this.userRole = userRole;
         this.username = username;
@@ -25,6 +34,6 @@ public class User {
         this.email = email;
         this.phoneNumber = phoneNumber;
         this.password = password;
-        this.age = age;
+        this.dateOfBirth = age;
     }
 }

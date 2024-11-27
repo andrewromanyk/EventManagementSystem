@@ -83,6 +83,8 @@ public class EventController {
 	@GetMapping("/{id}")
 	public String get(@PathVariable long id, Model model) throws IOException {
 		Event event = eventService.getEventById(id);
+		UserDetails details = (UserDetails) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+		User user = userService.getUserByUsername(details.getUsername());
 
 		// Prepare a map of event IDs to Base64-encoded images
 		String base64Image;
@@ -94,6 +96,7 @@ public class EventController {
 		}
 
 		model.addAttribute("event", event);
+		model.addAttribute("isAllowedToBuy", user.getAge()>=event.getMinAgeRestriction());
 		model.addAttribute("img", base64Image);
 		return "events/event";
 	}

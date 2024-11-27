@@ -4,6 +4,7 @@ import jakarta.persistence.*;
 import org.springframework.context.annotation.Lazy;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 
+import java.time.LocalDateTime;
 import java.util.List;
 import lombok.*;
 
@@ -39,12 +40,12 @@ public class UserEntity {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private int age;
+    private LocalDateTime dateOfBirth;
 
     @ManyToMany(mappedBy = "users")
     private List<EventEntity> events;
 
-    public UserEntity(UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, int age) {
+    public UserEntity(UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, LocalDateTime age) {
         this.userRole = userRole;
         this.username = username;
         this.firstName = firstName;
@@ -52,6 +53,6 @@ public class UserEntity {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.age = age;
+        this.dateOfBirth = age;
     }
 }

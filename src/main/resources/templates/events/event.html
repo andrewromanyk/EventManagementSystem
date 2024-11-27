@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en"
+      xmlns:th="http://www.thymeleaf.org"
       xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
 <head>
     <meta charset="UTF-8">
@@ -38,6 +39,9 @@
                         <h5 class="card-text">
                             <strong>Minimum Age Restriction:</strong> <span th:text="${event.minAgeRestriction}"></span>
                         </h5>
+                        <h5 class="card-text">
+                            <strong>Price:</strong> <span th:text="${event.price}"></span>
+                        </h5>
                         <div class="card-footer text-muted">
                             <small>
                                 <strong>Start:</strong> <span th:text="${#temporals.format(event.dateTimeStart, 'dd MMM yyyy HH:mm')}"></span><br>
@@ -47,12 +51,20 @@
                     </div>
                 </div>
             </div>
-            <div class="button-cont" th:if="${event.getDateTimeEnd().isAfter(T(java.time.LocalDateTime).now())}">
+            <div class="button-cont" th:if="${event.getDateTimeEnd().isAfter(T(java.time.LocalDateTime).now()) && isAllowedToBuy}" >
                 <a th:href="@{'/event/' + ${event.id} + '/buy-ticket'}">
                     <button class="button">
                         Buy ticket
                     </button>
                 </a>
+            </div>
+            <div style="text-align: center" class="text-to-do">
+                <div th:if="${!event.getDateTimeEnd().isAfter(T(java.time.LocalDateTime).now())}">
+                    The event has ended!
+                </div>
+                <div th:if="${!isAllowedToBuy}">
+                    Sorry, you are not old enough to attend this event!
+                </div>
             </div>
             <div class="button-cont" sec:authorize="hasAuthority('ORGANIZER')">
                 <button class="button" style="background-color: #C94F4F">Delete</button>
