@@ -42,6 +42,10 @@
       <input type="number" class="form-control" id="minAgeRestriction" name="minAgeRestriction" th:field="*{minAgeRestriction}" required  min="0">
     </div>
     <div class="mb-3">
+      <label for="price" class="form-label">Ticket Price</label>
+      <input type="number" class="form-control" id="price" name="price" th:field="*{price}" required  min="0">
+    </div>
+    <div class="mb-3">
       <label for="dateTimeStart" class="form-label">Start Date & Time</label>
       <input type="datetime-local" class="form-control" id="dateTimeStart" name="dateTimeStart" th:field="*{dateTimeStart}" required>
     </div>

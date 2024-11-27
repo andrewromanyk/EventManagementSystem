@@ -32,7 +32,7 @@ public class FormController {
 
     @GetMapping("/main")
     public String mainPage(Model model) throws IOException {
-        List<Event> events = eventService.getAllEvents();
+        List<Event> events = eventService.getAllRelevant();
         Map<Integer, String> imageMap = new HashMap<>();
         for (Event event : events) {
             if (event.getImage() != null) {

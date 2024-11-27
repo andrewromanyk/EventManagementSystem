@@ -57,7 +57,7 @@ public class SecurityConfiguration {
 						.requestMatchers("/*.png").permitAll()
 						.requestMatchers("/register/**").permitAll()
 						.requestMatchers("/register").permitAll()
-						.requestMatchers("/myprofile").hasAuthority("ORGANIZER")
+						.requestMatchers("/myprofile").hasAuthority("USER")
 						.requestMatchers("/building").hasAuthority("ORGANIZER")
 						.requestMatchers("/building/**").hasAuthority("USER")
 						.requestMatchers(HttpMethod.GET, "/api/building/**").hasAuthority("USER")

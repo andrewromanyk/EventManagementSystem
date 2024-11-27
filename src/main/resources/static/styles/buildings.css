@@ -30,3 +30,7 @@
     cursor: pointer;
     color: black;
 }
+
+.dimmed {
+    opacity: 0.5;
+}
