@@ -30,10 +30,10 @@
             </form>
             <a th:href="@{/building/{id}/edit(id=${building.id})}" role="button" class="btn btn-warning btn-sm">Update</a>
         </div>
-        <div class="col-12 text-center p-1 shadow-sm">
+        <div class="col-12 text-center p-1">
             <h3>Building</h3>
             <div class="building-list">
-                <div class="card shadow-sm">
+                <div class="card">
                     <label class="card-body">
                         <h5 class="card-title" th:text="${building.address}"></h5>
                         <h6 class="card-subtitle mb-2 text-muted" th:text="${building.description}"></h6>
