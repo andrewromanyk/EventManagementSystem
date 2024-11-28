@@ -79,10 +79,5 @@ public class DatabasePopulatorService {
         ticketRepository.save(ticket1);
         ticketRepository.save(ticket2);
 
-//        EventRatingEntity rating1 = new EventRatingEntity(event1, (byte) 4, user1, "");
-//        eventRatingRepository.save(rating1);
-//
-//        BuildingRatingEntity rating2 = new BuildingRatingEntity(building1, (byte) 5, user2, "");
-//        buildingRatingRepository.save(rating2);
     }
 }
