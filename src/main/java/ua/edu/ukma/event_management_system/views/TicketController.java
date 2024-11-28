@@ -65,8 +65,6 @@ public class TicketController {
 
 	@PostMapping("/")
 	public String create(@ModelAttribute TicketDto ticket) {
-
-
 		ticket.setPurchaseDate(LocalDateTime.now());
 		ticketService.createTicket(ticket);
 		return "redirect:/ticket/";

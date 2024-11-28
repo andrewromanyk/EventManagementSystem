@@ -66,6 +66,7 @@ public class SecurityConfiguration {
 						.requestMatchers(HttpMethod.GET, "/api/building/**").hasAuthority(USER)
 						.requestMatchers(HttpMethod.GET, "/event/").permitAll()
 						.requestMatchers(HttpMethod.GET, "/event/*").permitAll()
+						.requestMatchers("/event/*/buy-ticket").hasAuthority(USER)
 						.requestMatchers(HttpMethod.GET, "/event/**").hasAuthority(ORGANIZER)
 						.requestMatchers("/event/**").hasAuthority(ORGANIZER)
 						.requestMatchers("/user").hasAuthority(ORGANIZER)

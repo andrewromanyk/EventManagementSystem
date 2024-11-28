@@ -32,7 +32,7 @@
         <br>
 
         <label for="lastName">Last name:</label>
-        <input type="text" id="lastName" th:field="*{lastName}" required minlength="10">
+        <input type="text" id="lastName" th:field="*{lastName}" required minlength="1">
         <br>
 
         <label for="email">E-mail:</label>
@@ -48,7 +48,7 @@
         <br>
 
         <label for="dateOfBirth">Date of birth:</label>
-        <input type="datetime-local" id="dateOfBirth" th:field="*{dateOfBirth}" pattern="^\\+?[0-9. ()-]{7,25}$" required>
+        <input type="date" id="dateOfBirth" th:field="*{dateOfBirth}" pattern="^\\+?[0-9. ()-]{7,25}$" required>
         <br>
 
         <button id="submit-button" type="submit">Submit</button>

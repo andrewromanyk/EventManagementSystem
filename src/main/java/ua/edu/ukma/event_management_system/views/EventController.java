@@ -37,7 +37,9 @@ public class EventController {
 	private static final String STOCK_PHOTO = "src/main/resources/stock_photo.jpg";
 	private static final String EVENT_FORM = "events/event-form";
 	private static final String EVENT = "event";
+	private static final String ERROR = "error";
 	private static final String REDIRECT_EVENT = "redirect:/event/";
+	private static final String BUILDINGS = "buildings";
 
 	private ModelMapper modelMapper;
 	private EventService eventService;
@@ -124,7 +126,7 @@ public class EventController {
 				.stream()
 				.map(this::toDto)
 				.toList();
-		model.addAttribute("buildings", buildings);
+		model.addAttribute(BUILDINGS, buildings);
 		model.addAttribute(EVENT, new EventDto());
 		return EVENT_FORM;
 	}
@@ -138,12 +140,12 @@ public class EventController {
 		}
 		if (eventDto.getDateTimeEnd().isBefore(eventDto.getDateTimeStart())) {
 			model.addAttribute(EVENT, eventDto);
-			model.addAttribute("error", "Event cannot end before it started!");
+			model.addAttribute(ERROR, "Event cannot end before it started!");
 			return EVENT_FORM;
 		}
 		if (!eventService.getAllThatIntersect(eventDto.getDateTimeStart(), eventDto.getDateTimeEnd(), eventDto.getBuilding()).isEmpty()) {
 			model.addAttribute(EVENT, eventDto);
-			model.addAttribute("error", "Building is already occupied for that time");
+			model.addAttribute(ERROR, "Building is already occupied for that time");
 			return EVENT_FORM;
 		}
 		eventDto.setImage(image.getBytes());
@@ -193,15 +195,35 @@ public class EventController {
 		String formattedDate2= event.getDateTimeEnd().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
 		model.addAttribute("dateTimeStartString", formattedDate1);
 		model.addAttribute("dateTimeEndString", formattedDate2);
-		model.addAttribute("buildings", buildings);
+		model.addAttribute(BUILDINGS, buildings);
 		model.addAttribute(EVENT, event);
 		return EVENT_FORM;
 	}
 
 	@PutMapping("/{id}")
-	public String editPut(@PathVariable long id, @ModelAttribute EventDto event, @RequestParam("image_cstm") MultipartFile image) throws IOException {
+	public String editPut(@PathVariable long id, @ModelAttribute EventDto event, @RequestParam("image_cstm") MultipartFile image, Model model) throws IOException {
 		if (image.isEmpty()) {
 			event.setImage(eventService.getEventById(id).getImage());
+		}
+		if (event.getDateTimeEnd().isBefore(event.getDateTimeStart())) {
+			model.addAttribute(EVENT, event);
+			model.addAttribute(ERROR, "Event cannot end before it started!");
+			List<BuildingDto> buildings = buildingService.getAllBuildings()
+					.stream()
+					.map(this::toDto)
+					.toList();
+			model.addAttribute(BUILDINGS, buildings);
+			return EVENT_FORM;
+		}
+		if (!eventService.getAllThatIntersect(event.getDateTimeStart(), event.getDateTimeEnd(), event.getBuilding()).isEmpty()) {
+			model.addAttribute(EVENT, event);
+			model.addAttribute(ERROR, "Building is already occupied for that time");
+			List<BuildingDto> buildings = buildingService.getAllBuildings()
+					.stream()
+					.map(this::toDto)
+					.toList();
+			model.addAttribute(BUILDINGS, buildings);
+			return EVENT_FORM;
 		}
 		else event.setImage(image.getBytes());
 		eventService.updateEvent(id, event);

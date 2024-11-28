@@ -61,7 +61,7 @@ public class UserController {
             return "error";
         }
         UserDto user = toDto(userService.getUserById(id));
-        String formattedDate = user.getDateOfBirth().format(DateTimeFormatter.ofPattern("yyyy-MM-dd'T'HH:mm"));
+        String formattedDate = user.getDateOfBirth().format(DateTimeFormatter.ofPattern("yyyy-MM-dd"));
         model.addAttribute("dateOfBirthString", formattedDate);
         model.addAttribute("userDto", user);
         model.addAttribute("roles", UserRole.values());

@@ -9,12 +9,14 @@ import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExcep
 import ua.edu.ukma.event_management_system.exceptions.EventFullException;
 import ua.edu.ukma.event_management_system.exceptions.IllegalNameException;
 
+import java.util.List;
+
 @ControllerAdvice
 public class CustomExceptionHandler extends ResponseEntityExceptionHandler {
 
     @ExceptionHandler(EventFullException.class)
     public String handleEventFullException(EventFullException e, Model model) {
-        model.addAttribute("error", e.getLocalizedMessage());
+        model.addAttribute("errors", List.of("The event is already full!"));
         return "error";
     }
 

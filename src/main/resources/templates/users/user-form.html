@@ -67,7 +67,7 @@
         <br>
 
         <label for="dateOfBirth">Date of birth:</label>
-        <input type="datetime-local" id="dateOfBirth" th:value="${dateOfBirthString}" name ="dateOfBirth"  maxlength="500" required>
+        <input type="date" id="dateOfBirth" th:value="${dateOfBirthString}" name ="dateOfBirth"  maxlength="500" required>
         <br>
 
         <input type="hidden" id="password" th:field="*{password}"/>

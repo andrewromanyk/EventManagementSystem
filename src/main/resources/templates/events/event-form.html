@@ -24,8 +24,8 @@
 <div class="container mt-4">
   <h2 class="text-center mb-4">Create Event</h2>
   <span class="text-center mb-4" th:text="${error}">text</span>
-  <form action="#" th:action="@{(${event.id} != null) ? '/event/' + ${event.id} : '/event/'}" th:object="${event}" method="post" class="shadow-sm p-4" enctype="multipart/form-data">
-    <input type="hidden" name="_method" th:value="${event.id != null} ? 'PUT' : 'POST'">
+  <form action="#" th:action="@{(${event.id} != 0) ? '/event/' + ${event.id} : '/event/create'}" th:object="${event}" method="post" class="shadow-sm p-4" enctype="multipart/form-data">
+    <input type="hidden" name="_method" th:value="${event.id != 0} ? 'PUT' : 'POST'">
 
     <div class="mb-3">
       <label for="eventTitle" class="form-label">Event Title</label>
