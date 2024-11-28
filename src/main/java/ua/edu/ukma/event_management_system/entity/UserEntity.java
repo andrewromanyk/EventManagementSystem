@@ -3,7 +3,7 @@ package ua.edu.ukma.event_management_system.entity;
 import jakarta.persistence.*;
 import ua.edu.ukma.event_management_system.domain.UserRole;
 
-import java.time.LocalDateTime;
+import java.time.LocalDate;
 import java.util.List;
 import lombok.*;
 
@@ -39,12 +39,12 @@ public class UserEntity {
     private String phoneNumber;
 
     @Column(nullable = false)
-    private LocalDateTime dateOfBirth;
+    private LocalDate dateOfBirth;
 
     @ManyToMany(mappedBy = "users")
     private List<EventEntity> events;
 
-    public UserEntity(UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, LocalDateTime age) {
+    public UserEntity(UserRole userRole, String username, String firstName, String lastName, String email, String password, String phoneNumber, LocalDate dateOfBirth) {
         this.userRole = userRole;
         this.username = username;
         this.firstName = firstName;
@@ -52,6 +52,6 @@ public class UserEntity {
         this.email = email;
         this.password = password;
         this.phoneNumber = phoneNumber;
-        this.dateOfBirth = age;
+        this.dateOfBirth = dateOfBirth;
     }
 }
