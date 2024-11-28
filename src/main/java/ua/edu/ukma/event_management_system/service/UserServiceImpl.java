@@ -57,7 +57,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public User createUser(UserDto user) {
-       // user.setPassword(passwordEncoder.encode(user.getPassword())); already receives encoded password
+        user.setPassword(passwordEncoder.encode(user.getPassword()));
         logger.info(USER_ACTION_MARKER, "PASSWORD RECEIVED FROM USER: {}", user.getPassword());
         User returned = toDomain(userRepository.save(dtoToEntity(user)));
         logger.info(USER_ACTION_MARKER, "Got user");
